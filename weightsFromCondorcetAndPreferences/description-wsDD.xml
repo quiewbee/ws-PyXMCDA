@@ -1,0 +1,203 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<program_description xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../docs/w3-ws/specificationData/description.xsd">
+       <program provider="DecisionDeck"
+              name="weightsFromCondorcetAndPreferences"
+              displayName="weightsFromCondorcetAndPreferences"
+              version="1.0" />
+       <documentation>
+              <description>This web service allows to compute criteria significance weights from pairwise outranking comparisons, taking into account some robust properties. For ordered pairs a decision maker would ensure a strong outranking, the web service grants, if possible, that the outranking remains unchanged when changing the criteria weights, as long as the relative importance between all criteria weights don't change (a weight greater than another has to stay greater). In addition to weightsFromCondorcetRelation, it allows to model decision-maker's preferences on criteria, a for example constraints like w1 > w2, w3>w4+w5, w6=3, 2&lt;w7&lt;8, ...</description>
+              <contact>Veneziano Thomas (thomas.veneziano@uni.lu)</contact>
+              <reference>Bisdorff Raymond, Meyer Patrick, Veneziano Thomas ; Inverse analysis from a Condorcet robustness denotation of valued outranking relations ; ADT 2009 : 1st International Conference on Algorithmic Decision Theory , Lecture Notes in Artificial Intelligence : Springer Verlag, 21-23 october 2009, Venise, Italy, 2009</reference>
+       </documentation>
+       
+       
+       
+       <parameters>
+              
+              <input id="maxWeight"
+                     name="maxWeight"
+                     displayName="maxWeight"
+                     isoptional="0">
+                     <documentation>
+                            <description>Indicates the maximal value a weight can reach</description>
+                     </documentation>
+                     <xmcda tag="methodParameters">
+                            <![CDATA[
+                                   <methodParameters>
+                                          <parameter
+                                                 name="maxWeight"> <!-- REQUIRED  -->
+                                                 <value>
+                                                        <integer>%1</integer>
+                                                 </value>
+                                          </parameter>
+                                   </methodParameters>
+                            ]]>
+                     </xmcda>
+                     
+                     <gui status="preferFile">
+                            <entry id="%1" type="int" displayName="maxWeight">
+                                   <documentation>
+                                          <description>Indicates the maximal value a weight can reach</description>
+                                   </documentation>
+                                   <constraint>
+                                          <description>The value should be a positive integer.</description>
+                                          <code>
+                                                 <![CDATA[
+                                                        %1 > 0
+                                                 ]]>
+                                          </code>
+                                   </constraint>
+                            </entry>
+                     </gui>
+              </input>
+              
+              <input id="criteria" name="criteria" displayName="criteria"
+                     isoptional="0">
+                     
+                     <documentation>
+                            <description>A list of criteria. Criteria can be activated or desactivated via the &lt;active&gt; tag (true or false). By default (no &lt;active&gt; tag), criteria are considered as active.
+                                   Using thresholds is optional, only the constant ones with mcdaConcept equals to "indifference", "preference" or "veto" will be considered.
+                            </description>
+                     </documentation>
+                     <xmcda tag="criteria">
+                            <![CDATA[
+                            <criteria>
+                                   <criterion>
+                                          <active>[...]</active>
+                                          <thresholds>
+                                                 <threshold 
+                                                        mcdaConcept="indifference"><!-- REQUIRED, must be indifference, preference or veto  -->
+                                                        <constant><real>[...]</real></constant>
+                                                 </threshold>
+                                          </thresholds>
+                                          [...]
+                                   </criterion>
+                                   [...]
+                            </criteria>
+                            ]]>
+                     </xmcda>
+              </input>
+              
+              <input id="alternatives" name="alternatives" displayName="alternatives"
+                     isoptional="0">
+                     
+                     <documentation>
+                            <description>A list of alternatives. Alternatives can be activated or desactivated via the &lt;active&gt; tag (true or false). By default (no &lt;active&gt; tag), alternatives are considered as active. </description>
+                     </documentation>
+                     <xmcda tag="alternatives">
+                            <![CDATA[ 
+                            <alternatives>
+                                   <alternative>
+                                          <active>[...]</active>
+                                          [...]
+                                   </alternative>
+                                   [...]
+                            </alternatives>
+                            ]]>
+                     </xmcda>
+              </input>
+              
+              <input id="performanceTable"
+                     name="performanceTable"
+                     displayName="performanceTable"
+                     isoptional="0">
+                     <documentation>
+                            <description>A performance table. The evaluations should be numeric values, i.e. &lt;real&gt;, &lt;integer&gt; or &lt;rational&gt;.</description>
+                     </documentation>
+                     <xmcda tag="performanceTable"/>
+              </input>
+              
+              <input id="alternativesComparisons"
+                     name="alternativesComparisons"
+                     displayName="condorcetDenotation"
+                     isoptional="0">
+                     <documentation>
+                            <description>The Condorcet denotation for some alternative comparisons. The value associated to each ordered pair (a,b) must be an integer between 3 and -3. Note that all pairs with a value of 3 or -3 will be ignored during the computation phase, as they are trivial constraints.</description>
+                     </documentation>
+                     <xmcda tag="alternativesComparisons"/>
+              </input>
+              
+              <input id="criteriaComparisons"
+                     name="criteriaComparisons"
+                     displayName="criteriaComparisons"
+                     isoptional="1">
+                     <documentation>
+                            <description>Allows to model criteria weights preferences. For each defined pair in criteriaComparisons, we create a constraint indicating that the sum of the initial criterion (or set of criteria) weights must be greater than those of the terminal criterion (or also set of criteria)</description>
+                     </documentation>
+                     <xmcda tag="criteriaComparisons">
+                            <![CDATA[
+                            <criteriaComparisons>
+                                   <pair>
+                                          <initial><criterionID>[...]</criterionID></initial>
+                                          <terminal><criterionID>[...]</criterionID></terminal>
+                                   </pair>
+                                   <pair>
+                                          <initial><criteriaSet>[...]</criteriaSet></initial>
+                                          <terminal><criteriaSet>[...]</criteriaSet></terminal>
+                                   </pair>
+                                   [...]
+                            </criteriaComparisons>
+                            	               ]]>
+                     </xmcda>
+              </input>
+              
+              <input id="criteriaLowerBounds"
+                     name="criteriaLowerBounds"
+                     displayName="criteriaLowerBounds"
+                     isoptional="1">
+                     <documentation>
+                            <description>Allows to indicate some criteria lower bounds, i.e. constraints like w(g1) > 3.</description>
+                     </documentation>
+                     <xmcda tag="criteriaValues">
+                            <![CDATA[
+                            <criteriaValues>
+                                   <criterionValue>
+                                          <criterionID>[...]</criterionID>
+                                          <value>[...]</value>
+                                   </criterionValue>
+                                   [...]
+                            </criteriaValues>
+                                                        ]]>
+                     </xmcda>
+              </input>
+              
+              <input id="criteriaUpperBounds"
+                     name="criteriaUpperBounds"
+                     displayName="criteriaUpperBounds"
+                     isoptional="1">
+                     <documentation>
+                            <description>Allows to indicate some criteria upper bounds, i.e. constraints like w(g1) &lt; 5. Note that if you want to fix the value of a criteria, just give it some equal lower and upper bounds.</description>
+                     </documentation>
+                     <xmcda tag="criteriaValues">
+                            <![CDATA[
+                            <criteriaValues>
+                                   <criterionValue>
+                                          <criterionID>[...]</criterionID>
+                                          <value>[...]</value>
+                                   </criterionValue>
+                                   [...]
+                            </criteriaValues>
+                            	                    ]]>
+                     </xmcda>
+              </input>
+              
+              <output id="messages"
+                     name="messages"
+                     displayName="messages">
+                     <documentation>
+                            <description>A list of messages generated by the algorithm.</description>
+                     </documentation>
+                     <xmcda tag="methodMessages"/>
+              </output>
+              
+              <output id="criteriaWeights"
+                     name="criteriaWeights"
+                     displayName="criteriaWeights">
+                     <documentation>
+                            <description>The set of criteria weights generated by the algorithm</description>
+                     </documentation>        
+                     <xmcda tag="criteriaValues"/>
+              </output>
+              
+       </parameters>
+</program_description>

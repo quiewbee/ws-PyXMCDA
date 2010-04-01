@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" href="xmcda2Rubis.xsl"?>
+<xmcda:XMCDA xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.decision-deck.org/2009/XMCDA-2.0.0 file:../XMCDA-2.0.0.xsd" xmlns:xmcda="http://www.decision-deck.org/2009/XMCDA-2.0.0" instanceID="void">
+
+<alternatives mcdaConcept="alternatives">
+<description>
+<subTitle>Potential decision actions.</subTitle>
+</description>
+<alternative id="a01" name="random decision action A- B+ C~" mcdaConcept="potentialDecisionAction">
+<description>
+<comment>RandomS3PerformanceTableau() generated.</comment>
+</description>
+<type>real</type>
+<active>true</active>
+</alternative>
+<alternative id="a02" name="random decision action A+ B~ C~" mcdaConcept="potentialDecisionAction">
+<description>
+<comment>RandomS3PerformanceTableau() generated.</comment>
+</description>
+<type>real</type>
+<active>true</active>
+</alternative>
+<alternative id="a03" name="random decision action A~ B~ C~" mcdaConcept="potentialDecisionAction">
+<description>
+<comment>RandomS3PerformanceTableau() generated.</comment>
+</description>
+<type>real</type>
+<active>true</active>
+</alternative>
+<alternative id="a04" name="random decision action A+ B- C-" mcdaConcept="potentialDecisionAction">
+<description>
+<comment>RandomS3PerformanceTableau() generated.</comment>
+</description>
+<type>real</type>
+<active>true</active>
+</alternative>
+<alternative id="a05" name="random decision action A+ B+ C+" mcdaConcept="potentialDecisionAction">
+<description>
+<comment>RandomS3PerformanceTableau() generated.</comment>
+</description>
+<type>real</type>
+<active>true</active>
+</alternative>
+</alternatives>
+
+</xmcda:XMCDA>

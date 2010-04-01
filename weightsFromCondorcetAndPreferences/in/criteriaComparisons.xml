@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" href="xmcdaXSL.xsl"?>
+<xmcda:XMCDA xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.decision-deck.org/2009/UMCDA-2.0.0 file:../XMCDA-2.0.0.xsd" xmlns:xmcda="http://www.decision-deck.org/2009/XMCDA-2.0.0">
+
+
+<criteriaComparisons>
+<description>
+	<comment>On ecrit les contraintes du type g_init superieur a g_term</comment>
+</description>
+
+<comparisonType>&gt;</comparisonType>
+
+<pairs>
+
+<pair>
+<initial><criterionID>g01</criterionID></initial>
+<terminal><criterionID>g02</criterionID></terminal>
+</pair>
+
+<pair>
+<initial>
+	<criteriaSet>
+		<element><criterionID>g03</criterionID></element>
+		<element><criterionID>g05</criterionID></element>
+	</criteriaSet>
+</initial>
+<terminal><criteriaSet>
+		<element><criterionID>g04</criterionID></element>
+		<element><criterionID>g02</criterionID></element>
+	</criteriaSet>
+</terminal>
+</pair>
+
+</pairs>
+</criteriaComparisons>
+</xmcda:XMCDA>

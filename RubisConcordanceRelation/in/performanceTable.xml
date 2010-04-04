@@ -28,7 +28,7 @@
         </value>
       </performance>
       <performance>
-        <criterionID>C02</criterionID>
+        <criterionID>CO2</criterionID>
         <value>
           <real>2</real>
         </value>
@@ -73,7 +73,7 @@
         </value>
       </performance>
       <performance>
-        <criterionID>C02</criterionID>
+        <criterionID>CO2</criterionID>
         <value>
           <real>4</real>
         </value>
@@ -118,7 +118,7 @@
         </value>
       </performance>
       <performance>
-        <criterionID>C02</criterionID>
+        <criterionID>CO2</criterionID>
         <value>
           <real>5</real>
         </value>
@@ -163,7 +163,7 @@
         </value>
       </performance>
       <performance>
-        <criterionID>C02</criterionID>
+        <criterionID>CO2</criterionID>
         <value>
           <real>4</real>
         </value>
@@ -208,7 +208,7 @@
         </value>
       </performance>
       <performance>
-        <criterionID>C02</criterionID>
+        <criterionID>CO2</criterionID>
         <value>
           <real>4</real>
         </value>
@@ -253,7 +253,7 @@
         </value>
       </performance>
       <performance>
-        <criterionID>C02</criterionID>
+        <criterionID>CO2</criterionID>
         <value>
           <real>6</real>
         </value>
@@ -298,7 +298,7 @@
         </value>
       </performance>
       <performance>
-        <criterionID>C02</criterionID>
+        <criterionID>CO2</criterionID>
         <value>
           <real>8</real>
         </value>
@@ -343,7 +343,7 @@
         </value>
       </performance>
       <performance>
-        <criterionID>C02</criterionID>
+        <criterionID>CO2</criterionID>
         <value>
           <real>7</real>
         </value>
@@ -388,7 +388,7 @@
         </value>
       </performance>
       <performance>
-        <criterionID>C02</criterionID>
+        <criterionID>CO2</criterionID>
         <value>
           <real>7</real>
         </value>
@@ -433,7 +433,7 @@
         </value>
       </performance>
       <performance>
-        <criterionID>C02</criterionID>
+        <criterionID>CO2</criterionID>
         <value>
           <real>5</real>
         </value>
@@ -478,7 +478,7 @@
         </value>
       </performance>
       <performance>
-        <criterionID>C02</criterionID>
+        <criterionID>CO2</criterionID>
         <value>
           <real>1</real>
         </value>
@@ -523,7 +523,7 @@
         </value>
       </performance>
       <performance>
-        <criterionID>C02</criterionID>
+        <criterionID>CO2</criterionID>
         <value>
           <real>6</real>
         </value>
@@ -568,7 +568,7 @@
         </value>
       </performance>
       <performance>
-        <criterionID>C02</criterionID>
+        <criterionID>CO2</criterionID>
         <value>
           <real>6</real>
         </value>

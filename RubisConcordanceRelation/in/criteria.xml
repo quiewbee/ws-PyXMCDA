@@ -5,7 +5,7 @@
     <criterion id="Esthetique"/>
     <criterion id="Performance"/>
     <criterion id="Securite"/>
-    <criterion id="C02"/>
+    <criterion id="CO2"/>
     <criterion id="Packing"/>
     <criterion id="PrixAchat"/>
 </criteria>

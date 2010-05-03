@@ -5,7 +5,7 @@
               displayName="generateAlternatives"
               version="1.0" />
        <documentation>
-              <description>This web service allows to create a simple list of alternative by simply providing the desired number of alternatives.</description>
+              <description>This web service allows to create a simple list of alternative by simply providing the desired number of alternatives, or a list of alternatives names.</description>
               <contact>Thomas Veneziano (thomas.veneziano@uni.lu)</contact>
        </documentation>
        
@@ -14,7 +14,7 @@
               <input id="nbAlternatives"
                      name="nbAlternatives"
                      displayName="nbAlternatives"
-                     isoptional="0">
+                     isoptional="1">
                      <documentation>
                             <description>Indicates the desired number of alternatives. It must be a strict positive integer.</description>
                      </documentation>
@@ -38,6 +38,57 @@
                                    </documentation>
                             </entry>
                      </gui>
+              </input>
+              
+              <input id="alternativesPrefix"
+                     name="alternativesPrefix"
+                     displayName="alternativesPrefix"
+                     isoptional="1">
+                     <documentation>
+                            <description>Indicates the desired prefix for the name of the alternatives. If not provided, alternatives will be called a1, a2, ... If provided, alternatives will be called prefix1, prefix2, ... Note that it will only be used if you provide a number of alternatives.</description>
+                     </documentation>
+                     <xmcda tag="methodParameters">
+                            <![CDATA[
+                    <methodParameters>
+                        <parameter
+                             name="alternativesPrefix"><!-- REQUIRED  -->
+                            <value>
+                                <label>%1</label>
+                            </value>
+                        </parameter>
+                    </methodParameters>
+                    ]]>
+                     </xmcda>
+                     
+                     <gui status="preferGUI">
+                            <entry id="%1" type="string" displayName="alternativesPrefix">
+                                   <documentation>
+                                          <description>Indicates the desired prefix for the alternatives.</description>
+                                   </documentation>
+                            </entry>
+                     </gui>
+              </input>
+              
+              <input id="alternativesNames"
+                     name="alternativesNames"
+                     displayName="alternativesNames"
+                     isoptional="1">
+                     <documentation>
+                            <description>Indicates a list of alternatives names.<description>
+                     </documentation>
+                     <xmcda tag="methodParameters">
+                            <![CDATA[
+                    <methodParameters>
+                        <parameters
+                             name="alternativesNames"><!-- REQUIRED  -->
+                            <parameter><value>
+                                <label>[..]</label>
+                            </value></parameter>
+                            [..]
+                        </parameter>
+                    </methodParameters>
+                    ]]>
+                     </xmcda>
               </input>
               
               <output id="messages"

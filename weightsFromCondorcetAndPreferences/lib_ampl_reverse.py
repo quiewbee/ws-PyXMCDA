@@ -14,6 +14,15 @@ def create_ampl_reverse_data (file, altId, critId, perfTable, altComparisons, th
 	#Les contraintes du style g_i > g_j
 	for crit in critId :
 		file.write('set cr_'+crit+' := {"'+crit+'"};\n')
+	
+	
+	
+	
+	
+	
+	
+	
+	
 		
 	#Un compteur pour numeroter les contraintes et les ensembles
 	count = 1
@@ -21,6 +30,7 @@ def create_ampl_reverse_data (file, altId, critId, perfTable, altComparisons, th
 		# On ecrit l'ensemble des neuds initiaux
 		file.write('\nset crs_init_'+str(count)+' := {')
 		file.write(PyXMCDA.getListOnString (comp["initial"], '"', '"', ', '))
+		print PyXMCDA.getListOnString (comp["initial"], '"', '"', ', ')
 		file.write('};\n')
 		# On ecrit l'ensemble des noeuds terminaux
 		file.write('set crs_term_'+str(count)+' := {')
@@ -28,6 +38,15 @@ def create_ampl_reverse_data (file, altId, critId, perfTable, altComparisons, th
 		file.write('};\n')
 		file.write("s.t. ct_comp_"+str(count)+" : sum{init in crs_init_"+str(count)+"} sum {k in WEIGHTUNIT} Accumulator[init,k] >= sum{term in crs_term_"+str(count)+"} sum {k in WEIGHTUNIT} Accumulator[term,k] +1;\n")
 		count = count + 1
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	#Les contraintes du style g_i > lower_bound_i
 	file.write("\n")

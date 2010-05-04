@@ -28,6 +28,7 @@ prefDir = {}
 critType = {}
 lowerBound = {}
 upperBound = {}
+levelNumber = {}
 
 # Creating a list for error messages
 errorList = []
@@ -152,6 +153,18 @@ if not errorList :
 
 if not errorList :
 	
+	# We check if a numberOfLevels parameter has been provided
+	if os.path.isfile (in_dir+"/numberOfLevels.xml") :
+		xmltree_levelNumber = PyXMCDA.parseValidate(in_dir+"/numberOfLevels.xml")
+		if xmltree_levelNumber == None :
+			errorList.append ("numberOfLevels file can't be validated.")
+		else :
+			levelNumber = PyXMCDA.getNamedParametersByName (xmltree_levelNumber, "numberOfLevels")
+			if not levelNumber :
+				errorList.append("No number of levels found. Is your numberOfLevels file correct ?")
+
+if not errorList :
+	
 	# We check if a thresholdsNames file has been provided
 	if os.path.isfile (in_dir+"/thresholdsNames.xml") :
 		xmltree_Thresholds = PyXMCDA.parseValidate(in_dir+"/thresholdsNames.xml")
@@ -174,18 +187,30 @@ if not errorList :
 	for crit in critNames :
 		fileCrit.write ("\t<criterion id='" + crit + "'>\n\t\t<active>true</active>\n\t\t<scale>\n")
 		
-		# Opening qualitative (ordinal) or quantitative (cardinal) tag
-		if critType.has_key (crit) and critType[crit] == "ordinal" :
+		# Opening qualitative or quantitative tag
+		if critType.has_key (crit) and critType[crit] == "qualitative" :
 			fileCrit.write ("\t\t\t<qualitative>\n")
 			varBoundType = "integer"
-			valLB = 0
-			valUB = 10
+			if levelNumber.has_key (crit) :
+				numberOfLevels = levelNumber[crit]
+				valLB = 1
+				valUB = numberOfLevels
+			else :
+				numberOfLevels = 10
+				valLB = 1
+				valUB = 10
 		else :
 			# By default, a criterion is quantitative
 			fileCrit.write ("\t\t\t<quantitative>\n")
 			varBoundType = "real"
-			valLB = 0.0
-			valUB = 100.0
+			if lowerBound.has_key (crit) :
+				valLB = lowerBound[crit]
+			else :
+				valLB = 0.0
+			if upperBound.has_key (crit) :
+				valUB = upperBound[crit]
+			else :
+				valUB = 100.0
 		
 		# Preference direction information	
 		if prefDir.has_key (crit) and prefDir[crit] == "min" :
@@ -194,24 +219,27 @@ if not errorList :
 			# By default, the preference direction is "max"
 			fileCrit.write ("\t\t\t\t<preferenceDirection>max</preferenceDirection>\n")
 		
-		# Writing minimum tag for the lower bound
-		fileCrit.write ("\t\t\t\t<minimum><"+varBoundType+">")
+		if critType.has_key (crit) and critType[crit] == "qualitative" :
+			for nb in range (numberOfLevels) :
+				fileCrit.write ("\t\t\t\t<rankedLabel><label>"+str(nb+1)+"</label><rank>"+str(nb+1)+"</rank></rankedLabel>\n")
 		
-		if lowerBound.has_key (crit) :
-			valLB = lowerBound[crit]
+		else :
+	
+			# Writing minimum tag for the lower bound
+			fileCrit.write ("\t\t\t\t<minimum><"+varBoundType+">")
+		
+			if lowerBound.has_key (crit) :
+				valLB = lowerBound[crit]
 			
-		fileCrit.write (str(valLB)+"<"+varBoundType+"></minimum>\n")
-		
-		# Writing maximum tag for the upper bound
-		fileCrit.write ("\t\t\t\t<maximum><"+varBoundType+">")
-		
-		if upperBound.has_key (crit) :
-			valUB = upperBound[crit]
+			fileCrit.write (str(valLB)+"</"+varBoundType+"></minimum>\n")
 			
-		fileCrit.write (str(valUB)+"<"+varBoundType+"></maximum>\n")
+			# Writing maximum tag for the upper bound
+			fileCrit.write ("\t\t\t\t<maximum><"+varBoundType+">")
+				
+			fileCrit.write (str(valUB)+"</"+varBoundType+"></maximum>\n")
 		
 		# Closing quantitative or qualitative tag		
-		if critType.has_key (crit) and critType[crit] == "ordinal" :
+		if critType.has_key (crit) and critType[crit] == "qualitative" :
 			fileCrit.write("\t\t\t</qualitative>\n")
 		else :		
 			fileCrit.write("\t\t\t</quantitative>\n")
@@ -227,7 +255,7 @@ if not errorList :
 		pos = 0
 		for thre in thresholds :
 			
-			if critType.has_key (crit) and critType[crit] == "ordinal" :
+			if critType.has_key (crit) and critType[crit] == "qualitative" :
 				# Writing a random integer
 				valThre = random.randint(valLB+pos*(valUB-valLB)/len(thresholds),valLB+(pos+1)*(valUB-valLB)/len(thresholds))
 			else :

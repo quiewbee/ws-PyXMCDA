@@ -6,13 +6,13 @@
 
 <methodParameters>
 		<parameters name="criteriaType">
-			<parameter name ="First"><value><label>ordinal</label></value></parameter>
-			<parameter name ="Second"><value><label>cardinal</label></value></parameter>
-			<parameter name ="Third"><value><label>ordinal</label></value></parameter>
-			<parameter name ="Fourth"><value><label>ordinal</label></value></parameter>
-			<parameter name ="Fifth"><value><label>cardinal</label></value></parameter>
-			<parameter name ="Sixth"><value><label>ordinal</label></value></parameter>
-			<parameter name ="Seventh"><value><label>cardinal</label></value></parameter>
+			<parameter name ="First"><value><label>qualitative</label></value></parameter>
+			<parameter name ="Second"><value><label>quantitative</label></value></parameter>
+			<parameter name ="Third"><value><label>qualitative</label></value></parameter>
+			<parameter name ="Fourth"><value><label>qualitative</label></value></parameter>
+			<parameter name ="Fifth"><value><label>quantitative</label></value></parameter>
+			<parameter name ="Sixth"><value><label>qualitative</label></value></parameter>
+			<parameter name ="Seventh"><value><label>quantitative</label></value></parameter>
 		</parameters>
 </methodParameters>
 

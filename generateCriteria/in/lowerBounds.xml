@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<xmcda:XMCDA xmlns:xmcda="http://www.decision-deck.org/2009/XMCDA-2.0.0" 
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+  xsi:schemaLocation="http://www.decision-deck.org/2009/XMCDA-2.0.0 http://sma.uni.lu/d2cms/xmcda/_downloads/XMCDA-2.0.0.xsd">
+
+<methodParameters>
+		<parameters name="lowerBounds">
+			<parameter name ="First"><value><integer>20</integer></value></parameter>
+			<parameter name ="Second"><value><real>23</real></value></parameter>
+			<parameter name ="Third"><value><integer>4</integer></value></parameter>
+			<parameter name ="Fourth"><value><integer>5</integer></value></parameter>
+			<parameter name ="Fifth"><value><real>35</real></value></parameter>
+			<parameter name ="Sixth"><value><integer>10</integer></value></parameter>
+			<parameter name ="Seventh"><value><real>22.4</real></value></parameter>
+		</parameters>
+</methodParameters>
+
+</xmcda:XMCDA>

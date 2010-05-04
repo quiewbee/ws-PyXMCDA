@@ -6,10 +6,7 @@
 
 <methodParameters>
 		<parameter name="nbCriteria">
-			<value><integer>4</integer></value>
-		</parameter>
-		<parameter name="criteriaSuffix">
-			<value><label>g</label></value>
+			<value><integer>7</integer></value>
 		</parameter>
 </methodParameters>
 

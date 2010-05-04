@@ -240,7 +240,7 @@ if not errorList :
 			
 			pos += 1
 				
-		fileCrit.write ("\t\t</thresholds\n")
+		fileCrit.write ("\t\t</thresholds>\n")
 		
 		# Closing criterion tag
 		fileCrit.write("\t</criterion>\n")

@@ -101,6 +101,9 @@ if not errorList :
 			errorList.append("There is no defined weight for criterion "+crit+".")
 
 if not errorList :
+	
+	# We recover the criteria preference directions
+	criteriaDir = PyXMCDA.getCriteriaPreferenceDirections (xmltree_criteria, criteriaId)
 
 	# We compute the alternative comparisons values
 	fileAltValues = open(out_dir+"/alternativesComparisons.xml", 'w')
@@ -118,6 +121,11 @@ if not errorList :
 			
 			for crit in criteriaId :
 			
+				# Si le critere est un critere a minimiser
+				if criteriaDir.has_key (crit) and criteriaDir[crit] == "min" :
+					perfTable[alt1][crit] = -perfTable[alt1][crit]
+					perfTable[alt2][crit] = -perfTable[alt2][crit]
+					
 				try :
 					if perfTable[alt1][crit] >= perfTable[alt2][crit] :
 						sum = sum + maxValDomain*weights[crit]

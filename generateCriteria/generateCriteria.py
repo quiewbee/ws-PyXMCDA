@@ -2,7 +2,6 @@ import os
 import sys
 import getopt
 import subprocess
-
 import random
 
 import PyXMCDA
@@ -29,6 +28,7 @@ critType = {}
 lowerBound = {}
 upperBound = {}
 levelNumber = {}
+thresholds = {}
 
 # Creating a list for error messages
 errorList = []
@@ -39,7 +39,7 @@ if not os.path.isfile (in_dir+"/nbCriteria.xml") and not os.path.isfile (in_dir+
 
 else :
 	
-	# User provide a list of criteria names
+	# User provides a list of criteria names
 	if os.path.isfile (in_dir+"/criteriaNames.xml") :
 	
 		# We parse the input file
@@ -54,7 +54,7 @@ else :
 			if not critNames :
 				errorList.append ("No criterion name has been found in criteriaNames file. Is your file correct ?")
 		
-	# user provide a number of criteria
+	# User provides a number of criteria
 	else :
 	
 		# We parse the input file
@@ -252,23 +252,23 @@ if not errorList :
 		if thresholds :
 			fileCrit.write ("\t\t<thresholds>\n")
 		
-		pos = 0
-		for thre in thresholds :
-			
-			if critType.has_key (crit) and critType[crit] == "qualitative" :
-				# Writing a random integer
-				valThre = random.randint(valLB+pos*(valUB-valLB)/len(thresholds),valLB+(pos+1)*(valUB-valLB)/len(thresholds))
-			else :
-				# Writing a random real
-				valThre = float(random.randint(int((valLB+pos*(valUB-valLB)/len(thresholds)))*100,int((valLB+(pos+1)*(valUB-valLB)/len(thresholds)))*100))/100
+			pos = 0
+			for thre in thresholds :
 				
-			fileCrit.write ("\t\t\t<threshold id='"+thre+"'>\n\t\t\t\t<constant><"+varBoundType+">"+str(valThre)+"</"+varBoundType+"></constant>\n")
-			
-			fileCrit.write ("\t\t\t</threshold>\n")
-			
-			pos += 1
+				if critType.has_key (crit) and critType[crit] == "qualitative" :
+					# Writing a random integer
+					valThre = random.randint(valLB+pos*(valUB-valLB)/len(thresholds),valLB+(pos+1)*(valUB-valLB)/len(thresholds))
+				else :
+					# Writing a random real
+					valThre = float(random.randint(int((valLB+pos*(valUB-valLB)/len(thresholds)))*100,int((valLB+(pos+1)*(valUB-valLB)/len(thresholds)))*100))/100
 				
-		fileCrit.write ("\t\t</thresholds>\n")
+				fileCrit.write ("\t\t\t<threshold id='"+thre+"'>\n\t\t\t\t<constant><"+varBoundType+">"+str(valThre)+"</"+varBoundType+"></constant>\n")
+			
+				fileCrit.write ("\t\t\t</threshold>\n")
+			
+				pos += 1
+				
+			fileCrit.write ("\t\t</thresholds>\n")
 		
 		# Closing criterion tag
 		fileCrit.write("\t</criterion>\n")
@@ -290,5 +290,3 @@ else :
 	
 PyXMCDA.writeFooter(fileMessages)
 fileMessages.close()
-	
-

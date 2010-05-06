@@ -5,55 +5,13 @@
               displayName="RubisConcordanceRelation"
               version="1.0" />
        <documentation>
-              <description>This web service allows to compute a concordance relation as defined in the Rubis methodology.</description>
-              <reference>R. Bisdorff, P. Meyer, M. Roubens, Rubis: a bipolar-valued outranking method for the best choice decision problem, 4OR, 6 (2), June 2008, Springer (doi:10.1007/s10288-007-0045-5).</reference>
+              <description>This web service allows to compute the Condorcet robustness denotation associated to the concordance relation as defined in the Rubis methodology.</description>
+              <reference>R. Bisdorff. Logical Foundation of Multicriteria Preference Aggregation. In Bouyssou D et al. (eds) Aiding Decisions with Multiple Criteria. Kluwer Academic Publishers, pp. 379-403, 2002.</reference>
+              <reference>R. Bisdorff, P. Meyer and T. Veneziano. Inverse analysis from a Condorcet robustness denotation of valued outranking relations. F. Rossi and A. Tsoukias (Eds.), Algorithmic Decision Theory. Springer-Verlag Berlin Heidelberg, LNAI 5783, pp. 180--191, 2009.</reference>
               <contact>Thomas Veneziano (thomas.veneziano@uni.lu)</contact>
        </documentation>
-       
-       
-       
+
        <parameters>
-       
-       		<input id="valuationDomain"
-                     name="valuationDomain"
-                     displayName="valuationDomain"
-                     isoptional="1">
-                     <documentation>
-                            <description>Indicates the minimal and the maximal values of the valuation domain for computing the concordance relation. By default the valuation domain is {0,0.5,1}. The median indetermination value is computed as the average of the minimal and the maximal values.</description>
-                     </documentation>
-                     <xmcda tag="methodParameters">
-                            <![CDATA[
-                    <methodParameters
-                             name="valuationDomain"><!-- REQUIRED  -->
-                        <parameter
-                             name="min"><!-- REQUIRED  -->
-                            <value>
-                                <integer>%1</integer>
-                            </value>
-                        </parameter>
-                        <parameter
-                             name="max"><!-- REQUIRED  -->
-                            <value>
-                                <integer>%2</integer>
-                            </value>
-                        </parameter>
-                    </methodParameters>
-                    ]]>
-                     </xmcda>
-                     
-                     <gui status="preferGUI">
-                            <entry id="%1" type="float" displayName="min">
-                                   <documentation>
-                                          <description>Indicates the minimal value of the valuation domain.</description>
-                                   </documentation>
-                            </entry>
-                            <entry id="%2" type="float" displayName="max">
-                                   <documentation>
-                                          <description>Indicates the maximal value of the valuation domain (which should be greater than the minimal value).</description>
-                                   </documentation>
-                            </entry>
-                     </gui>
-              </input>
                             
               <input id="criteria" name="criteria" displayName="criteria"
                      isoptional="0">
@@ -131,9 +89,9 @@
               
               <output id="alternativesComparisons"
                      name="alternativesComparisons"
-                     displayName="concordanceRelation">
+                     displayName="CondorcetRobustnessRelation">
                      <documentation>
-                            <description>The concordance relation.</description>
+                            <description>The Condorcet robustness relation.</description>
                      </documentation>        
                      <xmcda tag="alternativesComparisons"/>
               </output>

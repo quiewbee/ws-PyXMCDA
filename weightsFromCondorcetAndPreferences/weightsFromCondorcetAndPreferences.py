@@ -152,7 +152,7 @@ if not errorList :
 		
 	else :
 		errorList.append ("CPlex is unable to solve the problem.")
-		errorList.append ("CPlex returned status : " + status)
+		errorList.append ("CPlex returned status : " + str(status))
 		errorList.append (stderr)
 	
 

@@ -166,7 +166,7 @@ if not errorList :
 					fileAltValues.write ("\t\t\t\t<value><integer>-3</integer></value>\n\t\t\t</pair>\n")
 				elif sum == 1 :
 					# p3 denotation
-					fileAltValues.write ("\t\t\t\t<value><integer>-3</integer></value>\n\t\t\t</pair>\n")
+					fileAltValues.write ("\t\t\t\t<value><integer>3</integer></value>\n\t\t\t</pair>\n")
 				elif sum == 0.5 :
 					# 0 denotation
 					fileAltValues.write ("\t\t\t\t<value><integer>0</integer></value>\n\t\t\t</pair>\n")

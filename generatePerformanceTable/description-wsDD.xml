@@ -5,7 +5,7 @@
               displayName="generatePerformanceTable"
               version="1.0" />
        <documentation>
-              <description>This web service allows to create a simple performance table by providing a list of alternatives and a list of criteria. This web service only consider integer evaluation between 1 (worst) and 100 (best) for all criteria, but should be improved soon.</description>
+              <description>This web service allows to create a simple performance table by providing a list of alternatives and a list of criteria.</description>
               <contact>Thomas Veneziano (thomas.veneziano@uni.lu)</contact>
        </documentation>
    
@@ -45,6 +45,28 @@
                         </alternative>
                         [...]
                     </alternatives>
+                    ]]>
+                     </xmcda>
+              </input>
+              
+              <input id="criteriaProfiles" name="criteriaProfiles" displayName="criteriaProfiles"
+                     isoptional="1">
+                     
+                     <documentation>
+                            <description>A list of parameters allowing to compute non uniform random values for a given criterion. it allows to compute normal series, by providing the average and the standard deviation. It will be able to provide soon other kind of distribution.</description>
+                     </documentation>
+                     <xmcda tag="methodParameters">
+                            <![CDATA[
+                    <methodParameters>
+                        <parameters name="distributionAverage">
+                            <parameter name ="criterion ID"><value>[...]</value></parameter>
+                            [...]
+                        </parameters>
+                        <parameters name="normalDistributionStandardDeviation">
+                            <parameter name ="criterion ID"><value>[...]</value></parameter>
+                            [...]
+                        </parameters>
+                    </methodParameters>
                     ]]>
                      </xmcda>
               </input>

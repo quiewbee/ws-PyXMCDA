@@ -109,12 +109,12 @@ if not errorList :
 	fileAltValues = open(out_dir+"/alternativesComparisons.xml", 'w')
 	PyXMCDA.writeHeader (fileAltValues)
 	
-	fileAltValues.write ("<alternativesComparisons><pairs>\n")
+	fileAltValues.write ("\t<alternativesComparisons>\n\t\t<pairs>\n")
 		
 	for alt1 in alternativesId :
 		for alt2 in alternativesId :
 		
-			fileAltValues.write("<pair><initial><alternativeID>"+alt1+"</alternativeID></initial><terminal><alternativeID>"+alt2+"</alternativeID></terminal>")
+			fileAltValues.write("\t\t\t<pair>\n\t\t\t\t<initial><alternativeID>"+alt1+"</alternativeID></initial>\n\t\t\t\t<terminal><alternativeID>"+alt2+"</alternativeID></terminal>\n")
 			
 			sum = 0.0
 			probComparisons = False
@@ -160,11 +160,11 @@ if not errorList :
 			
 			if not probComparisons :
 				sum = sum/sumWeights				
-				fileAltValues.write ("<value><real>"+str(sum)+"</real></value></pair>\n")
+				fileAltValues.write ("\t\t\t\t<value><real>"+str(sum)+"</real></value>\n\t\t\t</pair>\n")
 			else :
-				fileAltValues.write ("<value><NA>not available</NA></value></pair>\n")
+				fileAltValues.write ("\t\t\t\t<value><NA>not available</NA></value>\n\t\t\t</pair>\n")
 		
-	fileAltValues.write ("</pairs></alternativesComparisons>")
+	fileAltValues.write ("\t\t</pairs>\n\t</alternativesComparisons>\n")
 		
 	PyXMCDA.writeFooter(fileAltValues)
 	fileAltValues.close()

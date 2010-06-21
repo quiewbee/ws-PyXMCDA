@@ -36,8 +36,7 @@ for{i in CRITERIA} printf "<criterionValue><criterionID>%s</criterionID><value><
 printf "</criteriaValues>@@@\n";
 
 printf "###slackSum###";
-printf "Slack sum : %d", sum{ab in ROBUSTPREFPAIRS} slack2[ab] + sum{ab in ROBUSTnotPREFPAIRS} slackm2[ab];
-printf "\nNumber of violated pm2 constraints : %d", sum{ab in ROBUSTPREFPAIRS} varCount1[ab] + sum{ab in ROBUSTnotPREFPAIRS} varCountm1[ab];
+printf "Slack sum : %d", sum{ab in ROBUSTPREFPAIRS, k in WEIGHTUNIT} slack2[ab,k] + sum{ab in ROBUSTnotPREFPAIRS, k in WEIGHTUNIT} slackm2[ab,k];
 printf "@@@\n";
 
 end;

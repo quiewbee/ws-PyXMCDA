@@ -36,20 +36,17 @@ var bin2{ab in ROBUSTPREFPAIRS, k in WEIGHTUNIT} binary;
 
 var binm2{ab in ROBUSTnotPREFPAIRS, k in WEIGHTUNIT} binary;
 
-var slack2{ab in ROBUSTPREFPAIRS}  >= 0;
+var slack2{ab in ROBUSTPREFPAIRS, k in WEIGHTUNIT}  >= 0;
 
-var slackm2{ab in ROBUSTnotPREFPAIRS}  >= 0;
+var slackm2{ab in ROBUSTnotPREFPAIRS, k in WEIGHTUNIT}  >= 0;
 
-var varCount1{ab in ROBUSTPREFPAIRS} binary;
-
-var varCountm1{ab in ROBUSTnotPREFPAIRS} binary;
 
 /* ****** objective function ****** */
 
-param weightCount := maxWeight * 10;
+param weightSlack2 := maxWeight * 10 ;
 
-/* (sum{i in CRITERIA} sum{k in WEIGHTUNIT} Accumulator[i,k]) + */
-minimize obj: (sum{i in CRITERIA} sum{k in WEIGHTUNIT} Accumulator[i,k]) + (weightCount*sum{ab in ROBUSTPREFPAIRS} varCount1[ab]) + (weightCount*sum{ab in ROBUSTnotPREFPAIRS} varCountm1[ab]);
+minimize obj:  (sum{i in CRITERIA} sum{k in WEIGHTUNIT} Accumulator[i,k]) + (weightSlack2*sum{ab in ROBUSTPREFPAIRS, k in WEIGHTUNIT} slack2[ab,k]) + (weightSlack2*sum{ab in ROBUSTnotPREFPAIRS, k in WEIGHTUNIT} slackm2[ab,k]);
+
 
 /* ****** constraints ****** */
 
@@ -59,13 +56,15 @@ s.t. noNullWeight : sum {i in CRITERIA} Accumulator[i,1] = nbCriteria;
 
 s.t. cumulating{i in CRITERIA, k in WEIGHTDIFFLAST} : Accumulator[i,k] >= Accumulator[i,k+1];
 
+
+
 /* ***** constraints on majority denotations ***** */
 
 /* constraints for prefered pairs */
 
-s.t. ctVal2rob{k in WEIGHTUNIT, ab in ROBUSTPREFPAIRS} : sum {i in CRITERIA} (Accumulator[i,k] * (S[ab,i] - 1 + S[ab,i])) + slack2[ab] >= bin2[ab,k];
+s.t. ctVal2rob{k in WEIGHTUNIT, ab in ROBUSTPREFPAIRS} : sum {i in CRITERIA} (Accumulator[i,k] * (S[ab,i] - 1 + S[ab,i])) + slack2[ab,k] >= bin2[ab,k];
 
-s.t. ctValm2rob{k in WEIGHTUNIT, ab in ROBUSTnotPREFPAIRS} : sum {i in CRITERIA} (Accumulator[i,k]*(1- S[ab,i] - S[ab,i])) + slackm2[ab] >= binm2[ab,k];
+s.t. ctValm2rob{k in WEIGHTUNIT, ab in ROBUSTnotPREFPAIRS} : sum {i in CRITERIA} (Accumulator[i,k]*(1- S[ab,i] - S[ab,i])) + slackm2[ab,k] >= binm2[ab,k];
 
 /* strict majority and minority enforcing  */
 
@@ -73,11 +72,6 @@ s.t. ctbin2{ab in ROBUSTPREFPAIRS} : sum{k in WEIGHTUNIT} bin2[ab,k] >= 1;
 
 s.t. ctbinm2{ab in ROBUSTnotPREFPAIRS} : sum{k in WEIGHTUNIT} binm2[ab,k] >= 1;
 
-/* counting the number of violated pm2 constraints */
-
-s.t. count1{ab in ROBUSTPREFPAIRS} : slack2[ab] <= varCount1[ab] * nbCriteria; /* nbCriteria is used as the maximal value it can be obtained ( slack2 can't be higher) */
-
-s.t. countm1{ab in ROBUSTnotPREFPAIRS} : slackm2[ab] <= varCountm1[ab] * nbCriteria;
 
 /* hard majority and minority constraints */
 

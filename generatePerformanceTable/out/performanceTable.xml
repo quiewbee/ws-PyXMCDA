@@ -11,38 +11,7 @@
 		</performance>
 		<performance>
 			<criterionID>Second</criterionID>
-			<value><real>29.8992237549</real></value>
-		</performance>
-		<performance>
-			<criterionID>Third</criterionID>
-			<value><integer>1</integer></value>
-		</performance>
-		<performance>
-			<criterionID>Fourth</criterionID>
-			<value><integer>1</integer></value>
-		</performance>
-		<performance>
-			<criterionID>Fifth</criterionID>
-			<value><real>47.46</real></value>
-		</performance>
-		<performance>
-			<criterionID>Sixth</criterionID>
-			<value><integer>5</integer></value>
-		</performance>
-		<performance>
-			<criterionID>Seventh</criterionID>
-			<value><real>40.21</real></value>
-		</performance>
-	</alternativePerformances>
-	<alternativePerformances>
-		<alternativeID>a02</alternativeID>
-		<performance>
-			<criterionID>First</criterionID>
-			<value><integer>7</integer></value>
-		</performance>
-		<performance>
-			<criterionID>Second</criterionID>
-			<value><real>30.4511118406</real></value>
+			<value><real>28.4342324691</real></value>
 		</performance>
 		<performance>
 			<criterionID>Third</criterionID>
@@ -54,7 +23,7 @@
 		</performance>
 		<performance>
 			<criterionID>Fifth</criterionID>
-			<value><real>36.62</real></value>
+			<value><real>41.53</real></value>
 		</performance>
 		<performance>
 			<criterionID>Sixth</criterionID>
@@ -62,18 +31,49 @@
 		</performance>
 		<performance>
 			<criterionID>Seventh</criterionID>
-			<value><real>61.72</real></value>
+			<value><real>34.85</real></value>
+		</performance>
+	</alternativePerformances>
+	<alternativePerformances>
+		<alternativeID>a02</alternativeID>
+		<performance>
+			<criterionID>First</criterionID>
+			<value><integer>12</integer></value>
+		</performance>
+		<performance>
+			<criterionID>Second</criterionID>
+			<value><real>32.3357012119</real></value>
+		</performance>
+		<performance>
+			<criterionID>Third</criterionID>
+			<value><integer>2</integer></value>
+		</performance>
+		<performance>
+			<criterionID>Fourth</criterionID>
+			<value><integer>2</integer></value>
+		</performance>
+		<performance>
+			<criterionID>Fifth</criterionID>
+			<value><real>42.23</real></value>
+		</performance>
+		<performance>
+			<criterionID>Sixth</criterionID>
+			<value><integer>9</integer></value>
+		</performance>
+		<performance>
+			<criterionID>Seventh</criterionID>
+			<value><real>57.64</real></value>
 		</performance>
 	</alternativePerformances>
 	<alternativePerformances>
 		<alternativeID>a03</alternativeID>
 		<performance>
 			<criterionID>First</criterionID>
-			<value><integer>3</integer></value>
+			<value><integer>5</integer></value>
 		</performance>
 		<performance>
 			<criterionID>Second</criterionID>
-			<value><real>26.0966806182</real></value>
+			<value><real>33.513164502</real></value>
 		</performance>
 		<performance>
 			<criterionID>Third</criterionID>
@@ -81,19 +81,19 @@
 		</performance>
 		<performance>
 			<criterionID>Fourth</criterionID>
-			<value><integer>5</integer></value>
+			<value><integer>4</integer></value>
 		</performance>
 		<performance>
 			<criterionID>Fifth</criterionID>
-			<value><real>35.74</real></value>
+			<value><real>46.96</real></value>
 		</performance>
 		<performance>
 			<criterionID>Sixth</criterionID>
-			<value><integer>7</integer></value>
+			<value><integer>5</integer></value>
 		</performance>
 		<performance>
 			<criterionID>Seventh</criterionID>
-			<value><real>25.38</real></value>
+			<value><real>65.2</real></value>
 		</performance>
 	</alternativePerformances>
 	<alternativePerformances>
@@ -104,7 +104,7 @@
 		</performance>
 		<performance>
 			<criterionID>Second</criterionID>
-			<value><real>30.5814198531</real></value>
+			<value><real>30.9996620635</real></value>
 		</performance>
 		<performance>
 			<criterionID>Third</criterionID>
@@ -112,19 +112,19 @@
 		</performance>
 		<performance>
 			<criterionID>Fourth</criterionID>
-			<value><integer>4</integer></value>
+			<value><integer>3</integer></value>
 		</performance>
 		<performance>
 			<criterionID>Fifth</criterionID>
-			<value><real>40.9</real></value>
+			<value><real>42.84</real></value>
 		</performance>
 		<performance>
 			<criterionID>Sixth</criterionID>
-			<value><integer>2</integer></value>
+			<value><integer>6</integer></value>
 		</performance>
 		<performance>
 			<criterionID>Seventh</criterionID>
-			<value><real>54.25</real></value>
+			<value><real>43.59</real></value>
 		</performance>
 	</alternativePerformances>
 </performanceTable>

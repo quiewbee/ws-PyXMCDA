@@ -80,7 +80,7 @@ if not errorList :
 		except :
 			errorList.append("There is no defined weight for criterion "+crit+".")
 
-	uniqueWeights = sorted(uniqueWeights, reverse=False)
+	uniqueWeights = sorted(uniqueWeights, reverse=True)
 
 if not errorList :
 
@@ -103,117 +103,71 @@ if not errorList :
 	PyXMCDA.writeHeader (fileAltValues)
 	
 	fileAltValues.write ("\t<alternativesComparisons mcdaConcept='CondorcetRobustnessRelation'>\n\t\t<pairs>\n")
-		
+	
+	ElemOut = PyXMCDA.getRubisElementaryOutranking (alternativesId, criteriaId, perfTable, thresholds)
+				
 	for alt1 in alternativesId :
 		for alt2 in alternativesId :
 		
 			fileAltValues.write("\t\t\t<pair>\n\t\t\t\t<initial><alternativeID>"+alt1+"</alternativeID></initial>\n\t\t\t\t<terminal><alternativeID>"+alt2+"</alternativeID></terminal>\n")
-			
-			ElementaryVector = {}
-			sum = 0.0
-			probComparisons = False
-			
-			for crit in criteriaId :
-			
-				# Si le critere est un critere a minimiser
-				if criteriaDir.has_key (crit) and criteriaDir[crit] == "min" :
-					perfTable[alt1][crit] = -perfTable[alt1][crit]
-					perfTable[alt2][crit] = -perfTable[alt2][crit]
-					
-				try :
-					if perfTable[alt1][crit] >= perfTable[alt2][crit] :
-						sum = sum + weights[crit]
-						ElementaryVector[crit] = 1
-					else :
-						if not thresholds[crit].has_key('indifference') and not thresholds[crit].has_key('preference') :
-							# No constant thresholds are defined for the seleccted criterion
-							ElementaryVector[crit] = 0
-						else :
-							if (thresholds[crit].has_key('indifference') != thresholds[crit].has_key('preference')) :
-								# An indifference Xor a preference threshold has been defined
-								if thresholds[crit].has_key('indifference') :
-									if perfTable[alt1][crit] + thresholds[crit]["indifference"] >= perfTable[alt2][crit] :
-										sum = sum + weights[crit]
-										ElementaryVector[crit] = 1
-									else :
-										ElementaryVector[crit] = 0
-								else :
-									if perfTable[alt1][crit] + thresholds[crit]["preference"] >= perfTable[alt2][crit] :
-										sum = sum + weights[crit]
-										ElementaryVector[crit] = 1
-									else :
-										ElementaryVector[crit] = 0
-							else :
-								# An indifference and a preference thresholds have been defined
-								if perfTable[alt1][crit] + thresholds[crit]["indifference"] >= perfTable[alt2][crit] :
-									sum = sum + weights[crit]
-									ElementaryVector[crit] = 1
-								elif perfTable[alt1][crit] + thresholds[crit]["preference"] >= perfTable[alt2][crit] :
-									sum = sum + weights[crit]/2.0
-									ElementaryVector[crit] = 0.5
-								else :
-									ElementaryVector[crit] = 0
-				except :
-					errorList.append("some alternatives evaluations are missing for criterion "+crit+", during the comparison between "+alt1+" and "+alt2+".")
-					probComparisons = True
-			
-			if not probComparisons :
-				sum = sum/sumWeights
 				
-				# We compute the corresponding Condorcet denotation
-				if sum == 0 :
-					# m3 denotation
-					fileAltValues.write ("\t\t\t\t<value><integer>-3</integer></value>\n\t\t\t</pair>\n")
-				elif sum == 1 :
-					# p3 denotation
-					fileAltValues.write ("\t\t\t\t<value><integer>3</integer></value>\n\t\t\t</pair>\n")
-				elif sum == 0.5 :
-					# 0 denotation
-					fileAltValues.write ("\t\t\t\t<value><integer>0</integer></value>\n\t\t\t</pair>\n")
-				elif sum < 0.5 :
-					# m1 or m2 denotation
-					conditionm2Ok = True
-					strictInequality = False
-					sumPro = 0.0
-					sumAgainst = 0.0
-					
-					for we in uniqueWeights :
-						for crit in classWeights[we] :
-							sumPro += ElementaryVector[crit]
-							sumAgainst += 1.0 - ElementaryVector[crit]
-						if sumPro > sumAgainst :
-							conditionm2Ok = False
-							break
-						if sumPro < sumAgainst :
-							strictInequality = True
-					
-					if conditionm2Ok and strictInequality :
-						fileAltValues.write ("\t\t\t\t<value><integer>-2</integer></value>\n\t\t\t</pair>\n")
-					else :
-						fileAltValues.write ("\t\t\t\t<value><integer>-1</integer></value>\n\t\t\t</pair>\n")
+			sum = 0.0
+			for crit in criteriaId :
+				sum += ElemOut[alt1][alt2][crit]*weights[crit]
+			sum = sum/sumWeights
+			
+			# We compute the corresponding Condorcet denotation
+			if sum == 0 :
+				# m3 denotation
+				fileAltValues.write ("\t\t\t\t<value><integer>-3</integer></value>\n\t\t\t</pair>\n")
+			elif sum == 1 :
+				# p3 denotation
+				fileAltValues.write ("\t\t\t\t<value><integer>3</integer></value>\n\t\t\t</pair>\n")
+			elif sum == 0.5 :
+				# 0 denotation
+				fileAltValues.write ("\t\t\t\t<value><integer>0</integer></value>\n\t\t\t</pair>\n")
+			elif sum < 0.5 :
+				# m1 or m2 denotation
+				conditionm2Ok = True
+				strictInequality = False
+				sumPro = 0.0
+				sumAgainst = 0.0
+				
+				for we in uniqueWeights :
+					for crit in classWeights[we] :
+						sumPro += ElemOut[alt1][alt2][crit]
+						sumAgainst += 1.0 - ElemOut[alt1][alt2][crit]
+					if sumPro > sumAgainst :
+						conditionm2Ok = False
+						break
+					if sumPro < sumAgainst :
+						strictInequality = True
+				
+				if conditionm2Ok and strictInequality :
+					fileAltValues.write ("\t\t\t\t<value><integer>-2</integer></value>\n\t\t\t</pair>\n")
 				else :
-					# p1 or p2 denotation
-					conditionp2Ok = True
-					strictInequality = False
-					sumPro = 0.0
-					sumAgainst = 0.0
-					
-					for we in uniqueWeights :
-						for crit in classWeights[we] :
-							sumPro += ElementaryVector[crit]
-							sumAgainst += 1.0 - ElementaryVector[crit]
-						if sumPro < sumAgainst :
-							conditionp2Ok = False
-							break
-						if sumPro > sumAgainst :
-							strictInequality = True
-					
-					if conditionp2Ok and strictInequality :
-						fileAltValues.write ("\t\t\t\t<value><integer>2</integer></value>\n\t\t\t</pair>\n")
-					else :
-						fileAltValues.write ("\t\t\t\t<value><integer>1</integer></value>\n\t\t\t</pair>\n")
+					fileAltValues.write ("\t\t\t\t<value><integer>-1</integer></value>\n\t\t\t</pair>\n")
 			else :
-				fileAltValues.write ("\t\t\t\t<value><NA>not available</NA></value>\n\t\t\t</pair>\n")
+				# p1 or p2 denotation
+				conditionp2Ok = True
+				strictInequality = False
+				sumPro = 0.0
+				sumAgainst = 0.0
+					
+				for we in uniqueWeights :
+					for crit in classWeights[we] :
+						sumPro += ElemOut[alt1][alt2][crit]
+						sumAgainst += 1.0 - ElemOut[alt1][alt2][crit]
+					if sumPro < sumAgainst :
+						conditionp2Ok = False
+						break
+					if sumPro > sumAgainst :
+						strictInequality = True
+				
+				if conditionp2Ok and strictInequality :
+					fileAltValues.write ("\t\t\t\t<value><integer>2</integer></value>\n\t\t\t</pair>\n")
+				else :
+					fileAltValues.write ("\t\t\t\t<value><integer>1</integer></value>\n\t\t\t</pair>\n")
 		
 	fileAltValues.write ("\t\t</pairs>\n\t</alternativesComparisons>\n")
 		

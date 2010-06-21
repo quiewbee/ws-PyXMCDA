@@ -1,0 +1,11 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<?xml-stylesheet type='text/xsl' href='xmcdaXSL.xsl'?>
+<xmcda:XMCDA xmlns:xmcda='http://www.decision-deck.org/2009/XMCDA-2.0.0' xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance' xsi:schemaLocation='http://www.decision-deck.org/2009/XMCDA-2.0.0 http://sma.uni.lu/d2cms/xmcda/_downloads/XMCDA-2.0.0.xsd'>
+
+<alternativesValues>
+<alternativeValue><alternativeID>a01</alternativeID><value><real>58.0</real></value></alternativeValue>
+<alternativeValue><alternativeID>a02</alternativeID><value><real>45.02</real></value></alternativeValue>
+<alternativeValue><alternativeID>a03</alternativeID><value><real>23.81</real></value></alternativeValue>
+<alternativeValue><alternativeID>a04</alternativeID><value><real>33.42</real></value></alternativeValue>
+</alternativesValues>
+</xmcda:XMCDA>

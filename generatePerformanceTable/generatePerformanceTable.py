@@ -111,13 +111,9 @@ if not errorList :
 				temp = criteriaLB[crit] -1
 				while temp < criteriaLB[crit] or temp > criteriaUB[crit] :
 					temp = random.gauss (average,sd)
-					print "temp : " + str (temp)
-				if criteriaDir[crit] == "min" :
-					Tab[crit][alt] = criteriaUB[crit] - temp
-				else :
-					Tab[crit][alt] = temp
+				Tab[crit][alt] = temp
 				if criteriaTypes[crit] == "qualitative" :
-					Tab[crit][alt] = PyXMCDA.closestInt(Tab[crit][alt])
+					Tab[crit][alt] = int(Tab[crit][alt])
 				
 		elif critTriangSD.has_key (crit) :
 			for alt in alternativesId :

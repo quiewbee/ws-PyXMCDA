@@ -74,7 +74,7 @@
                      displayName="criteriaNames"
                      isoptional="1">
                      <documentation>
-                            <description>Indicates a list of criteria names. Note that if criteriaNames and nbCriteria are provided at the same time, then only criteriaNames are considered.<description>
+                            <description>Indicates a list of criteria names. Note that if criteriaNames and nbCriteria are provided at the same time, then only criteriaNames are considered.</description>
                      </documentation>
                      <xmcda tag="methodParameters">
                             <![CDATA[
@@ -96,7 +96,7 @@
                      displayName="criteriaType"
                      isoptional="1">
                      <documentation>
-                            <description>Allows to indicate the type of some criteria (qualitative or quantitative). The default value for each criterion is quantitative.<description>
+                            <description>Allows to indicate the type of some criteria (qualitative or quantitative). The default value for each criterion is quantitative.</description>
                      </documentation>
                      <xmcda tag="methodParameters">
                             <![CDATA[
@@ -118,7 +118,7 @@
                      displayName="lowerBounds"
                      isoptional="1">
                      <documentation>
-                            <description>Allows to indicate a lower bound for some quantitative criteria. The default value is 0. Lower bounds for qualitative criteria are ignored.<description>
+                            <description>Allows to indicate a lower bound for some quantitative criteria. The default value is 0. Lower bounds for qualitative criteria are ignored.</description>
                      </documentation>
                      <xmcda tag="methodParameters">
                             <![CDATA[
@@ -140,7 +140,7 @@
                      displayName="upperBounds"
                      isoptional="1">
                      <documentation>
-                            <description>Allows to indicate an upper bound for some quantitative criteria. The default value is 100. Upper bounds for qualitative criteria are ignored.<description>
+                            <description>Allows to indicate an upper bound for some quantitative criteria. The default value is 100. Upper bounds for qualitative criteria are ignored.</description>
                      </documentation>
                      <xmcda tag="methodParameters">
                             <![CDATA[
@@ -162,7 +162,7 @@
                      displayName="numberOfLevels"
                      isoptional="1">
                      <documentation>
-                            <description>Allows to indicate a number of levels for some qualitative criteria. The default value is 10. if provided for quantitative criteria, it will be ignored.<description>
+                            <description>Allows to indicate a number of levels for some qualitative criteria. The default value is 10. if provided for quantitative criteria, it will be ignored.</description>
                      </documentation>
                      <xmcda tag="methodParameters">
                             <![CDATA[
@@ -184,7 +184,7 @@
                      displayName="preferenceDirection"
                      isoptional="1">
                      <documentation>
-                            <description>Allows to indicate a preference direction (min or max) for some criteria. The default value is max.<description>
+                            <description>Allows to indicate a preference direction (min or max) for some criteria. The default value is max.</description>
                      </documentation>
                      <xmcda tag="methodParameters">
                             <![CDATA[
@@ -206,7 +206,7 @@
                      displayName="thresholdsNames"
                      isoptional="1">
                      <documentation>
-                            <description>Indicates a list of thresholds names. The names must be provided in an increasing order of importance, as the randomly generated values will be sorted and associated to the thresholds in the given order. The thresholds are added for every criteria (with different random values for each one).<description>
+                            <description>Indicates a list of thresholds names. The names must be provided in an increasing order of importance, as the randomly generated values will be sorted and associated to the thresholds in the given order. The thresholds are added for every criteria (with different random values for each one).</description>
                      </documentation>
                      <xmcda tag="methodParameters">
                             <![CDATA[

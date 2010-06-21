@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-1"?>
 <program_description xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../docs/w3-ws/specificationData/description.xsd">
+
        <program provider="DecisionDeck"
               name="generateAlternatives"
               displayName="generateAlternatives"
@@ -74,7 +75,7 @@
                      displayName="alternativesNames"
                      isoptional="1">
                      <documentation>
-                            <description>Indicates a list of alternatives names.<description>
+                            <description>Indicates a list of alternatives names.</description>
                      </documentation>
                      <xmcda tag="methodParameters">
                             <![CDATA[

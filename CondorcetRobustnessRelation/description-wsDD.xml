@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="iso-8859-1"?>
 <program_description xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../docs/w3-ws/specificationData/description.xsd">
        <program provider="PyXMCDA"
-              name="RubisConcordanceRelation"
-              displayName="RubisConcordanceRelation"
+              name="CondorcetRobustnessRelation"
+              displayName="CondorcetRobustnessRelation"
               version="1.0" />
        <documentation>
               <description>This web service allows to compute the Condorcet robustness denotation associated to the concordance relation as defined in the Rubis methodology.</description>

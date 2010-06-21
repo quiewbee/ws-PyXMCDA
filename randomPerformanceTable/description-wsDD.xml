@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="iso-8859-1"?>
 <program_description xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../docs/w3-ws/specificationData/description.xsd">
        <program provider="PyXMCDA"
-              name="generatePerformanceTable"
-              displayName="generatePerformanceTable"
+              name="randomPerformanceTable"
+              displayName="randomPerformanceTable"
               version="1.0" />
        <documentation>
               <description>This web service allows to create a simple performance table by providing a list of alternatives and a list of criteria.</description>

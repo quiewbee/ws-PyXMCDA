@@ -2,8 +2,8 @@
 <program_description xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../docs/w3-ws/specificationData/description.xsd">
 
        <program provider="PyXMCDA"
-              name="generateAlternatives"
-              displayName="generateAlternatives"
+              name="randomAlternatives"
+              displayName="randomAlternatives"
               version="1.0" />
        <documentation>
               <description>This web service allows to create a simple list of alternative by simply providing the desired number of alternatives, or a list of alternatives names.</description>

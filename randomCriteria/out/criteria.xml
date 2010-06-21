@@ -1,0 +1,186 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<?xml-stylesheet type='text/xsl' href='xmcdaXSL.xsl'?>
+<xmcda:XMCDA xmlns:xmcda='http://www.decision-deck.org/2009/XMCDA-2.0.0' xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance' xsi:schemaLocation='http://www.decision-deck.org/2009/XMCDA-2.0.0 http://sma.uni.lu/d2cms/xmcda/_downloads/XMCDA-2.0.0.xsd'>
+
+<criteria>
+	<criterion id='First'>
+		<active>true</active>
+		<scale>
+			<qualitative>
+				<preferenceDirection>max</preferenceDirection>
+				<rankedLabel><label>1</label><rank>1</rank></rankedLabel>
+				<rankedLabel><label>2</label><rank>2</rank></rankedLabel>
+				<rankedLabel><label>3</label><rank>3</rank></rankedLabel>
+				<rankedLabel><label>4</label><rank>4</rank></rankedLabel>
+				<rankedLabel><label>5</label><rank>5</rank></rankedLabel>
+				<rankedLabel><label>6</label><rank>6</rank></rankedLabel>
+				<rankedLabel><label>7</label><rank>7</rank></rankedLabel>
+				<rankedLabel><label>8</label><rank>8</rank></rankedLabel>
+				<rankedLabel><label>9</label><rank>9</rank></rankedLabel>
+				<rankedLabel><label>10</label><rank>10</rank></rankedLabel>
+				<rankedLabel><label>11</label><rank>11</rank></rankedLabel>
+				<rankedLabel><label>12</label><rank>12</rank></rankedLabel>
+				<rankedLabel><label>13</label><rank>13</rank></rankedLabel>
+				<rankedLabel><label>14</label><rank>14</rank></rankedLabel>
+				<rankedLabel><label>15</label><rank>15</rank></rankedLabel>
+				<rankedLabel><label>16</label><rank>16</rank></rankedLabel>
+				<rankedLabel><label>17</label><rank>17</rank></rankedLabel>
+				<rankedLabel><label>18</label><rank>18</rank></rankedLabel>
+				<rankedLabel><label>19</label><rank>19</rank></rankedLabel>
+				<rankedLabel><label>20</label><rank>20</rank></rankedLabel>
+			</qualitative>
+		</scale>
+		<thresholds>
+			<threshold id='indifference'>
+				<constant><integer>2</integer></constant>
+			</threshold>
+			<threshold id='preference'>
+				<constant><integer>12</integer></constant>
+			</threshold>
+			<threshold id='veto'>
+				<constant><integer>13</integer></constant>
+			</threshold>
+		</thresholds>
+	</criterion>
+	<criterion id='Second'>
+		<active>true</active>
+		<scale>
+			<quantitative>
+				<preferenceDirection>min</preferenceDirection>
+				<minimum><real>23.0</real></minimum>
+				<maximum><real>90.0</real></maximum>
+			</quantitative>
+		</scale>
+		<thresholds>
+			<threshold id='indifference'>
+				<constant><real>39.79</real></constant>
+			</threshold>
+			<threshold id='preference'>
+				<constant><real>61.36</real></constant>
+			</threshold>
+			<threshold id='veto'>
+				<constant><real>80.02</real></constant>
+			</threshold>
+		</thresholds>
+	</criterion>
+	<criterion id='Third'>
+		<active>true</active>
+		<scale>
+			<qualitative>
+				<preferenceDirection>min</preferenceDirection>
+				<rankedLabel><label>1</label><rank>1</rank></rankedLabel>
+				<rankedLabel><label>2</label><rank>2</rank></rankedLabel>
+				<rankedLabel><label>3</label><rank>3</rank></rankedLabel>
+				<rankedLabel><label>4</label><rank>4</rank></rankedLabel>
+			</qualitative>
+		</scale>
+		<thresholds>
+			<threshold id='indifference'>
+				<constant><integer>2</integer></constant>
+			</threshold>
+			<threshold id='preference'>
+				<constant><integer>3</integer></constant>
+			</threshold>
+			<threshold id='veto'>
+				<constant><integer>3</integer></constant>
+			</threshold>
+		</thresholds>
+	</criterion>
+	<criterion id='Fourth'>
+		<active>true</active>
+		<scale>
+			<qualitative>
+				<preferenceDirection>max</preferenceDirection>
+				<rankedLabel><label>1</label><rank>1</rank></rankedLabel>
+				<rankedLabel><label>2</label><rank>2</rank></rankedLabel>
+				<rankedLabel><label>3</label><rank>3</rank></rankedLabel>
+				<rankedLabel><label>4</label><rank>4</rank></rankedLabel>
+				<rankedLabel><label>5</label><rank>5</rank></rankedLabel>
+			</qualitative>
+		</scale>
+		<thresholds>
+			<threshold id='indifference'>
+				<constant><integer>2</integer></constant>
+			</threshold>
+			<threshold id='preference'>
+				<constant><integer>2</integer></constant>
+			</threshold>
+			<threshold id='veto'>
+				<constant><integer>3</integer></constant>
+			</threshold>
+		</thresholds>
+	</criterion>
+	<criterion id='Fifth'>
+		<active>true</active>
+		<scale>
+			<quantitative>
+				<preferenceDirection>min</preferenceDirection>
+				<minimum><real>35.0</real></minimum>
+				<maximum><real>48.7</real></maximum>
+			</quantitative>
+		</scale>
+		<thresholds>
+			<threshold id='indifference'>
+				<constant><real>35.46</real></constant>
+			</threshold>
+			<threshold id='preference'>
+				<constant><real>40.69</real></constant>
+			</threshold>
+			<threshold id='veto'>
+				<constant><real>47.26</real></constant>
+			</threshold>
+		</thresholds>
+	</criterion>
+	<criterion id='Sixth'>
+		<active>true</active>
+		<scale>
+			<qualitative>
+				<preferenceDirection>max</preferenceDirection>
+				<rankedLabel><label>1</label><rank>1</rank></rankedLabel>
+				<rankedLabel><label>2</label><rank>2</rank></rankedLabel>
+				<rankedLabel><label>3</label><rank>3</rank></rankedLabel>
+				<rankedLabel><label>4</label><rank>4</rank></rankedLabel>
+				<rankedLabel><label>5</label><rank>5</rank></rankedLabel>
+				<rankedLabel><label>6</label><rank>6</rank></rankedLabel>
+				<rankedLabel><label>7</label><rank>7</rank></rankedLabel>
+				<rankedLabel><label>8</label><rank>8</rank></rankedLabel>
+				<rankedLabel><label>9</label><rank>9</rank></rankedLabel>
+				<rankedLabel><label>10</label><rank>10</rank></rankedLabel>
+			</qualitative>
+		</scale>
+		<thresholds>
+			<threshold id='indifference'>
+				<constant><integer>2</integer></constant>
+			</threshold>
+			<threshold id='preference'>
+				<constant><integer>7</integer></constant>
+			</threshold>
+			<threshold id='veto'>
+				<constant><integer>10</integer></constant>
+			</threshold>
+		</thresholds>
+	</criterion>
+	<criterion id='Seventh'>
+		<active>true</active>
+		<scale>
+			<quantitative>
+				<preferenceDirection>max</preferenceDirection>
+				<minimum><real>22.4</real></minimum>
+				<maximum><real>76.3</real></maximum>
+			</quantitative>
+		</scale>
+		<thresholds>
+			<threshold id='indifference'>
+				<constant><real>38.53</real></constant>
+			</threshold>
+			<threshold id='preference'>
+				<constant><real>47.34</real></constant>
+			</threshold>
+			<threshold id='veto'>
+				<constant><real>66.34</real></constant>
+			</threshold>
+		</thresholds>
+	</criterion>
+</criteria>
+
+</xmcda:XMCDA>

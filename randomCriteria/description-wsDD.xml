@@ -1,22 +1,20 @@
 <?xml version="1.0" encoding="iso-8859-1"?>
-<program_description xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../docs/w3-ws/specificationData/description.xsd">
-       <program provider="PyXMCDA"
-              name="randomCriteria"
-              displayName="randomCriteria"
-              version="1.0" />
+<program_description xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:noNamespaceSchemaLocation="http://www.decision-deck.org/ws/_downloads/description.xsd">
+       <program provider="PyXMCDA" name="randomCriteria" displayName="randomCriteria" version="1.0"/>
        <documentation>
-              <description>This web service allows to create a simple list of criteria by providing the desired number of criteria. Now, it is not taking into account creation of thresholds.</description>
+              <description>This web service allows to create a simple list of criteria by providing
+                     the desired number of criteria. Now, it is not taking into account creation of
+                     thresholds.</description>
               <contact>Thomas Veneziano (thomas.veneziano@uni.lu)</contact>
        </documentation>
 
        <parameters>
-       
-              <input id="nbCriteria"
-                     name="nbCriteria"
-                     displayName="nbCriteria"
-                     isoptional="0">
+
+              <input id="nbCriteria" name="nbCriteria" displayName="nbCriteria" isoptional="0">
                      <documentation>
-                            <description>Indicates the desired number of criteria. It must be a strict positive integer.</description>
+                            <description>Indicates the desired number of criteria. It must be a
+                                   strict positive integer.</description>
                      </documentation>
                      <xmcda tag="methodParameters">
                             <![CDATA[
@@ -30,22 +28,35 @@
                     </methodParameters>
                     ]]>
                      </xmcda>
-                     
+
                      <gui status="preferGUI">
                             <entry id="%1" type="int" displayName="nbCriteria">
                                    <documentation>
-                                          <description>Indicates the desired number of criteria.</description>
+                                          <description>Indicates the desired number of
+                                                 criteria.</description>
                                    </documentation>
+                                   <constraint>
+                                          <description>The value should be a strict positive
+                                                 integer.</description>
+                                          <code>
+                                                 <![CDATA[
+                                                        %1 > 0
+                                                 ]]>
+                                          </code>
+                                   </constraint>
+                                   <defaultValue>2</defaultValue>
                             </entry>
                      </gui>
               </input>
-              
-              <input id="criteriaPrefix"
-                     name="criteriaPrefix"
-                     displayName="criteriaPrefix"
+
+              <input id="criteriaPrefix" name="criteriaPrefix" displayName="criteriaPrefix"
                      isoptional="1">
                      <documentation>
-                            <description>Indicates the desired prefix for the name of the criteria. If not provided, criteria will be called g1, g2, ... If provided, criteria will be called prefix1, prefix2, ... Note that it will only be used if you provide a number of alternatives.</description>
+                            <description>Indicates the desired prefix for the name of the criteria.
+                                   If not provided, criteria will be called g1, g2, ... If provided,
+                                   criteria will be called prefix1, prefix2, ... Note that it will
+                                   only be used if you provide a number of
+                                   alternatives.</description>
                      </documentation>
                      <xmcda tag="methodParameters">
                             <![CDATA[
@@ -59,22 +70,24 @@
                     </methodParameters>
                     ]]>
                      </xmcda>
-                     
+
                      <gui status="preferGUI">
                             <entry id="%1" type="string" displayName="criteriaPrefix">
                                    <documentation>
-                                          <description>Indicates the desired prefix for the criteria.</description>
+                                          <description>Indicates the desired prefix for the
+                                          criteria.</description>
                                    </documentation>
+                                   <defaultValue>g</defaultValue>
                             </entry>
                      </gui>
               </input>
-              
-              <input id="criteriaNames"
-                     name="criteriaNames"
-                     displayName="criteriaNames"
+
+              <input id="criteriaNames" name="criteriaNames" displayName="criteriaNames"
                      isoptional="1">
                      <documentation>
-                            <description>Indicates a list of criteria names. Note that if criteriaNames and nbCriteria are provided at the same time, then only criteriaNames are considered.</description>
+                            <description>Indicates a list of criteria names. Note that if
+                                   criteriaNames and nbCriteria are provided at the same time, then
+                                   only criteriaNames are considered.</description>
                      </documentation>
                      <xmcda tag="methodParameters">
                             <![CDATA[
@@ -90,13 +103,12 @@
                     ]]>
                      </xmcda>
               </input>
-              
-              <input id="criteriaType"
-                     name="criteriaType"
-                     displayName="criteriaType"
-                     isoptional="1">
+
+              <input id="criteriaType" name="criteriaType" displayName="criteriaType" isoptional="1">
                      <documentation>
-                            <description>Allows to indicate the type of some criteria (qualitative or quantitative). The default value for each criterion is quantitative.</description>
+                            <description>Allows to indicate the type of some criteria (qualitative
+                                   or quantitative). The default value for each criterion is
+                                   quantitative.</description>
                      </documentation>
                      <xmcda tag="methodParameters">
                             <![CDATA[
@@ -113,12 +125,11 @@
                      </xmcda>
               </input>
 
-              <input id="lowerBounds"
-                     name="lowerBounds"
-                     displayName="lowerBounds"
-                     isoptional="1">
+              <input id="lowerBounds" name="lowerBounds" displayName="lowerBounds" isoptional="1">
                      <documentation>
-                            <description>Allows to indicate a lower bound for some quantitative criteria. The default value is 0. Lower bounds for qualitative criteria are ignored.</description>
+                            <description>Allows to indicate a lower bound for some quantitative
+                                   criteria. The default value is 0. Lower bounds for qualitative
+                                   criteria are ignored.</description>
                      </documentation>
                      <xmcda tag="methodParameters">
                             <![CDATA[
@@ -134,13 +145,12 @@
                     ]]>
                      </xmcda>
               </input>
-              
-              <input id="upperBounds"
-                     name="upperBounds"
-                     displayName="upperBounds"
-                     isoptional="1">
+
+              <input id="upperBounds" name="upperBounds" displayName="upperBounds" isoptional="1">
                      <documentation>
-                            <description>Allows to indicate an upper bound for some quantitative criteria. The default value is 100. Upper bounds for qualitative criteria are ignored.</description>
+                            <description>Allows to indicate an upper bound for some quantitative
+                                   criteria. The default value is 100. Upper bounds for qualitative
+                                   criteria are ignored.</description>
                      </documentation>
                      <xmcda tag="methodParameters">
                             <![CDATA[
@@ -156,13 +166,13 @@
                     ]]>
                      </xmcda>
               </input>
-              
-              <input id="numberOfLevels"
-                     name="numberOfLevels"
-                     displayName="numberOfLevels"
+
+              <input id="numberOfLevels" name="numberOfLevels" displayName="numberOfLevels"
                      isoptional="1">
                      <documentation>
-                            <description>Allows to indicate a number of levels for some qualitative criteria. The default value is 10. if provided for quantitative criteria, it will be ignored.</description>
+                            <description>Allows to indicate a number of levels for some qualitative
+                                   criteria. The default value is 10. if provided for quantitative
+                                   criteria, it will be ignored.</description>
                      </documentation>
                      <xmcda tag="methodParameters">
                             <![CDATA[
@@ -178,13 +188,12 @@
                     ]]>
                      </xmcda>
               </input>
-              
-              <input id="preferenceDirection"
-                     name="preferenceDirection"
-                     displayName="preferenceDirection"
-                     isoptional="1">
+
+              <input id="preferenceDirection" name="preferenceDirection"
+                     displayName="preferenceDirection" isoptional="1">
                      <documentation>
-                            <description>Allows to indicate a preference direction (min or max) for some criteria. The default value is max.</description>
+                            <description>Allows to indicate a preference direction (min or max) for
+                                   some criteria. The default value is max.</description>
                      </documentation>
                      <xmcda tag="methodParameters">
                             <![CDATA[
@@ -200,13 +209,15 @@
                     ]]>
                      </xmcda>
               </input>
-              
-              <input id="thresholdsNames"
-                     name="thresholdsNames"
-                     displayName="thresholdsNames"
+
+              <input id="thresholdsNames" name="thresholdsNames" displayName="thresholdsNames"
                      isoptional="1">
                      <documentation>
-                            <description>Indicates a list of thresholds names. The names must be provided in an increasing order of importance, as the randomly generated values will be sorted and associated to the thresholds in the given order. The thresholds are added for every criteria (with different random values for each one).</description>
+                            <description>Indicates a list of thresholds names. The names must be
+                                   provided in an increasing order of importance, as the randomly
+                                   generated values will be sorted and associated to the thresholds
+                                   in the given order. The thresholds are added for every criteria
+                                   (with different random values for each one).</description>
                      </documentation>
                      <xmcda tag="methodParameters">
                             <![CDATA[
@@ -222,25 +233,22 @@
                     ]]>
                      </xmcda>
               </input>
-              
-              <output id="messages"
-                      name="messages"
-                      displayName="messages">
-                      <documentation>
-                            <description>A list of messages generated by the algorithm.</description>
-                      </documentation>
-                      <xmcda tag="methodMessages"/>
+
+              <output id="messages" name="messages" displayName="messages">
+                     <documentation>
+                            <description>A list of messages generated by the
+                                   algorithm.</description>
+                     </documentation>
+                     <xmcda tag="methodMessages"/>
               </output>
-              
-              <output id="criteria" 
-                      name="criteria"
-                      displayName="criteria">
-                     
-                      <documentation>
+
+              <output id="criteria" name="criteria" displayName="criteria">
+
+                     <documentation>
                             <description>A list of criteria with active tags.</description>
-                      </documentation>
-                      <xmcda tag="criteria"/>
+                     </documentation>
+                     <xmcda tag="criteria"/>
               </output>
-              
+
        </parameters>
 </program_description>

@@ -100,15 +100,22 @@ def main(argv=None):
 		
 		# We recover the criteria preference directions
 		criteriaDir = PyXMCDA.getCriteriaPreferenceDirections (xmltree_criteria, criteriaId)
-	
+		
+		# On retourne les valeurs pour les criteres a minimiser
+		# ATTENTION ! NE MARCHE QUE SI VALEUR NUMERIQUES !!!
+		for crit in criteriaId:
+			if criteriaDir.has_key (crit) and criteriaDir[crit] == "min" :
+				for alt in alternativesId:			
+					perfTable[alt][crit] = -perfTable[alt][crit]
+		
 		# We compute the alternative comparisons values
 		fileAltValues = open(out_dir+"/alternativesComparisons.xml", 'w')
 		PyXMCDA.writeHeader (fileAltValues)
 		
 		fileAltValues.write ("\t<alternativesComparisons mcdaConcept='CondorcetRobustnessRelation'>\n\t\t<pairs>\n")
 			
-		for alt1 in alternativesId :
-			for alt2 in alternativesId :
+		for alt1 in alternativesId: #["Flat 7"]: #alternativesId :
+			for alt2 in alternativesId: #["Flat 2"]: #alternativesId :
 			
 				fileAltValues.write("\t\t\t<pair>\n\t\t\t\t<initial><alternativeID>"+alt1+"</alternativeID></initial>\n\t\t\t\t<terminal><alternativeID>"+alt2+"</alternativeID></terminal>\n")
 				
@@ -118,10 +125,9 @@ def main(argv=None):
 				
 				for crit in criteriaId :
 				
-					# Si le critere est un critere a minimiser
-					if criteriaDir.has_key (crit) and criteriaDir[crit] == "min" :
-						perfTable[alt1][crit] = -perfTable[alt1][crit]
-						perfTable[alt2][crit] = -perfTable[alt2][crit]
+					# If the value of one criteria is NA
+					if perfTable[alt1][crit] == "NA" or perfTable[alt2][crit] == "NA":
+						print "NANANANANANANANAN"
 						
 					try :
 						if perfTable[alt1][crit] >= perfTable[alt2][crit] :

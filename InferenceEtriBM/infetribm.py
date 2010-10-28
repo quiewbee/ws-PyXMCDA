@@ -86,8 +86,46 @@ def glpk_solve(input_file):
 
     output_file = f.name
 
-    subprocess.Popen(["glpsol", "-m", "inf_etri_bm.mod", "-d", "%s" % input_file])
-#    subprocess.Popen("-m inf_etri_bm.mod -d %s -o %s" % (input_file, output_file), executable="/usr/bin/glpsol")
+    p = subprocess.Popen(["glpsol", "-m", "inf_etri_bm.mod", "-d", "%s" % input_file], stdout=subprocess.PIPE)
+
+    output = p.communicate()
+    status = p.returncode
+
+    return (status, output[0])
+
+def glpk_parse_output(output, crit_id):
+    glpk_weigths = (output.partition("\n### Criteria weights ###\n")[2]).partition("\n### Criteria weights ###\n")[0]
+    weights = glpk_weigths.split()
+
+    glpk_profiles = (output.partition("\n### Profiles ###\n")[2]).partition("\n### Profiles ###\n")[0]
+    profiles = []
+    for profile in glpk_profiles.split("\n"):
+        profiles.append(profile.split())
+
+    glpk_lambda = (output.partition("### Lambda ###\n")[2]).partition("### Lambda ###\n")[0]
+    lbda = glpk_lambda
+
+    glpk_compat = (output.partition("### Compatible alternatives ###\n")[2]).partition("### Compatible alternatives ###\n")[0]
+    compat = glpk_compat.split()
+
+    print "weights", weights
+    print "profiles", profiles
+    print "lambda", lbda
+    print "compat", compat
+
+    if not weights:
+        error_list.append("Impossible to get weights from the solver")
+
+    if not profiles:
+        error_list.append("Impossible to get profiles from the solver")
+
+    if not lbda:
+        error_list.append("Impossible to get lambda from the solver")
+
+    if not compat:
+        error_list.append("Impossible to get compatible alternatives from the solver")
+
+    return (weights, profiles, lbda, compat)
 
 def main(argv=None):
     if argv is None:
@@ -126,7 +164,16 @@ def main(argv=None):
     if error_list:
         return error_list
 
-    glpk_solve(input_file)
+    (status, output) = glpk_solve(input_file)
+    if status:
+        error_list.append("gklp returned status %d" % status);
+        return error_list
+
+    (weights, profiles, lbda, compat) = glpk_parse_output(output, crit_id)
+    if error_list:
+        return error_list
+
+    xmcda.write_weights_file(weights)
 
 if __name__ == "__main__":
     sys.exit(main())

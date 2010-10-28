@@ -15,7 +15,7 @@ param gmax{j in CRIT} := max{i in ALTS} perfs[i,j];
 
 /* Variables */
 var epsilon = 10e-3;
-var lambda  >= 0;
+var lambda  >= 0.5;
 var c_sup{ALTS,CRIT}  >= 0;
 var c_inf{ALTS,CRIT}  >= 0;
 var weight{CRIT}  >= 0;
@@ -25,7 +25,7 @@ var d_inf{ALTS,CRIT}, binary;
 var gb{0..ncat,CRIT}  >= 0;
 
 /* Objective */
-maximize obj: sum{i in ALTS} gamma[i] + lambda;
+maximize obj: sum{i in ALTS} gamma[i];
 
 /* Constraints */
 s.t. scinf{i in ALTS}:
@@ -87,26 +87,27 @@ solve;
 
 printf "SOLUTION:\n";
 
-printf "Obj.  :\t%g\n", obj;
+printf "### Lambda ###\n";
+printf lambda;
+printf "### Lambda ###\n";
 
-printf "Lambda:\t%g\n", lambda;
-
-printf "Profiles:\n";
+printf "### Profiles ###\n";
 for {i in 0..ncat}
 {
-	printf "b%d\t", i;
 	for {j in CRIT}	
-		printf "%.5g\t", gb[i,j];
+		printf "%.5g\t", gb[i,j]*gmax[j];
 	printf "\n";
 }
+printf "### Profiles ###\n";
 
-printf "Weights:\n\t";
+printf "### Criteria weights ###\n";
 for {j in CRIT}
 	printf "%g\t", weight[j];
-printf "\n";
+printf "### Criteria weights ###\n";
 
-printf "Compatible alternatives:\n";
+printf "### Compatible alternatives ###\n";
 for {i in ALTS}
-	printf "[%d] %d\n", i, gamma[i];
+	printf "%d ", gamma[i];
+printf "### Compatible alternatives ###\n";
 
 end;

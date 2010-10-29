@@ -5,6 +5,7 @@ import subprocess
 import tempfile
 from optparse import OptionParser
 
+import xmcda 
 import PyXMCDA
 
 error_list = []
@@ -38,25 +39,25 @@ def check_input_files(in_dir):
     if not os.path.isfile(in_dir+"/categories.xml"):
         error_list.append("No categories.xml file")
 
-def check_input_parameters(alt_id, crit_id, pt, cat, assign):
+def check_input_parameters(alt_id, crit_id, pt, cat_id, assign):
     if not alt_id:
         error_list.append("The alternatives file can't be validated.")
     if not crit_id:
         error_list.append("The criteria file can't be validated.")
     if not pt:
         error_list.append("The performance table file can't be validated.")
-    if not cat:
+    if not cat_id:
         error_list.append("The categories file can't be validated.")
     if not assign:
         error_list.append("The assign file can't be validated.")
 
-def create_glpk_input_file(alt_id, crit_id, pt, cat, assign):
+def create_glpk_input_file(alt_id, crit_id, pt, cat_id, assign):
     f = tempfile.NamedTemporaryFile(delete=False)
     if not f:
         error_list.append("Impossible to create input file")
         return
 
-    f.write("param ncat := %d;\n" % len(cat))
+    f.write("param ncat := %d;\n" % len(cat_id))
     f.write("param nalt := %d;\n" % len(alt_id))
     f.write("param ncrit := %d;\n" % len(crit_id))
     f.write("param perfs :\t")
@@ -73,7 +74,7 @@ def create_glpk_input_file(alt_id, crit_id, pt, cat, assign):
 
     f.write("param assign :=")
     for i in range(len(alt_id)):
-        f.write("[%d] %d " % ((i+1), cat.index((assign[alt_id[i]]))+1))
+        f.write("[%d] %d " % ((i+1), cat_id.index((assign[alt_id[i]]))+1))
     f.write(";\n")
 
     return f.name
@@ -127,6 +128,29 @@ def glpk_parse_output(output, crit_id):
 
     return (weights, profiles, lbda, compat)
 
+def create_output_file(xml_data, filename):
+    f = open(filename, 'w')
+    data = xmcda.add_xmcda_tags(xml_data)
+    f.write(data)
+    f.close()
+
+def create_output_files(out_dir, weights, catprof, refalts, lbda, compat):
+    create_output_file(weights, out_dir+"/crit_weights.xml") 
+    create_output_file(catprof, out_dir+"/cat_profiles.xml") 
+    create_output_file(refalts, out_dir+"/reference_alts.xml") 
+    create_output_file(lbda, out_dir+"/lambda.xml") 
+    create_output_file(compat, out_dir+"/compatible_alts.xml") 
+
+def create_error_file(out_dir, errors):
+    msgfile = open(out_dir+"/messages.xml", 'w')
+    PyXMCDA.writeErrorMessages(msgfile, errors)
+    msgfile.close()
+
+def create_log_file(out_dir):
+    msgfile = open(out_dir+"/messages.xml", 'w')
+    PyXMCDA.writeLogMessages(msgfile, "Execution ok")
+    msgfile.close()
+
 def main(argv=None):
     if argv is None:
         argv = sys.argv
@@ -138,6 +162,7 @@ def main(argv=None):
 
     check_input_files(in_dir)
     if error_list:
+        create_error_file(out_dir, error_list)
         return error_list
 
     xml_crit = PyXMCDA.parseValidate(in_dir+"/criteria.xml")
@@ -149,31 +174,46 @@ def main(argv=None):
     alt_id = PyXMCDA.getAlternativesID(xml_alt)
     crit_id = PyXMCDA.getCriteriaID(xml_crit)
     pt = PyXMCDA.getPerformanceTable(xml_pt, alt_id, crit_id)
-    cat = PyXMCDA.getCategoriesID(xml_cat)
-    assign = PyXMCDA.getAlternativesAffectation(xml_assign)
+    cat_id = PyXMCDA.getCategoriesID(xml_cat)
+    assign = PyXMCDA.getAlternativesAffectations(xml_assign)
     print 'alt  ids  ', alt_id
     print 'crit ids  ', crit_id
     print 'perfs     ', pt
-    print 'categories', cat
+    print 'categories', cat_id
     print 'affect    ', assign
-    check_input_parameters(alt_id, crit_id, pt, cat, assign)
+    check_input_parameters(alt_id, crit_id, pt, cat_id, assign)
     if error_list:
+        create_error_file(out_dir, error_list)
         return error_list
 
-    input_file = create_glpk_input_file(alt_id, crit_id, pt, cat, assign)
+    input_file = create_glpk_input_file(alt_id, crit_id, pt, cat_id, assign)
     if error_list:
+        create_error_file(out_dir, error_list)
         return error_list
 
     (status, output) = glpk_solve(input_file)
     if status:
         error_list.append("gklp returned status %d" % status);
+        os.unlink(input_file)
+        create_error_file(out_dir, error_list)
         return error_list
+
+    os.unlink(input_file)
 
     (weights, profiles, lbda, compat) = glpk_parse_output(output, crit_id)
     if error_list:
+        os.unlink(input_file)
+        create_error_file(out_dir, error_list)
         return error_list
 
-    xmcda.write_weights_file(weights)
+    out_weights = xmcda.format_criteria_weights(weights, crit_id)
+    out_catprof = xmcda.format_category_profiles(profiles, crit_id, cat_id)
+    out_refalts = xmcda.format_pt_reference_alternatives(profiles, crit_id)
+    out_lambda = xmcda.format_lambda(lbda)
+    out_compat = xmcda.format_format_compatible_alternatives(compat, alt_id)
+    create_output_files(out_dir, out_weights, out_catprof, out_refalts, out_lambda, out_compat)
+
+    create_log_file(out_dir)
 
 if __name__ == "__main__":
     sys.exit(main())

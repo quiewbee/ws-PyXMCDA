@@ -39,6 +39,12 @@ def check_input_files(in_dir):
     if not os.path.isfile(in_dir+"/categories.xml"):
         error_list.append("No categories.xml file")
 
+def convert_performance_table(pt, prefdir):
+    for alt, perfs in pt.iteritems():
+        for crit, perf in perfs.iteritems():
+            if prefdir[crit] == "min":
+                pt[alt][crit] = -perf
+
 def check_input_parameters(alt_id, crit_id, pt, cat_id, assign):
     if not alt_id:
         error_list.append("The alternatives file can't be validated.")
@@ -176,11 +182,18 @@ def main(argv=None):
     pt = PyXMCDA.getPerformanceTable(xml_pt, alt_id, crit_id)
     cat_id = PyXMCDA.getCategoriesID(xml_cat)
     assign = PyXMCDA.getAlternativesAffectations(xml_assign)
+    pref_dir = PyXMCDA.getCriteriaPreferenceDirections(xml_crit, crit_id)
+
     print 'alt  ids  ', alt_id
     print 'crit ids  ', crit_id
     print 'perfs     ', pt
     print 'categories', cat_id
     print 'affect    ', assign
+    print 'pref_dir  ', pref_dir
+
+    convert_performance_table(pt, pref_dir)
+    print 'perfs     ', pt
+
     check_input_parameters(alt_id, crit_id, pt, cat_id, assign)
     if error_list:
         create_error_file(out_dir, error_list)
@@ -202,7 +215,6 @@ def main(argv=None):
 
     (weights, profiles, lbda, compat) = glpk_parse_output(output, crit_id)
     if error_list:
-        os.unlink(input_file)
         create_error_file(out_dir, error_list)
         return error_list
 

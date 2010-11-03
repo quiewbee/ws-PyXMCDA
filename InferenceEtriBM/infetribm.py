@@ -58,7 +58,7 @@ def check_input_parameters(alt_id, crit_id, pt, cat_id, assign):
         error_list.append("The assign file can't be validated.")
 
 def create_glpk_input_file(alt_id, crit_id, pt, cat_id, assign):
-    f = tempfile.NamedTemporaryFile(delete=False)
+    f = tempfile.NamedTemporaryFile(delete=True)
     if not f:
         error_list.append("Impossible to create input file")
         return
@@ -83,16 +83,11 @@ def create_glpk_input_file(alt_id, crit_id, pt, cat_id, assign):
         f.write("[%d] %d " % ((i+1), cat_id.index((assign[alt_id[i]]))+1))
     f.write(";\n")
 
-    return f.name
+    f.flush()
+
+    return f
 
 def glpk_solve(input_file):
-    f = tempfile.NamedTemporaryFile(delete=False)
-    if not f:
-        error_list.append("Impossible to create output file")
-        return
-
-    output_file = f.name
-
     p = subprocess.Popen(["glpsol", "-m", "inf_etri_bm.mod", "-d", "%s" % input_file], stdout=subprocess.PIPE)
 
     output = p.communicate()
@@ -204,14 +199,14 @@ def main(argv=None):
         create_error_file(out_dir, error_list)
         return error_list
 
-    (status, output) = glpk_solve(input_file)
+    (status, output) = glpk_solve(input_file.name)
     if status:
         error_list.append("gklp returned status %d" % status);
-        os.unlink(input_file)
+        input_file.close()
         create_error_file(out_dir, error_list)
         return error_list
 
-    os.unlink(input_file)
+    input_file.close()
 
     (weights, profiles, lbda, compat) = glpk_parse_output(output, crit_id)
     if error_list:

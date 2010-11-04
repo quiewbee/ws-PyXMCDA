@@ -156,7 +156,9 @@ def create_error_file(out_dir, errors):
 
 def create_log_file(out_dir):
     msgfile = open(out_dir+"/messages.xml", 'w')
+    PyXMCDA.writeHeader(msgfile)
     PyXMCDA.writeLogMessages(msgfile, "Execution ok")
+    PyXMCDA.writeFooter(msgfile)
     msgfile.close()
 
 def main(argv=None):

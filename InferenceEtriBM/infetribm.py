@@ -35,7 +35,7 @@ def check_input_files(in_dir):
     if not os.path.isfile(in_dir+"/alternatives.xml"):
         error_list.append("No alternatives.xml file") 
 
-    if not os.path.isfile(in_dir+"/performanceTable.xml"):
+    if not os.path.isfile(in_dir+"/perfs_table.xml"):
         error_list.append("No perfs_table.xml file") 
 
     if not os.path.isfile(in_dir+"/assign.xml"):
@@ -174,7 +174,7 @@ def main(argv=None):
 
     xml_crit = PyXMCDA.parseValidate(in_dir+"/criteria.xml")
     xml_alt = PyXMCDA.parseValidate(in_dir+"/alternatives.xml")
-    xml_pt = PyXMCDA.parseValidate(in_dir+"/performanceTable.xml")
+    xml_pt = PyXMCDA.parseValidate(in_dir+"/perfs_table.xml")
     xml_assign = PyXMCDA.parseValidate(in_dir+"/assign.xml")
     xml_cat = PyXMCDA.parseValidate(in_dir+"/categories.xml")
 

@@ -88,6 +88,7 @@ def create_glpk_input_file(alt_id, crit_id, pt, cat_id, cat_rank, assign):
         f.write("[%d] %d " % ((i+1), cat_rank[assign[alt_id[i]]]))
     f.write(";\n")
 
+    f.write("end;\n")
     f.flush()
 
     return f

@@ -7,7 +7,7 @@
 		version="1.0" />
 	<documentation>
 		<description>This web service allows to infer parameters of a Bouyssou-Marchant Electre Tri relation on basis of reference actions affectations</description>
-		<contact>Olivier Sobrie</contact>
+		<contact>Olivier Sobrie (olivier.sobrie@gmail.com)</contact>
 		<reference>Agnès Leroy: Apprentissage des paramètres d'une méthode multicritère de tri ordonné</reference>
 	</documentation>
 
@@ -34,6 +34,7 @@
 			<documentation>
 				<description>Assignment of reference alternatives</description>
 			</documentation>
+			<xmcda tag="alternativesAffectations" />
 		</input>
 		<input id="categories" name="categories" displayName="categories" isoptional="0">
 			<documentation>

@@ -26,7 +26,9 @@ def format_category_profiles(profiles, crit_id, cat_id):
 
 def format_pt_reference_alternatives(profiles, crit_id):
     output = "<performanceTable>\n"
-    output += "\t<description>Performance table of reference alternatives</description>\n"
+    output += "\t<description>\n"
+    output += "\t\t<title>Performance table of reference alternatives</title>\n"
+    output += "\t</description>\n"
     for i, profile in enumerate(profiles):
         if i == 0 or i == len(profiles)-1:
             continue
@@ -40,7 +42,7 @@ def format_pt_reference_alternatives(profiles, crit_id):
             output += "\t\t</performance>\n"
         output += "\t</alternativePerformances>\n"
 
-    output += "<performanceTable>\n"
+    output += "</performanceTable>\n"
     return output
 
 def format_lambda(lbda):

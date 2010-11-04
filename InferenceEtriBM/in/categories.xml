@@ -5,15 +5,19 @@
 <categories>
 	<category id="cat1">
 		<active>true</active>
+		<rank><integer>1</integer></rank>
 	</category>
 	<category id="cat2">
 		<active>true</active>
+		<rank><integer>2</integer></rank>
 	</category>
 	<category id="cat3">
 		<active>true</active>
+		<rank><integer>3</integer></rank>
 	</category>
 	<category id="cat4">
 		<active>true</active>
+		<rank><integer>4</integer></rank>
 	</category>
 </categories>
 

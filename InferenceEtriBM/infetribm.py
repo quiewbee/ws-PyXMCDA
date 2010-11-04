@@ -30,7 +30,7 @@ def check_input_files(in_dir):
     if not os.path.isfile(in_dir+"/alternatives.xml"):
         error_list.append("No alternatives.xml file") 
 
-    if not os.path.isfile(in_dir+"/perfs_table.xml"):
+    if not os.path.isfile(in_dir+"/performanceTable.xml"):
         error_list.append("No perfs_table.xml file") 
 
     if not os.path.isfile(in_dir+"/assign.xml"):
@@ -57,7 +57,7 @@ def check_input_parameters(alt_id, crit_id, pt, cat_id, assign):
     if not assign:
         error_list.append("The assign file can't be validated.")
 
-def create_glpk_input_file(alt_id, crit_id, pt, cat_id, assign):
+def create_glpk_input_file(alt_id, crit_id, pt, cat_id, cat_rank, assign):
     f = tempfile.NamedTemporaryFile(delete=True)
     if not f:
         error_list.append("Impossible to create input file")
@@ -80,7 +80,7 @@ def create_glpk_input_file(alt_id, crit_id, pt, cat_id, assign):
 
     f.write("param assign :=")
     for i in range(len(alt_id)):
-        f.write("[%d] %d " % ((i+1), cat_id.index((assign[alt_id[i]]))+1))
+        f.write("[%d] %d " % ((i+1), cat_rank[assign[alt_id[i]]]))
     f.write(";\n")
 
     f.flush()
@@ -168,7 +168,7 @@ def main(argv=None):
 
     xml_crit = PyXMCDA.parseValidate(in_dir+"/criteria.xml")
     xml_alt = PyXMCDA.parseValidate(in_dir+"/alternatives.xml")
-    xml_pt = PyXMCDA.parseValidate(in_dir+"/perfs_table.xml")
+    xml_pt = PyXMCDA.parseValidate(in_dir+"/performanceTable.xml")
     xml_assign = PyXMCDA.parseValidate(in_dir+"/assign.xml")
     xml_cat = PyXMCDA.parseValidate(in_dir+"/categories.xml")
 
@@ -176,6 +176,7 @@ def main(argv=None):
     crit_id = PyXMCDA.getCriteriaID(xml_crit)
     pt = PyXMCDA.getPerformanceTable(xml_pt, alt_id, crit_id)
     cat_id = PyXMCDA.getCategoriesID(xml_cat)
+    cat_rank = PyXMCDA.getCategoriesRank(xml_cat, cat_id)
     assign = PyXMCDA.getAlternativesAffectations(xml_assign)
     pref_dir = PyXMCDA.getCriteriaPreferenceDirections(xml_crit, crit_id)
 
@@ -194,7 +195,7 @@ def main(argv=None):
         create_error_file(out_dir, error_list)
         return error_list
 
-    input_file = create_glpk_input_file(alt_id, crit_id, pt, cat_id, assign)
+    input_file = create_glpk_input_file(alt_id, crit_id, pt, cat_id, cat_rank, assign)
     if error_list:
         create_error_file(out_dir, error_list)
         return error_list

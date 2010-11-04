@@ -9,6 +9,11 @@ import xmcda
 import PyXMCDA
 
 error_list = []
+verbose = False
+
+def log(msg):
+    if verbose == True:
+        print >>sys.stderr, msg
 
 def parse_cmdline(argv=None):
     parser = OptionParser()
@@ -110,10 +115,11 @@ def glpk_parse_output(output, crit_id):
     glpk_compat = (output.partition("### Compatible alternatives ###\n")[2]).partition("### Compatible alternatives ###\n")[0]
     compat = glpk_compat.split()
 
-    print "weights", weights
-    print "profiles", profiles
-    print "lambda", lbda
-    print "compat", compat
+    log("GLPK OUTPUT:")
+    log("weights  : %s" % weights)
+    log("profiles : %s" % profiles)
+    log("lambda   : %s" % lbda)
+    log("compat   : %s" % compat)
 
     if not weights:
         error_list.append("Impossible to get weights from the solver")
@@ -180,15 +186,15 @@ def main(argv=None):
     assign = PyXMCDA.getAlternativesAffectations(xml_assign)
     pref_dir = PyXMCDA.getCriteriaPreferenceDirections(xml_crit, crit_id)
 
-    print 'alt  ids  ', alt_id
-    print 'crit ids  ', crit_id
-    print 'perfs     ', pt
-    print 'categories', cat_id
-    print 'affect    ', assign
-    print 'pref_dir  ', pref_dir
+    log("GLPK INPUT:")
+    log('alt  ids   : %s' % alt_id)
+    log('crit ids   : %s' % crit_id)
+    log('perfs      : %s' % pt)
+    log('categories : %s' % cat_id)
+    log('affect     : %s' % assign)
+    log('pref_dir   : %s' % pref_dir)
 
     convert_performance_table(pt, pref_dir)
-    print 'perfs     ', pt
 
     check_input_parameters(alt_id, crit_id, pt, cat_id, assign)
     if error_list:

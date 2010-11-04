@@ -64,11 +64,8 @@ s.t. dinf2{i in ALTS, j in CRIT}:
 s.t. dsup2{i in ALTS, j in CRIT}:
 	d_sup[i,j] <= perfs[i,j]/gmax[j] - gb[assign[i],j] + 1;
 
-s.t. gbmin{i in 1..ncat-1, j in CRIT}:
+s.t. gblim{i in 1..ncat-1, j in CRIT}:
 	gb[i,j] <= gb[i+1,j];
-
-s.t. gbmax{i in 1..ncat-1, j in CRIT}:
-	gb[i,j] <= 1;
 
 s.t. gbliminf{j in CRIT}:
 	gb[0,j] = 0;
@@ -95,7 +92,7 @@ printf "### Profiles ###\n";
 for {i in 0..ncat}
 {
 	for {j in CRIT}	
-		printf "%.5g\t", gb[i,j]*gmax[j];
+		printf "%g\t", gb[i,j]*gmax[j];
 	printf "\n";
 }
 printf "### Profiles ###\n";
@@ -103,11 +100,11 @@ printf "### Profiles ###\n";
 printf "### Criteria weights ###\n";
 for {j in CRIT}
 	printf "%g\t", weight[j];
-printf "### Criteria weights ###\n";
+printf "\n### Criteria weights ###\n";
 
 printf "### Compatible alternatives ###\n";
 for {i in ALTS}
 	printf "%d ", gamma[i];
-printf "### Compatible alternatives ###\n";
+printf "\n### Compatible alternatives ###\n";
 
 end;

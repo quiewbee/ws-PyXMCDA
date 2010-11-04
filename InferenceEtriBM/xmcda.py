@@ -53,12 +53,14 @@ def format_lambda(lbda):
 
 def format_format_compatible_alternatives(compat, alts_id):
     output = "<alternatives>\n"
-    output += "\t<description>Compatible alternatives</description>\n"
+    output += "\t<description>\n"
+    output += "\t\t<title>Compatible alternatives</title>\n"
+    output += "\t</description>\n"
     for i, compatible in enumerate(compat):
         if compatible == 0:
             continue
 
-        output += "\t<alternative id=%s>\n" % alts_id[i]
+        output += "\t<alternative id=\"%s\">\n" % alts_id[i]
         output += "\t\t<active>true</active>\n"
         output += "\t</alternative>\n"
     output += "</alternatives>\n"

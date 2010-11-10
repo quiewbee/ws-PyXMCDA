@@ -154,10 +154,10 @@ def create_error_file(out_dir, errors):
     PyXMCDA.writeErrorMessages(msgfile, errors)
     msgfile.close()
 
-def create_log_file(out_dir):
+def create_log_file(out_dir, logs):
     msgfile = open(out_dir+"/messages.xml", 'w')
     PyXMCDA.writeHeader(msgfile)
-    PyXMCDA.writeLogMessages(msgfile, "Execution ok")
+    PyXMCDA.writeLogMessages(msgfile, logs)
     PyXMCDA.writeFooter(msgfile)
     msgfile.close()
 
@@ -230,7 +230,8 @@ def main(argv=None):
     out_compat = xmcda.format_format_compatible_alternatives(compat, alt_id)
     create_output_files(out_dir, out_weights, out_catprof, out_refalts, out_lambda, out_compat)
 
-    create_log_file(out_dir)
+    logs = [ "Execution ok" ]
+    create_log_file(out_dir, logs)
 
 if __name__ == "__main__":
     sys.exit(main())

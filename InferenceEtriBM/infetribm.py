@@ -102,6 +102,10 @@ def glpk_solve(input_file):
     return (status, output[0])
 
 def glpk_parse_output(output, crit_id):
+    found = output.rfind("INTEGER OPTIMAL SOLUTION FOUND")
+    if found < 0:
+        error_list.append("Integer optimal solution not found")
+
     glpk_weigths = (output.partition("\n### Criteria weights ###\n")[2]).partition("\n### Criteria weights ###\n")[0]
     weights = glpk_weigths.split()
 

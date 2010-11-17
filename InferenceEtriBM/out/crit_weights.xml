@@ -4,7 +4,7 @@
 <criteriaValues>
 	<criterionValue>
 		<criterionID>g1</criterionID>
-		<value><real>0</real></value>
+		<value><real>0.255</real></value>
 	</criterionValue>
 	<criterionValue>
 		<criterionID>g2</criterionID>
@@ -12,7 +12,7 @@
 	</criterionValue>
 	<criterionValue>
 		<criterionID>g3</criterionID>
-		<value><real>0.47</real></value>
+		<value><real>0</real></value>
 	</criterionValue>
 	<criterionValue>
 		<criterionID>g4</criterionID>
@@ -20,11 +20,11 @@
 	</criterionValue>
 	<criterionValue>
 		<criterionID>g5</criterionID>
-		<value><real>0.01</real></value>
+		<value><real>0</real></value>
 	</criterionValue>
 	<criterionValue>
 		<criterionID>g6</criterionID>
-		<value><real>0.02</real></value>
+		<value><real>0.255</real></value>
 	</criterionValue>
 	<criterionValue>
 		<criterionID>g7</criterionID>
@@ -32,15 +32,15 @@
 	</criterionValue>
 	<criterionValue>
 		<criterionID>g8</criterionID>
-		<value><real>0.01</real></value>
+		<value><real>0</real></value>
 	</criterionValue>
 	<criterionValue>
 		<criterionID>g9</criterionID>
-		<value><real>0.48</real></value>
+		<value><real>0.255</real></value>
 	</criterionValue>
 	<criterionValue>
 		<criterionID>g10</criterionID>
-		<value><real>0.01</real></value>
+		<value><real>0.235</real></value>
 	</criterionValue>
 	<criterionValue>
 		<criterionID>g11</criterionID>

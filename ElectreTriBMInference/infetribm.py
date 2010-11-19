@@ -101,14 +101,6 @@ def check_input_parameters(alt_id, crit_id, pt, cat_id, assign):
     if not assign:
         error_list.append("The assign file can't be validated.")
 
-def glpk_solve(input_file):
-    p = subprocess.Popen(["glpsol", "-m", "inf_etri_bm.mod", "-d", "%s" % input_file], stdout=subprocess.PIPE)
-
-    output = p.communicate()
-    status = p.returncode
-
-    return (status, output[0])
-
 def glpk_parse_output(output, crit_id):
     found = output.rfind("INTEGER OPTIMAL SOLUTION FOUND")
     if found < 0:
@@ -222,7 +214,7 @@ def main(argv=None):
         create_error_file(out_dir, error_list)
         return error_list
 
-    (status, output) = glpk_solve(input_file.name)
+    (status, output) = glpk.solve(input_file.name)
     if status:
         error_list.append("gklp returned status %d" % status);
         input_file.close()

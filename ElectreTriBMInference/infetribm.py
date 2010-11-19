@@ -5,6 +5,7 @@ import subprocess
 import tempfile
 from optparse import OptionParser
 
+import glpk
 import xmcda 
 import PyXMCDA
 
@@ -99,37 +100,6 @@ def check_input_parameters(alt_id, crit_id, pt, cat_id, assign):
         error_list.append("The categories file can't be validated.")
     if not assign:
         error_list.append("The assign file can't be validated.")
-
-def create_glpk_input_file(alt_id, crit_id, pt, cat_id, cat_rank, assign):
-    f = tempfile.NamedTemporaryFile(delete=True)
-    if not f:
-        error_list.append("Impossible to create input file")
-        return
-
-    f.write("param ncat := %d;\n" % len(cat_id))
-    f.write("param nalt := %d;\n" % len(alt_id))
-    f.write("param ncrit := %d;\n" % len(crit_id))
-    f.write("param perfs :\t")
-    for i in range(len(crit_id)):
-        f.write("%d\t" % (i+1))
-    f.write(":=\n")
-    for i in range(len(pt)):
-        f.write("\t%d\t" % (i+1))
-        perfs = pt[alt_id[i]]
-        for j in range(len(crit_id)):
-            f.write("%f\t" % perfs[crit_id[j]])
-        f.write("\n")
-    f.write(";\n")
-
-    f.write("param assign :=")
-    for i in range(len(alt_id)):
-        f.write("[%d] %d " % ((i+1), cat_rank[assign[alt_id[i]]]))
-    f.write(";\n")
-
-    f.write("end;\n")
-    f.flush()
-
-    return f
 
 def glpk_solve(input_file):
     p = subprocess.Popen(["glpsol", "-m", "inf_etri_bm.mod", "-d", "%s" % input_file], stdout=subprocess.PIPE)
@@ -244,7 +214,7 @@ def main(argv=None):
         return error_list
 
     try:
-        input_file = create_glpk_input_file(alt_id, crit_id, pt, cat_id, cat_rank, assign)
+        input_file = glpk.create_input_file(alt_id, crit_id, pt, cat_id, cat_rank, assign)
     except:
         error_list.append("Impossible to create glpk input file")
 

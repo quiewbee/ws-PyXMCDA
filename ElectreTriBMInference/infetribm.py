@@ -44,6 +44,44 @@ def check_input_files(in_dir):
     if not os.path.isfile(in_dir+"/categories.xml"):
         error_list.append("No categories.xml file")
 
+def parse_xmcda_files(in_dir):
+    xml_crit = PyXMCDA.parseValidate(in_dir+"/criteria.xml")
+    xml_alt = PyXMCDA.parseValidate(in_dir+"/alternatives.xml")
+    xml_pt = PyXMCDA.parseValidate(in_dir+"/perfs_table.xml")
+    xml_assign = PyXMCDA.parseValidate(in_dir+"/assign.xml")
+    xml_cat = PyXMCDA.parseValidate(in_dir+"/categories.xml")
+
+    if xml_crit == None:
+        error_list.append("Invalid criteria file")
+        return
+    if xml_alt == None:
+        error_list.append("Invalid alternative file")
+        return
+    if xml_pt == None:
+        error_list.append("Invalid performance table file")
+        return
+    if xml_assign == None:
+        error_list.append("Invalid assignment file")
+        return
+    if xml_cat == None:
+        error_list.append("Invalid categories file")
+        return
+
+    try:
+        alt_id = PyXMCDA.getAlternativesID(xml_alt)
+        crit_id = PyXMCDA.getCriteriaID(xml_crit)
+        pt = PyXMCDA.getPerformanceTable(xml_pt, alt_id, crit_id)
+        cat_id = PyXMCDA.getCategoriesID(xml_cat)
+        cat_rank = PyXMCDA.getCategoriesRank(xml_cat, cat_id)
+        assign = PyXMCDA.getAlternativesAffectations(xml_assign)
+        pref_dir = PyXMCDA.getCriteriaPreferenceDirections(xml_crit, crit_id)
+    except:
+        error_list.append("Failed to parse one or more file")
+        return
+
+    return (alt_id, crit_id, pt, cat_id, cat_rank, assign, pref_dir)
+
+
 def convert_performance_table(pt, prefdir):
     for alt, perfs in pt.iteritems():
         for crit, perf in perfs.iteritems():
@@ -179,19 +217,10 @@ def main(argv=None):
         create_error_file(out_dir, error_list)
         return error_list
 
-    xml_crit = PyXMCDA.parseValidate(in_dir+"/criteria.xml")
-    xml_alt = PyXMCDA.parseValidate(in_dir+"/alternatives.xml")
-    xml_pt = PyXMCDA.parseValidate(in_dir+"/perfs_table.xml")
-    xml_assign = PyXMCDA.parseValidate(in_dir+"/assign.xml")
-    xml_cat = PyXMCDA.parseValidate(in_dir+"/categories.xml")
-
-    alt_id = PyXMCDA.getAlternativesID(xml_alt)
-    crit_id = PyXMCDA.getCriteriaID(xml_crit)
-    pt = PyXMCDA.getPerformanceTable(xml_pt, alt_id, crit_id)
-    cat_id = PyXMCDA.getCategoriesID(xml_cat)
-    cat_rank = PyXMCDA.getCategoriesRank(xml_cat, cat_id)
-    assign = PyXMCDA.getAlternativesAffectations(xml_assign)
-    pref_dir = PyXMCDA.getCriteriaPreferenceDirections(xml_crit, crit_id)
+    (alt_id, crit_id, pt, cat_id, cat_rank, assign, pref_dir) = parse_xmcda_files(in_dir)
+    if error_list:
+        create_error_file(out_dir, error_list)
+        return error_list
 
     log("GLPK INPUT:")
     log('alt  ids   : %s' % alt_id)
@@ -201,14 +230,24 @@ def main(argv=None):
     log('affect     : %s' % assign)
     log('pref_dir   : %s' % pref_dir)
 
-    convert_performance_table(pt, pref_dir)
+    try:
+        convert_performance_table(pt, pref_dir)
+    except:
+        error_list.append("Impossible to convert performance table")
+        create_error_file(out_dir, error_list)
+        return error_list
+        
 
     check_input_parameters(alt_id, crit_id, pt, cat_id, assign)
     if error_list:
         create_error_file(out_dir, error_list)
         return error_list
 
-    input_file = create_glpk_input_file(alt_id, crit_id, pt, cat_id, cat_rank, assign)
+    try:
+        input_file = create_glpk_input_file(alt_id, crit_id, pt, cat_id, cat_rank, assign)
+    except:
+        error_list.append("Impossible to create glpk input file")
+
     if error_list:
         create_error_file(out_dir, error_list)
         return error_list

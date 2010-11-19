@@ -1,44 +1,38 @@
-def format_criteria_weights(weights, crit_id):
+def format_criteria_weights(weights):
     output = "<criteriaValues>\n"
-    for i, crit in enumerate(crit_id):
+    for crit, weight in weights.iteritems():
         output += "\t<criterionValue>\n"
         output += "\t\t<criterionID>%s</criterionID>\n" % crit
-        output += "\t\t<value><real>%s</real></value>\n" % weights[i]
+        output += "\t\t<value><real>%s</real></value>\n" % weight
         output += "\t</criterionValue>\n"
     output += "</criteriaValues>\n"
     return output
 
-def format_category_profiles(profiles, crit_id, cat_id):
+def format_category_profiles(profiles, palts_id, cat_id):
     output = "<categoriesProfiles>\n"
     for i, profile in enumerate(profiles):
-        if i == 0 or i == len(profiles)-1:
-            continue
-
         output += "\t<categoryProfile>\n"
-        output += "\t\t<alternativeID>b%d</alternativeID>\n" % i
+        output += "\t\t<alternativeID>%s</alternativeID>\n" % palts_id[i]
         output += "\t\t<limits>\n"
-        output += "\t\t\t<lowerCategory><categoryID>%s</categoryID></lowerCategory>\n" % cat_id[i-1]
-        output += "\t\t\t<upperCategory><categoryID>%s</categoryID></upperCategory>\n" % cat_id[i]
+        output += "\t\t\t<lowerCategory><categoryID>%s</categoryID></lowerCategory>\n" % cat_id[i]
+        output += "\t\t\t<upperCategory><categoryID>%s</categoryID></upperCategory>\n" % cat_id[i+1]
         output += "\t\t</limits>\n"
         output += "\t</categoryProfile>\n"
     output += "</categoriesProfiles>\n"
     return output
 
-def format_pt_reference_alternatives(profiles, crit_id):
+def format_pt_reference_alternatives(profiles, palts_id, crit_id):
     output = "<performanceTable>\n"
     output += "\t<description>\n"
     output += "\t\t<title>Performance table of reference alternatives</title>\n"
     output += "\t</description>\n"
     for i, profile in enumerate(profiles):
-        if i == 0 or i == len(profiles)-1:
-            continue
-
         output += "\t<alternativePerformances>\n"
-        output += "\t\t<alternativeID>b%d</alternativeID>\n" % i
+        output += "\t\t<alternativeID>%s</alternativeID>\n" % palts_id[i]
         for j, crit in enumerate(crit_id): 
             output += "\t\t<performance>\n"
             output += "\t\t\t<criterionID>%s</criterionID>\n" % crit
-            output += "\t\t\t<value><real>%s</real></value>\n" % profile[j]
+            output += "\t\t\t<value><real>%s</real></value>\n" % profile['refs'][crit]
             output += "\t\t</performance>\n"
         output += "\t</alternativePerformances>\n"
 

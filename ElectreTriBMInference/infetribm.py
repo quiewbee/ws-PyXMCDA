@@ -101,45 +101,6 @@ def check_input_parameters(alt_id, crit_id, pt, cat_id, assign):
     if not assign:
         error_list.append("The assign file can't be validated.")
 
-def glpk_parse_output(output, crit_id):
-    found = output.rfind("INTEGER OPTIMAL SOLUTION FOUND")
-    if found < 0:
-        error_list.append("Integer optimal solution not found")
-
-    glpk_weigths = (output.partition("\n### Criteria weights ###\n")[2]).partition("\n### Criteria weights ###\n")[0]
-    weights = glpk_weigths.split()
-
-    glpk_profiles = (output.partition("\n### Profiles ###\n")[2]).partition("\n### Profiles ###\n")[0]
-    profiles = []
-    for profile in glpk_profiles.split("\n"):
-        profiles.append(profile.split())
-
-    glpk_lambda = (output.partition("### Lambda ###\n")[2]).partition("### Lambda ###\n")[0]
-    lbda = glpk_lambda
-
-    glpk_compat = (output.partition("### Compatible alternatives ###\n")[2]).partition("### Compatible alternatives ###\n")[0]
-    compat = glpk_compat.split()
-
-    log("GLPK OUTPUT:")
-    log("weights  : %s" % weights)
-    log("profiles : %s" % profiles)
-    log("lambda   : %s" % lbda)
-    log("compat   : %s" % compat)
-
-    if not weights:
-        error_list.append("Impossible to get weights from the solver")
-
-    if not profiles:
-        error_list.append("Impossible to get profiles from the solver")
-
-    if not lbda:
-        error_list.append("Impossible to get lambda from the solver")
-
-    if not compat:
-        error_list.append("Impossible to get compatible alternatives from the solver")
-
-    return (weights, profiles, lbda, compat)
-
 def create_output_file(xml_data, filename):
     f = open(filename, 'w')
     data = xmcda.add_xmcda_tags(xml_data)
@@ -184,6 +145,9 @@ def main(argv=None):
         create_error_file(out_dir, error_list)
         return error_list
 
+    # Name of the profile alternatives
+    palts_id = [ "b%d" % (i+1) for i in range(len(cat_id)-1) ]
+
     log("GLPK INPUT:")
     log('alt  ids   : %s' % alt_id)
     log('crit ids   : %s' % crit_id)
@@ -223,14 +187,43 @@ def main(argv=None):
 
     input_file.close()
 
-    (weights, profiles, lbda, compat) = glpk_parse_output(output, crit_id)
-    if error_list:
+#    (weights, profiles, lbda, compat) = glpk.parse_output(output, alt_id, crit_id)
+    out_params = glpk.parse_output(output, alt_id, crit_id)
+    if out_params == None:
+        error_list.append("Error parsing output parameters")
         create_error_file(out_dir, error_list)
         return error_list
 
-    out_weights = xmcda.format_criteria_weights(weights, crit_id)
-    out_catprof = xmcda.format_category_profiles(profiles, crit_id, cat_id)
-    out_refalts = xmcda.format_pt_reference_alternatives(profiles, crit_id)
+    weights = out_params[0]
+    profiles = out_params[1]
+    lbda = out_params[2]
+    compat = out_params[3]
+    
+    log("GLPK OUTPUT:")
+    log("weights  : %s" % weights)
+    log("profiles : %s" % profiles)
+    log("lambda   : %s" % lbda)
+    log("compat   : %s" % compat)
+    
+    if not weights:
+        error_list.append("Impossible to get weights from the solver")
+    
+    if not profiles:
+        error_list.append("Impossible to get profiles from the solver")
+    
+    if not lbda:
+        error_list.append("Impossible to get lambda from the solver")
+    
+    if not compat:
+        error_list.append("Impossible to get compatible alternatives from the solver")
+
+    if error_list:
+        create_error_file(out_dir, error_list)
+        return error_list
+    
+    out_weights = xmcda.format_criteria_weights(weights)
+    out_catprof = xmcda.format_category_profiles(profiles, palts_id, cat_id)
+    out_refalts = xmcda.format_pt_reference_alternatives(profiles, palts_id, crit_id)
     out_lambda = xmcda.format_lambda(lbda)
     out_compat = xmcda.format_format_compatible_alternatives(compat, alt_id)
     create_output_files(out_dir, out_weights, out_catprof, out_refalts, out_lambda, out_compat)

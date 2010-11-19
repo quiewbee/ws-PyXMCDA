@@ -51,7 +51,7 @@ def parse_output(output, alt_id, crit_id):
     found = output.rfind("INTEGER OPTIMAL SOLUTION FOUND")
     if found < 0:
         print "Integer optimal solution not found"
-        return (None, None, None, None)
+        return
 
     glpk_weigths = (output.partition("\n### Criteria weights ###\n")[2]).partition("\n### Criteria weights ###\n")[0]
     w = glpk_weigths.split()

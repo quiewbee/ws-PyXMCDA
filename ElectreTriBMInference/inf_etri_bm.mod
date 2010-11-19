@@ -89,7 +89,7 @@ printf lambda;
 printf "### Lambda ###\n";
 
 printf "### Profiles ###\n";
-for {i in 0..ncat}
+for {i in 1..ncat-1}
 {
 	for {j in CRIT}	
 		printf "%g\t", gb[i,j]*gmax[j];

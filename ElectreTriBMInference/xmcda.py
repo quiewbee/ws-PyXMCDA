@@ -41,7 +41,7 @@ def format_pt_reference_alternatives(profiles, palts_id, crit_id):
 
 def format_lambda(lbda):
     output = "<methodParameters>\n"
-    output += "\t<parameter>\n"
+    output += "\t<parameter name=\"lambda\">\n"
     output += "\t\t<value><real>%s</real></value>\n" % lbda
     output += "\t</parameter>\n"
     output += "</methodParameters>\n"

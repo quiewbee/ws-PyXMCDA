@@ -116,7 +116,9 @@ def create_output_files(out_dir, weights, catprof, refalts, lbda, compat):
 
 def create_error_file(out_dir, errors):
     msgfile = open(out_dir+"/messages.xml", 'w')
+    PyXMCDA.writeHeader(msgfile)
     PyXMCDA.writeErrorMessages(msgfile, errors)
+    PyXMCDA.writeFooter(msgfile)
     msgfile.close()
 
 def create_log_file(out_dir, logs):

@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" href="xmcdaXSL.xsl"?>
+<xmcda:XMCDA xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.decision-deck.org/2009/XMCDA-2.0.0 file:../XMCDA-2.0.0.xsd" xmlns:xmcda="http://www.decision-deck.org/2009/XMCDA-2.0.0" instanceID="void">
+
+<alternativesAffectations>
+	<alternativeAffectation>
+		<alternativeID>x1</alternativeID>
+		<categoryID>cat3</categoryID>
+	</alternativeAffectation>
+	<alternativeAffectation>
+		<alternativeID>x2</alternativeID>
+		<categoryID>cat2</categoryID>
+	</alternativeAffectation>
+	<alternativeAffectation>
+		<alternativeID>x3</alternativeID>
+		<categoryID>cat1</categoryID>
+	</alternativeAffectation>
+	<alternativeAffectation>
+		<alternativeID>x4</alternativeID>
+		<categoryID>cat4</categoryID>
+	</alternativeAffectation>
+	<alternativeAffectation>
+		<alternativeID>x5</alternativeID>
+		<categoryID>cat1</categoryID>
+	</alternativeAffectation>
+	<alternativeAffectation>
+		<alternativeID>x6</alternativeID>
+		<categoryID>cat2</categoryID>
+	</alternativeAffectation>
+	<alternativeAffectation>
+		<alternativeID>x7</alternativeID>
+		<categoryID>cat2</categoryID>
+	</alternativeAffectation>
+</alternativesAffectations>
+
+</xmcda:XMCDA>

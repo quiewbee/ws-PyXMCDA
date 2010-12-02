@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" href="xmcdaXSL.xsl"?>
+<xmcda:XMCDA xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.decision-deck.org/2009/XMCDA-2.0.0 file:../XMCDA-2.0.0.xsd" xmlns:xmcda="http://www.decision-deck.org/2009/XMCDA-2.0.0" instanceID="void">
+
+<criteria>
+	<description>
+		<title>List of criteria</title>
+	</description>
+	<criterion id="g1"></criterion>
+	<criterion id="g2"></criterion>
+	<criterion id="g3"></criterion>
+	<criterion id="g4"></criterion>
+	<criterion id="g5"></criterion>
+	<criterion id="g6"></criterion>
+	<criterion id="g7"></criterion>
+	<criterion id="g8"></criterion>
+	<criterion id="g9"></criterion>
+	<criterion id="g10"></criterion>
+	<criterion id="g11"></criterion>
+</criteria>
+
+</xmcda:XMCDA>

@@ -3,7 +3,7 @@
        <program provider="PyXMCDA"
               name="CondorcetRobustnessRelation"
               displayName="CondorcetRobustnessRelation"
-              version="1.0" />
+              version="1.3.1" />
        <documentation>
               <description>This web service allows to compute the Condorcet robustness denotation associated to the concordance relation as defined in the Rubis methodology.</description>
               <reference>R. Bisdorff. Logical Foundation of Multicriteria Preference Aggregation. In Bouyssou D et al. (eds) Aiding Decisions with Multiple Criteria. Kluwer Academic Publishers, pp. 379-403, 2002.</reference>

@@ -11,8 +11,6 @@ set CRIT := 1..ncrit; /* set of criteria */
 param perfs{i in ALTS, j in CRIT};
 param assign{ALTS};
 
-param gmax{j in CRIT} := max{i in ALTS} perfs[i,j];
-
 /* Variables */
 var epsilon = 10e-3;
 var lambda  >= 0.5;
@@ -53,22 +51,22 @@ s.t. csup3{i in ALTS, j in CRIT}:
 	c_sup[i,j] >= d_sup[i,j] - 1 + weight[j];
 
 s.t. dinf{i in ALTS, j in CRIT}:
-	d_inf[i,j] >= perfs[i,j]/gmax[j] - gb[assign[i]-1,j] + epsilon;
+	d_inf[i,j] >= perfs[i,j] - gb[assign[i]-1,j] + epsilon;
 
 s.t. dsup{i in ALTS, j in CRIT}:
-	d_sup[i,j] >= perfs[i,j]/gmax[j] - gb[assign[i],j] + epsilon;
+	d_sup[i,j] >= perfs[i,j] - gb[assign[i],j] + epsilon;
 
 s.t. dinf2{i in ALTS, j in CRIT}:
-	d_inf[i,j] <= perfs[i,j]/gmax[j] - gb[assign[i]-1,j] + 1;
+	d_inf[i,j] <= perfs[i,j] - gb[assign[i]-1,j] + 1;
 
 s.t. dsup2{i in ALTS, j in CRIT}:
-	d_sup[i,j] <= perfs[i,j]/gmax[j] - gb[assign[i],j] + 1;
+	d_sup[i,j] <= perfs[i,j] - gb[assign[i],j] + 1;
 
 s.t. gblim{i in 1..ncat-1, j in CRIT}:
 	gb[i,j] <= gb[i+1,j];
 
 s.t. gbliminf{j in CRIT}:
-	gb[0,j] = 0;
+	gb[0,j] = 0 + epsilon;
 
 s.t. gblimsup{j in CRIT}:
 	gb[ncat,j] = 1;
@@ -92,7 +90,7 @@ printf "### Profiles ###\n";
 for {i in 1..ncat-1}
 {
 	for {j in CRIT}	
-		printf "%g\t", gb[i,j]*gmax[j];
+		printf "%g\t", gb[i,j];
 	printf "\n";
 }
 printf "### Profiles ###\n";

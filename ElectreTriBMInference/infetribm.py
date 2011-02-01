@@ -11,6 +11,7 @@ import PyXMCDA
 
 error_list = []
 verbose = False
+verbose = True
 
 def log(msg):
     if verbose == True:
@@ -82,12 +83,34 @@ def parse_xmcda_files(in_dir):
 
     return (alt_id, crit_id, pt, cat_id, cat_rank, assign, pref_dir)
 
+def get_min_max(pt):
+    gmax = {}
+    gmin = {}
+    for alt, perfs in pt.iteritems():
+        for crit, perf in perfs.iteritems():
+            if gmax.has_key(crit) == False or perf > gmax[crit]:
+                gmax[crit] = perf
 
-def convert_performance_table(pt, prefdir):
+            if gmin.has_key(crit) == False or perf < gmin[crit]:
+                gmin[crit] = perf
+
+    return (gmin, gmax)
+
+def normalize(pt, gmin, gmax, prefdir):
     for alt, perfs in pt.iteritems():
         for crit, perf in perfs.iteritems():
             if prefdir[crit] == "min":
-                pt[alt][crit] = -perf
+                pt[alt][crit] = float(gmax[crit]-perf)/(gmax[crit]-gmin[crit])
+            else:
+                pt[alt][crit] = float(perf-gmin[crit])/(gmax[crit]-gmin[crit])
+
+def denormalize(pt, gmin, gmax, prefdir):
+    for alt, perfs in pt.iteritems():
+        for crit, perf in perfs.iteritems():
+            if prefdir[crit] == "min":
+                pt[alt][crit] = gmax[crit] - float(perf)*(gmax[crit]-gmin[crit])
+            else:
+                pt[alt][crit] = gmin[crit] + float(perf)*(gmax[crit]-gmin[crit])
 
 def check_input_parameters(alt_id, crit_id, pt, cat_id, assign):
     if not alt_id:
@@ -159,7 +182,8 @@ def main(argv=None):
     log('pref_dir   : %s' % pref_dir)
 
     try:
-        convert_performance_table(pt, pref_dir)
+        (gmin, gmax) = get_min_max(pt)
+        normalize(pt, gmax, gmin, pref_dir) 
     except:
         error_list.append("Impossible to convert performance table")
         create_error_file(out_dir, error_list)
@@ -189,7 +213,6 @@ def main(argv=None):
 
     input_file.close()
 
-#    (weights, profiles, lbda, compat) = glpk.parse_output(output, alt_id, crit_id)
     out_params = glpk.parse_output(output, alt_id, crit_id)
     if out_params == None:
         error_list.append("Error parsing output parameters")
@@ -198,6 +221,8 @@ def main(argv=None):
 
     weights = out_params[0]
     profiles = out_params[1]
+    for profile in profiles:
+        denormalize(profile, gmin, gmax, pref_dir)
     lbda = out_params[2]
     compat = out_params[3]
     

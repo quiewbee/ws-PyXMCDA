@@ -83,6 +83,22 @@ def parse_xmcda_files(in_dir):
 
     return (alt_id, crit_id, pt, cat_id, cat_rank, assign, pref_dir)
 
+def get_fixed_parameters(in_dir, crit_id):
+    try:
+        xml_weights = PyXMCDA.parseValidate(in_dir+"/crit_weights.xml")
+        weights = PyXMCDA.getCriterionValue(xml_weights, crit_id) 
+        weights_sum = sum(weights.values())
+        for value in weights.values():
+            value = value/weights_sum
+
+        xml_lbda = PyXMCDA.parseValidate(in_dir+"/lambda.xml")
+        lbda = xmcda.get_lambda(xml_lbda)
+    except:
+        weights = None
+        lbda = None
+
+    return (weights, lbda)
+
 def get_min_max(pt):
     gmax = {}
     gmin = {}
@@ -181,6 +197,11 @@ def main(argv=None):
     log('affect     : %s' % assign)
     log('pref_dir   : %s' % pref_dir)
 
+    check_input_parameters(alt_id, crit_id, pt, cat_id, assign)
+    if error_list:
+        create_error_file(out_dir, error_list)
+        return error_list
+
     try:
         (gmin, gmax) = get_min_max(pt)
         normalize(pt, gmax, gmin, pref_dir) 
@@ -189,14 +210,19 @@ def main(argv=None):
         create_error_file(out_dir, error_list)
         return error_list
         
+    fixed_params = get_fixed_parameters(in_dir, crit_id)
+    fixed_weights = fixed_params[0]
+    fixed_lambda = fixed_params[1]
+    log('fixed_weights  : %s' % fixed_weights)
+    log('fixed_lambda  : %s' % fixed_lambda)
 
-    check_input_parameters(alt_id, crit_id, pt, cat_id, assign)
-    if error_list:
-        create_error_file(out_dir, error_list)
-        return error_list
+    if fixed_weights:
+        glpk_model = "inf_etri_bm_fixed_weights.mod"
+    else:
+        glpk_model = "inf_etri_bm.mod"
 
     try:
-        input_file = glpk.create_input_file(alt_id, crit_id, pt, cat_id, cat_rank, assign)
+        input_file = glpk.create_input_file(alt_id, crit_id, pt, cat_id, cat_rank, assign, fixed_weights, fixed_lambda)
     except:
         error_list.append("Impossible to create glpk input file")
 
@@ -204,7 +230,7 @@ def main(argv=None):
         create_error_file(out_dir, error_list)
         return error_list
 
-    (status, output) = glpk.solve(input_file.name)
+    (status, output) = glpk.solve(glpk_model, input_file.name)
     if status:
         error_list.append("gklp returned status %d" % status);
         input_file.close()

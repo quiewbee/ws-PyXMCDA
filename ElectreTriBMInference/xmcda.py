@@ -69,3 +69,7 @@ def add_xmcda_tags(xml_data):
     output += xml_data
     output += "</xmcda:XMCDA>\n"
     return output
+
+def get_lambda(xmltree):
+    xml_lbda = xmltree.find(".//methodParameters/parameter/value/real")
+    return float(xml_lbda.text)

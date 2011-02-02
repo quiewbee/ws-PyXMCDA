@@ -11,7 +11,6 @@ import PyXMCDA
 
 error_list = []
 verbose = False
-verbose = True
 
 def log(msg):
     if verbose == True:

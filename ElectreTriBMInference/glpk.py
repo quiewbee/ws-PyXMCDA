@@ -2,7 +2,7 @@ import tempfile
 import subprocess
 
 def create_input_file(alt_id, crit_id, pt, cat_id, cat_rank, assign, weights=None, lbda=None, profiles=None):
-    f = tempfile.NamedTemporaryFile(delete=False)
+    f = tempfile.NamedTemporaryFile(delete=True)
     if not f:
         return None
 

@@ -73,3 +73,18 @@ def add_xmcda_tags(xml_data):
 def get_lambda(xmltree):
     xml_lbda = xmltree.find(".//methodParameters/parameter/value/real")
     return float(xml_lbda.text)
+
+def get_categories_profiles(xmltree):
+    cat_profiles = xmltree.find(".//categoriesProfiles")
+    if cat_profiles == None:
+        return None
+
+    output = {}
+    cat_profiles = cat_profiles.findall(".//categoryProfile")
+    for cat_profile in cat_profiles :
+        alt = cat_profile.find("alternativeID").text
+        output[alt] = {}
+        output[alt]["lower"] = cat_profile.find(".//limits/lowerCategory/categoryID").text
+        output[alt]["upper"] = cat_profile.find(".//limits/upperCategory/categoryID").text
+
+    return output

@@ -83,21 +83,51 @@ def parse_xmcda_files(in_dir):
 
     return (alt_id, crit_id, pt, cat_id, cat_rank, assign, pref_dir)
 
-def get_fixed_parameters(in_dir, crit_id):
+def get_fixed_parameters(in_dir, alt_id, crit_id, pt, cat_id, cat_rank, pref_dir, gmax, gmin):
     try:
         xml_weights = PyXMCDA.parseValidate(in_dir+"/crit_weights.xml")
+        xml_lbda = PyXMCDA.parseValidate(in_dir+"/lambda.xml")
+
         weights = PyXMCDA.getCriterionValue(xml_weights, crit_id) 
         weights_sum = sum(weights.values())
         for value in weights.values():
             value = value/weights_sum
 
-        xml_lbda = PyXMCDA.parseValidate(in_dir+"/lambda.xml")
         lbda = xmcda.get_lambda(xml_lbda)
     except:
         weights = None
         lbda = None
 
-    return (weights, lbda)
+    try:
+        xml_catprofiles = PyXMCDA.parseValidate(in_dir+"/cat_profiles.xml")
+        xml_refalts = PyXMCDA.parseValidate(in_dir+"/reference_alts.xml")
+        cat_profiles = xmcda.get_categories_profiles(xml_catprofiles)
+        pt_refalts = PyXMCDA.getPerformanceTable(xml_refalts, cat_id, crit_id)
+        normalize(pt_refalts, gmin, gmax, pref_dir) 
+        profiles = get_sorted_profiles(cat_profiles, cat_rank, pt_refalts)
+    except:
+        profiles = None
+
+    return (weights, lbda, profiles)
+
+def get_sorted_profiles(cat_profiles, cat_rank, pt):
+    lower_cat_rank = {}
+    for profile, limits in cat_profiles.iteritems():
+        lower_cat_rank[profile] = limits["lower"]
+
+
+    profiles_rank = {}
+    for profile, category in lower_cat_rank.iteritems():
+        profiles_rank[cat_rank[category]] = profile
+
+    ranks = profiles_rank.keys()
+    ranks.sort()
+    pt_profiles = []
+    for rank in ranks:
+        profile = profiles_rank[rank]
+        pt_profiles.append(pt[profile])
+
+    return pt_profiles
 
 def get_min_max(pt):
     gmax = {}
@@ -204,25 +234,29 @@ def main(argv=None):
 
     try:
         (gmin, gmax) = get_min_max(pt)
-        normalize(pt, gmax, gmin, pref_dir) 
+        normalize(pt, gmin, gmax, pref_dir) 
     except:
         error_list.append("Impossible to convert performance table")
         create_error_file(out_dir, error_list)
         return error_list
         
-    fixed_params = get_fixed_parameters(in_dir, crit_id)
+    fixed_params = get_fixed_parameters(in_dir, alt_id, crit_id, pt, cat_id, cat_rank, pref_dir, gmax, gmin)
     fixed_weights = fixed_params[0]
     fixed_lambda = fixed_params[1]
+    fixed_profiles = fixed_params[2]
     log('fixed_weights  : %s' % fixed_weights)
     log('fixed_lambda  : %s' % fixed_lambda)
+    log('fixed_profiles  : %s' % fixed_profiles)
 
     if fixed_weights:
         glpk_model = "inf_etri_bm_fixed_weights.mod"
+    elif fixed_profiles:
+        glpk_model = "inf_etri_bm_fixed_profiles.mod"
     else:
         glpk_model = "inf_etri_bm.mod"
 
     try:
-        input_file = glpk.create_input_file(alt_id, crit_id, pt, cat_id, cat_rank, assign, fixed_weights, fixed_lambda)
+        input_file = glpk.create_input_file(alt_id, crit_id, pt, cat_id, cat_rank, assign, fixed_weights, fixed_lambda, fixed_profiles)
     except:
         error_list.append("Impossible to create glpk input file")
 

@@ -9,54 +9,7 @@
 		<alternativeID>b1</alternativeID>
 		<performance>
 			<criterionID>g1</criterionID>
-			<value><real>3.0</real></value>
-		</performance>
-		<performance>
-			<criterionID>g2</criterionID>
-			<value><real>3.0</real></value>
-		</performance>
-		<performance>
-			<criterionID>g3</criterionID>
-			<value><real>2.0</real></value>
-		</performance>
-		<performance>
-			<criterionID>g4</criterionID>
-			<value><real>2.0</real></value>
-		</performance>
-		<performance>
-			<criterionID>g5</criterionID>
-			<value><real>1.999999</real></value>
-		</performance>
-		<performance>
-			<criterionID>g6</criterionID>
-			<value><real>1.999999</real></value>
-		</performance>
-		<performance>
-			<criterionID>g7</criterionID>
-			<value><real>2.0</real></value>
-		</performance>
-		<performance>
-			<criterionID>g8</criterionID>
-			<value><real>2.0</real></value>
-		</performance>
-		<performance>
-			<criterionID>g9</criterionID>
-			<value><real>2.0</real></value>
-		</performance>
-		<performance>
-			<criterionID>g10</criterionID>
-			<value><real>3.0</real></value>
-		</performance>
-		<performance>
-			<criterionID>g11</criterionID>
-			<value><real>1.04</real></value>
-		</performance>
-	</alternativePerformances>
-	<alternativePerformances>
-		<alternativeID>b2</alternativeID>
-		<performance>
-			<criterionID>g1</criterionID>
-			<value><real>3.0</real></value>
+			<value><real>1.0</real></value>
 		</performance>
 		<performance>
 			<criterionID>g2</criterionID>
@@ -72,27 +25,74 @@
 		</performance>
 		<performance>
 			<criterionID>g5</criterionID>
-			<value><real>1.999999</real></value>
+			<value><real>1.0</real></value>
 		</performance>
 		<performance>
 			<criterionID>g6</criterionID>
-			<value><real>1.999999</real></value>
+			<value><real>1.0</real></value>
 		</performance>
 		<performance>
 			<criterionID>g7</criterionID>
-			<value><real>2.0</real></value>
+			<value><real>2.02</real></value>
 		</performance>
 		<performance>
 			<criterionID>g8</criterionID>
-			<value><real>2.04</real></value>
+			<value><real>4.04</real></value>
 		</performance>
 		<performance>
 			<criterionID>g9</criterionID>
-			<value><real>2.0</real></value>
+			<value><real>2.02</real></value>
 		</performance>
 		<performance>
 			<criterionID>g10</criterionID>
+			<value><real>1.02</real></value>
+		</performance>
+		<performance>
+			<criterionID>g11</criterionID>
+			<value><real>1.04</real></value>
+		</performance>
+	</alternativePerformances>
+	<alternativePerformances>
+		<alternativeID>b2</alternativeID>
+		<performance>
+			<criterionID>g1</criterionID>
+			<value><real>1.02</real></value>
+		</performance>
+		<performance>
+			<criterionID>g2</criterionID>
 			<value><real>3.0</real></value>
+		</performance>
+		<performance>
+			<criterionID>g3</criterionID>
+			<value><real>3.0</real></value>
+		</performance>
+		<performance>
+			<criterionID>g4</criterionID>
+			<value><real>2.0</real></value>
+		</performance>
+		<performance>
+			<criterionID>g5</criterionID>
+			<value><real>3.030001</real></value>
+		</performance>
+		<performance>
+			<criterionID>g6</criterionID>
+			<value><real>3.000001</real></value>
+		</performance>
+		<performance>
+			<criterionID>g7</criterionID>
+			<value><real>2.02</real></value>
+		</performance>
+		<performance>
+			<criterionID>g8</criterionID>
+			<value><real>4.04</real></value>
+		</performance>
+		<performance>
+			<criterionID>g9</criterionID>
+			<value><real>2.02</real></value>
+		</performance>
+		<performance>
+			<criterionID>g10</criterionID>
+			<value><real>1.02</real></value>
 		</performance>
 		<performance>
 			<criterionID>g11</criterionID>
@@ -111,7 +111,7 @@
 		</performance>
 		<performance>
 			<criterionID>g3</criterionID>
-			<value><real>2.02</real></value>
+			<value><real>3.0</real></value>
 		</performance>
 		<performance>
 			<criterionID>g4</criterionID>
@@ -119,27 +119,27 @@
 		</performance>
 		<performance>
 			<criterionID>g5</criterionID>
-			<value><real>1.999999</real></value>
+			<value><real>4.0</real></value>
 		</performance>
 		<performance>
 			<criterionID>g6</criterionID>
-			<value><real>1.999999</real></value>
+			<value><real>3.000001</real></value>
 		</performance>
 		<performance>
 			<criterionID>g7</criterionID>
-			<value><real>2.02</real></value>
+			<value><real>3.0</real></value>
 		</performance>
 		<performance>
 			<criterionID>g8</criterionID>
-			<value><real>2.04</real></value>
+			<value><real>5.0</real></value>
 		</performance>
 		<performance>
 			<criterionID>g9</criterionID>
-			<value><real>3.0</real></value>
+			<value><real>2.02</real></value>
 		</performance>
 		<performance>
 			<criterionID>g10</criterionID>
-			<value><real>3.0</real></value>
+			<value><real>1.02</real></value>
 		</performance>
 		<performance>
 			<criterionID>g11</criterionID>

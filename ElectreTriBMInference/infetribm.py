@@ -83,29 +83,43 @@ def parse_xmcda_files(in_dir):
     return (alt_id, crit_id, pt, cat_id, cat_rank, assign, pref_dir)
 
 def get_fixed_parameters(in_dir, alt_id, crit_id, pt, cat_id, cat_rank, pref_dir, gmax, gmin):
-    try:
-        xml_weights = PyXMCDA.parseValidate(in_dir+"/crit_weights.xml")
-        xml_lbda = PyXMCDA.parseValidate(in_dir+"/lambda.xml")
+    weights = None
+    lbda = None
+    profiles = None
 
-        weights = PyXMCDA.getCriterionValue(xml_weights, crit_id) 
-        weights_sum = sum(weights.values())
-        for value in weights.values():
-            value = value/weights_sum
+    xml_weights = PyXMCDA.parseValidate(in_dir+"/crit_weights.xml")
+    xml_lbda = PyXMCDA.parseValidate(in_dir+"/lambda.xml")
+    xml_catprofiles = PyXMCDA.parseValidate(in_dir+"/cat_profiles.xml")
+    xml_refalts = PyXMCDA.parseValidate(in_dir+"/reference_alts.xml")
 
-        lbda = xmcda.get_lambda(xml_lbda)
-    except:
-        weights = None
-        lbda = None
+    if xml_weights != None and xml_lbda != None:
+        if xml_weights == None or xml_lbda == None:
+            error_list.append("You must give both weights and lambda")
+            
+        try:
+            weights = PyXMCDA.getCriterionValue(xml_weights, crit_id) 
+            weights_sum = sum(weights.values())
+            for value in weights.values():
+                value = value/weights_sum
 
-    try:
-        xml_catprofiles = PyXMCDA.parseValidate(in_dir+"/cat_profiles.xml")
-        xml_refalts = PyXMCDA.parseValidate(in_dir+"/reference_alts.xml")
-        cat_profiles = xmcda.get_categories_profiles(xml_catprofiles)
-        pt_refalts = PyXMCDA.getPerformanceTable(xml_refalts, cat_id, crit_id)
-        normalize(pt_refalts, gmin, gmax, pref_dir) 
-        profiles = get_sorted_profiles(cat_profiles, cat_rank, pt_refalts)
-    except:
-        profiles = None
+            lbda = xmcda.get_lambda(xml_lbda)
+        except:
+            error_list.append("Unable to get fixed weights or lambda")
+
+    if xml_catprofiles != None and xml_refalts != None:
+        if xml_catprofiles == None or xml_refalts == None:
+            error_list.append("You must give both categories profiles and performance table of reference alternatives")
+
+        try:
+            cat_profiles = xmcda.get_categories_profiles(xml_catprofiles)
+            pt_refalts = PyXMCDA.getPerformanceTable(xml_refalts, cat_id, crit_id)
+            normalize(pt_refalts, gmin, gmax, pref_dir) 
+            profiles = get_sorted_profiles(cat_profiles, cat_rank, pt_refalts)
+        except:
+            error_list.append("Unable to get fixed profiles")
+
+    if weights != None and lbda != None and profiles != None:
+        error_list.append("No parameters to infer")
 
     return (weights, lbda, profiles)
 
@@ -253,6 +267,8 @@ def main(argv=None):
         glpk_model = "inf_etri_bm_fixed_profiles.mod"
     else:
         glpk_model = "inf_etri_bm.mod"
+
+    log("GLPK model used: %s" % glpk_model)
 
     try:
         input_file = glpk.create_input_file(alt_id, crit_id, pt, cat_id, cat_rank, assign, fixed_weights, fixed_lambda, fixed_profiles)

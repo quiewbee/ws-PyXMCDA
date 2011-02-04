@@ -31,7 +31,7 @@ def create_input_file(alt_id, crit_id, pt, cat_id, cat_rank, assign, weights=Non
         for i in range(len(crit_id)):
             f.write("[%d] %f " % ((i+1), weights[crit_id[j]]))
         f.write(";\n")
-        f.write("param weight := %f;\n" % lbda)
+        f.write("param lambda := %f;\n" % lbda)
 
     if profiles <> None:
         f.write("param profiles :\t")

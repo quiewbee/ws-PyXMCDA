@@ -46,6 +46,7 @@
 			<documentation>
 				<description>The set of criteria weights to use (optional)</description>
 			</documentation>
+			<xmcda tag="criteriaValues" />
 		</input>
 		<input id="lambda" name="lambda" displayName="lambda" isoptional="1">
 			<documentation>

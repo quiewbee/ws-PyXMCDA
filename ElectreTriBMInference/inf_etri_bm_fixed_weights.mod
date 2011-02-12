@@ -15,7 +15,7 @@ param weight{CRIT}, >= 0;
 param lambda;
 
 /* Variables */
-var epsilon = 10e-3;
+var epsilon = 10e-5;
 var c_sup{ALTS,CRIT}  >= 0;
 var c_inf{ALTS,CRIT}  >= 0;
 var gamma{ALTS}, binary;

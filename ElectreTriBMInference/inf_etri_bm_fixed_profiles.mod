@@ -13,7 +13,7 @@ param assign{ALTS};
 param profiles{1..ncat-1,CRIT}, >= 0;
 
 /* Variables */
-var epsilon = 10e-3;
+var epsilon = 10e-5;
 var lambda  >= 0.5;
 var c_sup{ALTS,CRIT}  >= 0;
 var c_inf{ALTS,CRIT}  >= 0;

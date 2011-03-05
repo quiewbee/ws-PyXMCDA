@@ -29,7 +29,7 @@ def create_input_file(alt_id, crit_id, pt, cat_id, cat_rank, assign, weights=Non
     if weights <> None:
         f.write("param weight :=")
         for i in range(len(crit_id)):
-            f.write("[%d] %f " % ((i+1), weights[crit_id[j]]))
+            f.write("[%d] %f " % ((i+1), weights[crit_id[i]]))
         f.write(";\n")
         f.write("param lambda := %f;\n" % lbda)
 

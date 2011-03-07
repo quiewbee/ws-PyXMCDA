@@ -99,8 +99,8 @@ def get_fixed_parameters(in_dir, alt_id, crit_id, pt, cat_id, cat_rank, pref_dir
         try:
             weights = PyXMCDA.getCriterionValue(xml_weights, crit_id) 
             weights_sum = sum(weights.values())
-            for value in weights.values():
-                value = value/weights_sum
+            for key, value in weights.iteritems():
+                weights[key] = value/weights_sum
 
             lbda = xmcda.get_lambda(xml_lbda)
         except:

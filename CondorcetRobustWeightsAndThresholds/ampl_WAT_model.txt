@@ -1,0 +1,147 @@
+reset;
+
+/* ****** sets ****** */
+
+set CRITERIA;
+
+param nbCriteria := card (CRITERIA) ;
+
+param maxWeight;
+
+set WEIGHTUNIT := 1 .. maxWeight ;
+
+set LAST := maxWeight .. maxWeight ;
+
+set WEIGHTDIFFLAST := WEIGHTUNIT diff LAST ;
+
+set ALLPAIRS;
+
+set ROBUSTPREFPAIRS; /* Les paires pour lesquelles un surclassement robuste est possible */
+
+set ROBUSTnotPREFPAIRS; /* Les paires ordonnees dans l'autre sens, pour obtenir le surclassement negatif */
+
+set SIMPLEPREFPAIRS; /* Les paires pour lesquels on ne pourra pas assurer de surclassement robuste */
+
+set SIMPLEnotPREFPAIRS;
+
+set PAIRSINFOS := ROBUSTPREFPAIRS union ROBUSTnotPREFPAIRS union SIMPLEPREFPAIRS union SIMPLEnotPREFPAIRS; /* Les paires pour lesquelles on a une info preferentielle */
+
+set PAIRSROBUST := ROBUSTPREFPAIRS union ROBUSTnotPREFPAIRS;
+
+set PAIRSSIMPLE := SIMPLEPREFPAIRS union SIMPLEnotPREFPAIRS;
+
+set PAIRSPREF := ROBUSTPREFPAIRS union SIMPLEPREFPAIRS;
+
+set PAIRSnotPREF := ROBUSTnotPREFPAIRS union SIMPLEnotPREFPAIRS;
+
+param Perf{ab in PAIRSINFOS, j in CRITERIA};
+
+/*param SureOut{ab in PAIRSINFOS, j in CRITERIA};*/
+
+param MaxCrit{j in CRITERIA}; /* Les valeurs les plus elevees sur chaque critere, pour pouvoir normaliser */
+
+param cpt; /* Un compteur d'iteration pour les problemes de licence */
+
+/* ****** variables ****** */
+
+var Accumulator{j in CRITERIA, k in WEIGHTUNIT} binary;
+
+var bin2{ab in ROBUSTPREFPAIRS, k in WEIGHTUNIT} binary;
+
+var binm2{ab in ROBUSTnotPREFPAIRS, k in WEIGHTUNIT} binary;
+
+var slack2{ab in ROBUSTPREFPAIRS, k in WEIGHTUNIT}  >= 0;
+
+var slackm2{ab in ROBUSTnotPREFPAIRS, k in WEIGHTUNIT}  >= 0;
+
+var q{j in CRITERIA} >= 0, <= MaxCrit[j]; /* Les seuils d'indif */
+
+var p{j in CRITERIA} >= 0, <= MaxCrit[j]; /* Les seuils de pref */
+
+var alpha{ab in PAIRSINFOS, j in CRITERIA} binary;
+
+var beta{ab in PAIRSINFOS, j in CRITERIA} binary; 
+
+var w1{ab in PAIRSINFOS, j in CRITERIA} >= -maxWeight, <= maxWeight;
+
+var w2{ab in PAIRSINFOS, j in CRITERIA, k in WEIGHTUNIT} >= -1, <= 1;
+
+/* ****** objective function ****** */
+
+param weightSlack2 := maxWeight * 10 ;
+
+minimize obj:  (sum{i in CRITERIA} sum{k in WEIGHTUNIT} Accumulator[i,k]) + (weightSlack2*sum{ab in ROBUSTPREFPAIRS, k in WEIGHTUNIT} slack2[ab,k]) + (weightSlack2*sum{ab in ROBUSTnotPREFPAIRS, k in WEIGHTUNIT} slackm2[ab,k]);
+
+
+/* ****** constraints ****** */
+
+/* constraints on weights */
+
+s.t. noNullWeight : sum {j in CRITERIA} Accumulator[j,1] = nbCriteria;
+
+s.t. cumulating{j in CRITERIA, k in WEIGHTDIFFLAST} : Accumulator[j,k] >= Accumulator[j,k+1];
+
+
+/* ***** constraints on majority denotations ***** */
+
+/* constraints for prefered pairs */
+
+s.t. ctVal2rob{k in WEIGHTUNIT, ab in ROBUSTPREFPAIRS} : sum {j in CRITERIA} (w2[ab,j,k]) + slack2[ab,k] >= bin2[ab,k];
+
+s.t. ctValm2rob{k in WEIGHTUNIT, ab in ROBUSTnotPREFPAIRS} : sum {j in CRITERIA} (-w2[ab,j,k]) + slackm2[ab,k] >= binm2[ab,k];
+
+/* constraints on w2 */
+
+s.t. ctw2aLeft{k in WEIGHTUNIT, ab in PAIRSROBUST, j in CRITERIA} : -Accumulator[j,k] <= w2[ab,j,k];
+
+s.t. ctw2aRight{k in WEIGHTUNIT, ab in PAIRSROBUST, j in CRITERIA} : w2[ab,j,k] <= Accumulator[j,k];
+
+s.t. ctw2b{k in WEIGHTUNIT, ab in PAIRSROBUST, j in CRITERIA} : Accumulator[j,k] + alpha[ab,j] - beta[ab,j] - 1 <= w2[ab,j,k];
+
+s.t. ctw2c{k in WEIGHTUNIT, ab in PAIRSROBUST, j in CRITERIA} : w2[ab,j,k] <= Accumulator[j,k] + alpha[ab,j] - beta[ab,j] +1;
+
+s.t. ctw2dLeft{k in WEIGHTUNIT, ab in PAIRSROBUST, j in CRITERIA} : -alpha[ab,j] - beta[ab,j] <= w2[ab,j,k];
+
+s.t. ctw2dRight{k in WEIGHTUNIT, ab in PAIRSROBUST, j in CRITERIA} : w2[ab,j,k] <= alpha[ab,j] + beta[ab,j];
+
+/* strict majority and minority enforcing  */
+
+s.t. ctbin2{ab in ROBUSTPREFPAIRS} : sum{k in WEIGHTUNIT} bin2[ab,k] >= 1;
+
+s.t. ctbinm2{ab in ROBUSTnotPREFPAIRS} : sum{k in WEIGHTUNIT} binm2[ab,k] >= 1;
+
+/* hard majority and minority constraints */
+
+s.t. ctVal1{ab in PAIRSPREF} : sum {j in CRITERIA} w1[ab,j] >= 1;
+
+s.t. ctValm1{ab in PAIRSnotPREF} : sum {j in CRITERIA} -w1[ab,j] >= 1;
+
+/* constraints on w1 */
+
+s.t. ctw1aLeft{ab in PAIRSINFOS, j in CRITERIA} : sum{k in WEIGHTUNIT} (-Accumulator[j,k]) <= w1[ab,j];
+
+s.t. ctw1aRight{ab in PAIRSINFOS, j in CRITERIA} : w1[ab,j] <= sum{k in WEIGHTUNIT} (Accumulator[j,k]);
+
+s.t. ctw1b{ab in PAIRSINFOS, j in CRITERIA} : sum{k in WEIGHTUNIT} (Accumulator[j,k]) + (alpha[ab,j] - beta[ab,j])*maxWeight - maxWeight <= w1[ab,j];
+
+s.t. ctw1c{ab in PAIRSINFOS, j in CRITERIA} : w1[ab,j] <= sum{k in WEIGHTUNIT} (Accumulator[j,k]) + (alpha[ab,j] - beta[ab,j])*maxWeight + maxWeight;
+
+s.t. ctw1dLeft{ab in PAIRSINFOS, j in CRITERIA} : (-alpha[ab,j] - beta[ab,j])*maxWeight <= w1[ab,j];
+
+s.t. ctw1dRight{ab in PAIRSINFOS, j in CRITERIA} : w1[ab,j] <= (alpha[ab,j] + beta[ab,j])*maxWeight;
+
+/* constraints on alpha and beta */
+
+s.t. ctalpha1{j in CRITERIA, ab in PAIRSINFOS} : 2*(alpha[ab,j]-1)*MaxCrit[j] <= Perf[ab,j] + q[j];
+
+s.t. ctalpha2{j in CRITERIA, ab in PAIRSINFOS} : Perf[ab,j] + q[j] <= 2*alpha[ab,j]*MaxCrit[j];
+
+s.t. ctbeta1{j in CRITERIA, ab in PAIRSINFOS} : (-beta[ab,j])*2*MaxCrit[j] <= Perf[ab,j] + p[j];
+
+s.t. ctbeta2{j in CRITERIA, ab in PAIRSINFOS} : Perf[ab,j] + p[j] <= 2*(1-beta[ab,j])*MaxCrit[j];
+
+/* constraints between p and q thresholds */
+
+s.t. ctqp{j in CRITERIA} : q[j] <= p[j];
+
+/* constraints for the decision-maker's preference on the weights */

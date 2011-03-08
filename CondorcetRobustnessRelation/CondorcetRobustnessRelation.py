@@ -7,7 +7,7 @@ import PyXMCDA
 
 from optparse import OptionParser
 
-VERSION = "1.2.1"
+VERSION = "1.3.1"
 
 
 ###
@@ -112,12 +112,6 @@ def main(argv=None):
 			return
 	
 	uniqueWeights = sorted(uniqueWeights, reverse=True)
-	
-	# We transform the values for criteria to be minimized
-	for crit in criteriaId:
-		if criteriaDir.has_key (crit) and criteriaDir[crit] == "min" :
-			for alt in alternativesId:			
-				perfTable[alt][crit] = - perfTable[alt][crit]
 	
 	# We compute the alternative comparisons values
 	fileAltValues = open(out_dir+"/alternativesComparisons.xml", 'w')

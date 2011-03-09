@@ -41,7 +41,6 @@ def create_input_file(alt_id, crit_id, pt, cat_id, cat_rank, assign, weights=Non
         for i in range(len(profiles)):
             f.write("\t%d\t" % (i+1))
             perfs = profiles[i]
-            print "****", perfs
             for j in range(len(crit_id)):
                 f.write("%f\t" % perfs[crit_id[j]]) 
             f.write("\n")

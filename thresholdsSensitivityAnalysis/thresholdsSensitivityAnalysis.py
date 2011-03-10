@@ -103,8 +103,8 @@ def main(argv=None):
 								if not thresholdsBounds[crit]["pre"].has_key("max") or perfTable[alt2][crit] - perfTable[alt1][crit] < thresholdsBounds[crit]["pre"]["max"]:
 									thresholdsBounds[crit]["pre"]["max"] = perfTable[alt2][crit] - perfTable[alt1][crit]
 
-		# Creating criteriaTresholdsBounds file
-		fileThresholds = open(out_dir+"/criteriaTresholdsBounds.xml",'w')
+		# Creating criteriaThresholdsBounds file
+		fileThresholds = open(out_dir+"/criteriaThresholdsBounds.xml",'w')
 		PyXMCDA.writeHeader(fileThresholds)
 		
 		# We write some information about the generated file

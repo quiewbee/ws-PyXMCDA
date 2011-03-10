@@ -48,8 +48,15 @@ def create_ampl_reverse_data (file, altId, critId, perfTable, altComparisons, th
 	pairs1 = []
 	pairsm1 = []
 	
+	tabVeto = PyXMCDA.getVetos (altId, critId, perfTable, thresholds)
+	
 	for init in altComparisons.keys() :
 		for term in altComparisons[init].keys() :
+			
+			if tabVeto.has_key(init) and tabVeto[init].has_key(term) and not tabVeto[init][term] is None :
+				# Veto situation
+				continue
+				
 			if init != term :
 				val = altComparisons[init][term]
 	
@@ -105,37 +112,14 @@ def create_ampl_reverse_data (file, altId, critId, perfTable, altComparisons, th
 		file.write (c+" ")
 	file.write (":=\n")
 	
+	ElemOut = PyXMCDA.getRubisElementaryOutranking (altId, critId, perfTable, thresholds)
+	
 	for alt1 in altId :
 		for alt2 in altId :
 			file.write (str(alt1)+str(alt2)+" ")
 			for crit in critId :
-				if perfTable[alt1][crit] >= perfTable[alt2][crit] :
-					file.write ("1.0 ")
-				else :
-					if not thresholds[crit].has_key('indifference') and not thresholds[crit].has_key('preference') :
-						# aucun seuil, indif ou pref, defini
-						file.write ("0.0 ")
-					else :
-						if (thresholds[crit].has_key('indifference') != thresholds[crit].has_key('preference')) :
-							#un seuil, indif ou pref, est defini
-							if thresholds[crit].has_key('indifference') :
-								if perfTable[alt1][crit] + thresholds[crit]["indifference"] >= perfTable[alt2][crit] :
-									file.write ("1.0 ")
-								else :
-									file.write ("0.0 ")
-							else :
-								if perfTable[alt1][crit] + thresholds[crit]["preference"] >= perfTable[alt2][crit] :
-									file.write ("1.0 ")
-								else :
-									file.write ("0.0 ")
-						else :
-							# il y a deux seuils
-							if perfTable[alt1][crit] + thresholds[crit]["indifference"] >= perfTable[alt2][crit] :
-								file.write ("1.0 ")
-							elif perfTable[alt1][crit] + thresholds[crit]["preference"] >= perfTable[alt2][crit] :
-								file.write ("0.5 ")
-							else :
-								file.write ("0.0 ")						
+				file.write (str(ElemOut[alt1][alt2][crit])+" ")						
+			
 			file.write ("\n")
 	file.write(";\n")
 

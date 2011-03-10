@@ -1,0 +1,66 @@
+option solver cplexamp;
+
+option cplex_options 'threads=6';
+option cplex_options 'timing=1';
+
+option solver_msg 0;
+
+printf "###CPLexInfos###";
+let cpt := 0;
+repeat {
+	solve;
+	/* CPLEX license restrictions may refuse access to solver because of timeout problems */ 
+	if match (solve_message, "cplexamp") > 0 then {
+	   /* Try again */
+	   let cpt := cpt + 1;
+	   shell "sleep 1";
+	   if cpt == 50 then {
+	     printf "###nolicense###No CPLEX license available@@@\n";
+	     break;
+	   }
+	}
+	else {
+	     break;
+	}
+};
+printf"@@@\n";
+
+if match(solve_message,"infeasible") > 0 then {
+	printf "###infeasible###infeasible@@@\n";
+}
+
+printf "###criteriaValues###<criteriaValues mcdaConcept='weights'>\n";
+
+for{i in CRITERIA} printf "<criterionValue><criterionID>%s</criterionID><value><integer>%d</integer></value></criterionValue>\n",i, sum {k in WEIGHTUNIT} Accumulator[i,k];
+
+printf "</criteriaValues>@@@\n";
+
+printf "###criteriaThresholds###<criteriaValues mcdaConcept='indifferenceThresholds'>\n";
+
+for{j in CRITERIA} printf "<criterionValue><criterionID>%s</criterionID><value><integer>%d</integer></value></criterionValue>\n",j, q[j];
+
+printf "</criteriaValues>\n\n<criteriaValues mcdaConcept='preferenceThresholds'>\n";
+
+for{j in CRITERIA} printf "<criterionValue><criterionID>%s</criterionID><value><integer>%d</integer></value></criterionValue>\n",j, p[j];
+
+printf "</criteriaValues>\n@@@\n";
+
+printf "###slackSum###";
+printf "Slack sum : %d", sum{ab in ROBUSTPREFPAIRS, k in WEIGHTUNIT} slack2[ab,k] + sum{ab in ROBUSTnotPREFPAIRS, k in WEIGHTUNIT} slackm2[ab,k];
+printf "@@@\n";
+
+display q;
+
+display p;
+
+display w1;
+
+display w2;
+
+for{ab in PAIRSINFOS} {
+	printf "%s ", ab;
+	for{j in CRITERIA} printf "%d ", alpha[ab,j]-beta[ab,j];
+	printf "\n";
+}
+
+end;

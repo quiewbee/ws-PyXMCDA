@@ -102,7 +102,7 @@ def main(argv=None):
 				sumWeights = sumWeights + weights[crit]
 			except :
 				errorList.append("There is no defined weight for criterion "+crit+".")
-	
+		
 	if not errorList :
 		
 		# We recover the criteria preference directions
@@ -113,59 +113,29 @@ def main(argv=None):
 		PyXMCDA.writeHeader (fileAltValues)
 		
 		fileAltValues.write ("\t<alternativesComparisons>\n\t\t<pairs>\n")
-			
+		
+		ElemOut = PyXMCDA.getRubisElementaryOutranking (alternativesId, criteriaId, perfTable, thresholds)
+		
 		for alt1 in alternativesId :
 			for alt2 in alternativesId :
 			
 				fileAltValues.write("\t\t\t<pair>\n\t\t\t\t<initial><alternativeID>"+alt1+"</alternativeID></initial>\n\t\t\t\t<terminal><alternativeID>"+alt2+"</alternativeID></terminal>\n")
 				
+				# Verifier s'il manque des valeurs !!! try expect
+				#fileAltValues.write ("\t\t\t\t<value><NA>not available</NA></value>\n\t\t\t</pair>\n")
 				sum = 0.0
-				probComparisons = False
 				
 				for crit in criteriaId :
+					
+					sum += ElemOut[alt1][alt2][crit] * weights[crit]
+					
+				sum = sum/sumWeights
 				
-					# Si le critere est un critere a minimiser
-					if criteriaDir.has_key (crit) and criteriaDir[crit] == "min" :
-						perfTable[alt1][crit] = -perfTable[alt1][crit]
-						perfTable[alt2][crit] = -perfTable[alt2][crit]
-						
-					try :
-						if perfTable[alt1][crit] >= perfTable[alt2][crit] :
-							sum = sum + maxValDomain*weights[crit]
-						else :
-							if not thresholds[crit].has_key('indifference') and not thresholds[crit].has_key('preference') :
-								# No constant thresholds are defined for the seleccted criterion
-								sum = sum + minValDomain*weights[crit]
-							else :
-								if (thresholds[crit].has_key('indifference') != thresholds[crit].has_key('preference')) :
-									# An indifference Xor a preference threshold has been defined
-									if thresholds[crit].has_key('indifference') :
-										if perfTable[alt1][crit] + thresholds[crit]["indifference"] >= perfTable[alt2][crit] :
-											sum = sum + maxValDomain*weights[crit]
-										else :
-											sum = sum + minValDomain*weights[crit]
-									else :
-										if perfTable[alt1][crit] + thresholds[crit]["preference"] >= perfTable[alt2][crit] :
-											sum = sum + maxValDomain*weights[crit]
-										else :
-											sum = sum + minValDomain*weights[crit]
-								else :
-									# An indifference and a preference thresholds have been defined
-									if perfTable[alt1][crit] + thresholds[crit]["indifference"] >= perfTable[alt2][crit] :
-										sum = sum + maxValDomain*weights[crit]
-									elif perfTable[alt1][crit] + thresholds[crit]["preference"] >= perfTable[alt2][crit] :
-										sum = sum + (float(maxValDomain+minValDomain))*weights[crit]/2.0
-									else :
-										sum = sum + minValDomain*weights[crit]
-					except :
-						errorList.append("some alternatives evaluations are missing for criterion "+crit+", during the comparison between "+alt1+" and "+alt2+".")
-						probComparisons = True
+				# La valeur est entre 0 et 1, on la met dans le bon intervalle
+				sum = (maxValDomain - minValDomain)*sum + minValDomain
 				
-				if not probComparisons :
-					sum = sum/sumWeights				
-					fileAltValues.write ("\t\t\t\t<value><real>"+str(sum)+"</real></value>\n\t\t\t</pair>\n")
-				else :
-					fileAltValues.write ("\t\t\t\t<value><NA>not available</NA></value>\n\t\t\t</pair>\n")
+				fileAltValues.write ("\t\t\t\t<value><real>"+str(sum)+"</real></value>\n\t\t\t</pair>\n")
+					
 			
 		fileAltValues.write ("\t\t</pairs>\n\t</alternativesComparisons>\n")
 			

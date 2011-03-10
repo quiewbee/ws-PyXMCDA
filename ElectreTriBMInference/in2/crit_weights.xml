@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" href="xmcdaXSL.xsl"?>
+<xmcda:XMCDA xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.decision-deck.org/2009/XMCDA-2.0.0 file:../XMCDA-2.0.0.xsd" xmlns:xmcda="http://www.decision-deck.org/2009/XMCDA-2.0.0" instanceID="void">
+
+<criteriaValues>
+	<criterionValue>
+		<criterionID>1</criterionID>
+		<value><real>45.0</real></value>
+	</criterionValue>
+	<criterionValue>
+		<criterionID>0</criterionID>
+		<value><real>25.0</real></value>
+	</criterionValue>
+	<criterionValue>
+		<criterionID>3</criterionID>
+		<value><real>12.0</real></value>
+	</criterionValue>
+	<criterionValue>
+		<criterionID>2</criterionID>
+		<value><real>10.0</real></value>
+	</criterionValue>
+	<criterionValue>
+		<criterionID>4</criterionID>
+		<value><real>8.0</real></value>
+	</criterionValue>
+</criteriaValues>
+
+</xmcda:XMCDA>

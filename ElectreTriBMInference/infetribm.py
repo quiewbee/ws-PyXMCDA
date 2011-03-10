@@ -158,10 +158,14 @@ def get_min_max(pt):
 def normalize(pt, gmin, gmax, prefdir):
     for alt, perfs in pt.iteritems():
         for crit, perf in perfs.iteritems():
+            div = gmax[crit]-gmin[crit]
+            if div == 0:
+                div = 1
+
             if prefdir[crit] == "min":
-                pt[alt][crit] = float(gmax[crit]-perf)/(gmax[crit]-gmin[crit])
+                pt[alt][crit] = float(gmax[crit]-perf)/div
             else:
-                pt[alt][crit] = float(perf-gmin[crit])/(gmax[crit]-gmin[crit])
+                pt[alt][crit] = float(perf-gmin[crit])/div
 
 def denormalize(pt, gmin, gmax, prefdir):
     for alt, perfs in pt.iteritems():

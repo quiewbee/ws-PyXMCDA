@@ -52,16 +52,16 @@ s.t. csup3{i in ALTS, j in CRIT}:
 	c_sup[i,j] >= d_sup[i,j] - 1 + weight[j];
 
 s.t. dinf{i in ALTS, j in CRIT}:
-	d_inf[i,j] >= perfs[i,j] - gb[assign[i]-1,j] + epsilon;
+	d_inf[i,j] >= perfs[i,j]*(1-epsilon) - gb[assign[i]-1,j] + epsilon;
 
 s.t. dsup{i in ALTS, j in CRIT}:
-	d_sup[i,j] >= perfs[i,j] - gb[assign[i],j] + epsilon;
+	d_sup[i,j] >= perfs[i,j]*(1-epsilon) - gb[assign[i],j] + epsilon;
 
 s.t. dinf2{i in ALTS, j in CRIT}:
-	d_inf[i,j] <= perfs[i,j] - gb[assign[i]-1,j] + 1;
+	d_inf[i,j] <= perfs[i,j]*(1-epsilon) - gb[assign[i]-1,j] + 1;
 
 s.t. dsup2{i in ALTS, j in CRIT}:
-	d_sup[i,j] <= perfs[i,j] - gb[assign[i],j] + 1;
+	d_sup[i,j] <= perfs[i,j]*(1-epsilon) - gb[assign[i],j] + 1;
 
 s.t. wmin{j in CRIT}:
 	weight[j] <= 1;
@@ -73,7 +73,7 @@ s.t. prof2{j in CRIT}:
 	gb[ncat,j] = 1;
 
 s.t. prof3{i in 1..ncat-1, j in CRIT}:
-	gb[i,j] = profiles[i,j];
+	gb[i,j] = profiles[i,j]*(1-epsilon);
 
 wsum: sum{j in CRIT} weight[j] = 1;
 lbdamin: lambda >= 0.5;
@@ -91,7 +91,7 @@ printf "### Profiles ###\n";
 for {i in 1..ncat-1}
 {
 	for {j in CRIT}	
-		printf "%g\t", gb[i,j];
+		printf "%g\t", gb[i,j]/(1-epsilon);
 	printf "\n";
 }
 printf "### Profiles ###\n";

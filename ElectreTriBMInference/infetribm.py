@@ -82,10 +82,11 @@ def parse_xmcda_files(in_dir):
 
     return (alt_id, crit_id, pt, cat_id, cat_rank, assign, pref_dir)
 
-def get_fixed_parameters(in_dir, alt_id, crit_id, pt, cat_id, cat_rank, pref_dir, gmax, gmin):
+def get_fixed_parameters(in_dir, alt_id, crit_id, pt, cat_id, cat_rank, pref_dir):
     weights = None
     lbda = None
-    profiles = None
+    cat_profiles = None
+    pt_refalts = None
 
     xml_weights = PyXMCDA.parseValidate(in_dir+"/crit_weights.xml")
     xml_lbda = PyXMCDA.parseValidate(in_dir+"/lambda.xml")
@@ -113,15 +114,13 @@ def get_fixed_parameters(in_dir, alt_id, crit_id, pt, cat_id, cat_rank, pref_dir
         try:
             cat_profiles = xmcda.get_categories_profiles(xml_catprofiles)
             pt_refalts = PyXMCDA.getPerformanceTable(xml_refalts, cat_id, crit_id)
-            normalize(pt_refalts, gmin, gmax, pref_dir) 
-            profiles = get_sorted_profiles(cat_profiles, cat_rank, pt_refalts)
         except:
             error_list.append("Unable to get fixed profiles")
 
-    if weights != None and lbda != None and profiles != None:
+    if weights != None and lbda != None and pt_refalts != None:
         error_list.append("No parameters to infer")
 
-    return (weights, lbda, profiles)
+    return (weights, lbda, cat_profiles, pt_refalts)
 
 def get_sorted_profiles(cat_profiles, cat_rank, pt):
     lower_cat_rank = {}
@@ -249,25 +248,51 @@ def main(argv=None):
         create_error_file(out_dir, error_list)
         return error_list
 
+    fixed_params = get_fixed_parameters(in_dir, alt_id, crit_id, pt, cat_id, cat_rank, pref_dir)
+    fixed_weights = fixed_params[0]
+    fixed_lambda = fixed_params[1]
+    fixed_cat_profiles = fixed_params[2]
+    fixed_pt_profiles = fixed_params[3]
+    log('fixed_weights  : %s' % fixed_weights)
+    log('fixed_lambda  : %s' % fixed_lambda)
+    log('fixed_cat_profiles  : %s' % fixed_cat_profiles)
+    log('fixed_pt_profiles  : %s' % fixed_pt_profiles)
+
     try:
         (gmin, gmax) = get_min_max(pt)
+        if fixed_pt_profiles:
+            (gmin2, gmax2) = get_min_max(fixed_pt_profiles)
+            for c, val in gmin.iteritems():
+                if gmin[c] > gmin2[c]:
+                    gmin[c] = gmin2[c]
+                if gmax[c] < gmax2[c]:
+                    gmax[c] = gmax2[c]
+    except:
+        error_list.append("Impossible to get min max values in pt")
+        create_error_file(out_dir, error_list)
+        return error_list
+
+    try:
         normalize(pt, gmin, gmax, pref_dir) 
     except:
         error_list.append("Impossible to convert performance table")
         create_error_file(out_dir, error_list)
         return error_list
-        
-    fixed_params = get_fixed_parameters(in_dir, alt_id, crit_id, pt, cat_id, cat_rank, pref_dir, gmax, gmin)
-    fixed_weights = fixed_params[0]
-    fixed_lambda = fixed_params[1]
-    fixed_profiles = fixed_params[2]
-    log('fixed_weights  : %s' % fixed_weights)
-    log('fixed_lambda  : %s' % fixed_lambda)
-    log('fixed_profiles  : %s' % fixed_profiles)
+
+    if fixed_pt_profiles:
+        try:
+            normalize(fixed_pt_profiles, gmin, gmax, pref_dir)
+            fixed_profiles = get_sorted_profiles(fixed_cat_profiles, cat_rank, fixed_pt_profiles)
+        except:
+            error_list.append("Impossible to convert profile performance table")
+            create_error_file(out_dir, error_list)
+            return error_list
+    else:
+        fixed_profiles = None
 
     if fixed_weights:
         glpk_model = "inf_etri_bm_fixed_weights.mod"
-    elif fixed_profiles:
+    elif fixed_pt_profiles:
         glpk_model = "inf_etri_bm_fixed_profiles.mod"
     else:
         glpk_model = "inf_etri_bm.mod"

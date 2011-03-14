@@ -52,7 +52,7 @@ def create_input_file(alt_id, crit_id, pt, cat_id, cat_rank, assign, weights=Non
     return f
 
 def solve(model_file, input_file):
-    p = subprocess.Popen(["glpsol", "-m", "%s" % model_file, "-d", "%s" % input_file], stdout=subprocess.PIPE)
+    p = subprocess.Popen(["glpsol", "-m", model_file, "-d", input_file, "--pcost"], stdout=subprocess.PIPE)
 
     output = p.communicate()
     status = p.returncode

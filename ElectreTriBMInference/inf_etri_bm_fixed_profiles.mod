@@ -91,7 +91,7 @@ printf "### Profiles ###\n";
 for {i in 1..ncat-1}
 {
 	for {j in CRIT}	
-		printf "%g\t", gb[i,j]/(1-epsilon);
+		printf "%g\t", profiles[i,j];
 	printf "\n";
 }
 printf "### Profiles ###\n";

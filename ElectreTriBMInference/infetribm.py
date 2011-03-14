@@ -310,7 +310,7 @@ def main(argv=None):
 
     (status, output) = glpk.solve(glpk_model, input_file.name)
     if status:
-        error_list.append("gklp returned status %d" % status);
+        error_list.append("GLPK returned status %d" % status);
         input_file.close()
         create_error_file(out_dir, error_list)
         return error_list

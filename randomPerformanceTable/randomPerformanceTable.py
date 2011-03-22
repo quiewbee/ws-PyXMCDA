@@ -14,9 +14,6 @@ def main(argv=None):
 	if argv is None:
 		argv = sys.argv
 	
-	# Il faut donner la possibilite de lancer avec une graine predefinie
-	random.seed()
-	
 	parser = OptionParser()
 	
 	parser.add_option("-i", "--in", dest="in_dir")
@@ -73,8 +70,28 @@ def main(argv=None):
 				critTriangSD = PyXMCDA.getNamedParametersByName (xmltree_CritProfile, "triangularDistributionStandardDeviation")
 				# ...
 				
-	
 	if not errorList :
+	
+		# We check if a seed is provided for the random generation
+		if os.path.isfile (in_dir+"/seed.xml") :
+			xmltree_seed = PyXMCDA.parseValidate(in_dir+"/seed.xml")
+			if xmltree_seed == None :
+				errorList.append ("seed file can't be validated.")
+			else :
+				seed = PyXMCDA.getParameterByName (xmltree_seed, "seed")
+				if not isinstance(seed,int) :
+					errorList.append ("seed value should be a strictly positive integer")
+				else :
+					if seed <= 0 :
+						errorList.append ("seed should be a strictly positive integer")
+					else:
+						# We initialize the random generator
+						random.seed(seed)
+						
+	if not errorList :
+	
+		for i in range(20):
+			print random.random()
 	
 		# We recover criteria scale information
 		criteriaTypes = PyXMCDA.getCriteriaScalesTypes (xmltree_criteria, criteriaId)

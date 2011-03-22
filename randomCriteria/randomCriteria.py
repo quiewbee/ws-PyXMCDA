@@ -102,6 +102,22 @@ def main(argv=None):
 					
 				
 	if not errorList :
+	
+		# We check if a seed is provided for the random generation
+		if os.path.isfile (in_dir+"/seed.xml") :
+			xmltree_seed = PyXMCDA.parseValidate(in_dir+"/seed.xml")
+			if xmltree_seed == None :
+				errorList.append ("seed file can't be validated.")
+			else :
+				seed = PyXMCDA.getParameterByName (xmltree_seed, "seed")
+				if not isinstance(seed,int) :
+					errorList.append ("seed value should be a strictly positive integer")
+				else :
+					if seed <= 0 :
+						errorList.append ("seed should be a strictly positive integer")
+					else:
+						# We initialize the random generator
+						random.seed(seed)
 		
 		# We check if a preferenceDirection file has been provided
 		if os.path.isfile (in_dir+"/preferenceDirection.xml") :

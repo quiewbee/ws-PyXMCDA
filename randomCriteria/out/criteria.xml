@@ -35,10 +35,10 @@
 				<constant><integer>2</integer></constant>
 			</threshold>
 			<threshold id='preference'>
-				<constant><integer>12</integer></constant>
+				<constant><integer>11</integer></constant>
 			</threshold>
 			<threshold id='veto'>
-				<constant><integer>13</integer></constant>
+				<constant><integer>17</integer></constant>
 			</threshold>
 		</thresholds>
 	</criterion>
@@ -53,13 +53,13 @@
 		</scale>
 		<thresholds>
 			<threshold id='indifference'>
-				<constant><real>39.79</real></constant>
+				<constant><real>42.76</real></constant>
 			</threshold>
 			<threshold id='preference'>
-				<constant><real>61.36</real></constant>
+				<constant><real>66.81</real></constant>
 			</threshold>
 			<threshold id='veto'>
-				<constant><real>80.02</real></constant>
+				<constant><real>73.93</real></constant>
 			</threshold>
 		</thresholds>
 	</criterion>
@@ -79,7 +79,7 @@
 				<constant><integer>2</integer></constant>
 			</threshold>
 			<threshold id='preference'>
-				<constant><integer>3</integer></constant>
+				<constant><integer>2</integer></constant>
 			</threshold>
 			<threshold id='veto'>
 				<constant><integer>3</integer></constant>
@@ -121,13 +121,13 @@
 		</scale>
 		<thresholds>
 			<threshold id='indifference'>
-				<constant><real>35.46</real></constant>
+				<constant><real>35.11</real></constant>
 			</threshold>
 			<threshold id='preference'>
-				<constant><real>40.69</real></constant>
+				<constant><real>40.97</real></constant>
 			</threshold>
 			<threshold id='veto'>
-				<constant><real>47.26</real></constant>
+				<constant><real>47.03</real></constant>
 			</threshold>
 		</thresholds>
 	</criterion>
@@ -153,10 +153,10 @@
 				<constant><integer>2</integer></constant>
 			</threshold>
 			<threshold id='preference'>
-				<constant><integer>7</integer></constant>
+				<constant><integer>5</integer></constant>
 			</threshold>
 			<threshold id='veto'>
-				<constant><integer>10</integer></constant>
+				<constant><integer>7</integer></constant>
 			</threshold>
 		</thresholds>
 	</criterion>
@@ -171,13 +171,13 @@
 		</scale>
 		<thresholds>
 			<threshold id='indifference'>
-				<constant><real>38.53</real></constant>
+				<constant><real>38.39</real></constant>
 			</threshold>
 			<threshold id='preference'>
-				<constant><real>47.34</real></constant>
+				<constant><real>47.65</real></constant>
 			</threshold>
 			<threshold id='veto'>
-				<constant><real>66.34</real></constant>
+				<constant><real>74.26</real></constant>
 			</threshold>
 		</thresholds>
 	</criterion>

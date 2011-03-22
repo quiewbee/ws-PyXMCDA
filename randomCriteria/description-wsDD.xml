@@ -124,6 +124,43 @@
                     ]]>
                      </xmcda>
               </input>
+              
+              <input id="seed"
+                     name="seed"
+                     displayName="seed"
+                     isoptional="1">
+                     <documentation>
+                            <description>Allows to initialize the random generator with a precise seed.</description>
+                     </documentation>
+                     <xmcda tag="methodParameters">
+                            <![CDATA[
+                                   <methodParameters>
+                                          <parameter
+                                                 name="seed"> <!-- REQUIRED  -->
+                                                 <value>
+                                                        <integer>%1</integer>
+                                                 </value>
+                                          </parameter>
+                                   </methodParameters>
+                            ]]>
+                     </xmcda>
+                     
+                     <gui status="preferFile">
+                            <entry id="%1" type="int" displayName="seed">
+                                   <documentation>
+                                          <description>Allows to initialize the random generator with a precise seed</description>
+                                   </documentation>
+                                   <constraint>
+                                          <description>The value should be a positive integer.</description>
+                                          <code>
+                                                 <![CDATA[
+                                                        %1 > 0
+                                                 ]]>
+                                          </code>
+                                   </constraint>
+                            </entry>
+                     </gui>
+              </input>
 
               <input id="lowerBounds" name="lowerBounds" displayName="lowerBounds" isoptional="1">
                      <documentation>

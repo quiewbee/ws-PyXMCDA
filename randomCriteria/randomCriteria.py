@@ -119,6 +119,8 @@ def main(argv=None):
 						# We initialize the random generator
 						random.seed(seed)
 		
+	if not errorList :
+	
 		# We check if a preferenceDirection file has been provided
 		if os.path.isfile (in_dir+"/preferenceDirection.xml") :
 			xmltree_PrefDir = PyXMCDA.parseValidate(in_dir+"/preferenceDirection.xml")

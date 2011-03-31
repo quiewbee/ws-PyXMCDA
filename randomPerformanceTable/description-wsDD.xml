@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="iso-8859-1"?>
 <program_description xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xsi:noNamespaceSchemaLocation="http://www.decision-deck.org/ws/_downloads/description.xsd">
-       <program provider="PyXMCDA" name="randomPerformanceTable"
-              displayName="randomPerformanceTable" version="1.0"/>
+       <program provider="PyXMCDA"
+       	      name="randomPerformanceTable"
+              displayName="randomPerformanceTable"
+              version="1.1"/>
        <documentation>
               <description>This web service allows to create a simple performance table by providing
                      a list of alternatives and a list of criteria.</description>

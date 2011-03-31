@@ -1,7 +1,10 @@
 <?xml version="1.0" encoding="iso-8859-1"?>
 <program_description xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xsi:noNamespaceSchemaLocation="http://www.decision-deck.org/ws/_downloads/description.xsd">
-       <program provider="PyXMCDA" name="randomCriteria" displayName="randomCriteria" version="1.0"/>
+       <program provider="PyXMCDA"
+              name="randomCriteria"
+              displayName="randomCriteria"
+              version="1.1"/>
        <documentation>
               <description>This web service allows to create a simple list of criteria by providing
                      the desired number of criteria. Now, it is not taking into account creation of

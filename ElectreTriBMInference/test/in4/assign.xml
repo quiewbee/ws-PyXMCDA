@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" href="xmcdaXSL.xsl"?>
+<xmcda:XMCDA xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.decision-deck.org/2009/XMCDA-2.0.0 file:../XMCDA-2.0.0.xsd" xmlns:xmcda="http://www.decision-deck.org/2009/XMCDA-2.0.0" instanceID="void">
+	<projectReference>
+		<title>SixRealCars - Assignments pessimistic, threshold 75</title>
+		<comment>Assignments related to the "SixRealCars" data set, where the alternatives have been assigned
+		using Electre TRI, considering the pessimistic assignment rule, with a majority threshold of 0.75.</comment>
+	</projectReference>
+  <alternativesAffectations>
+    <alternativeAffectation>
+      <alternativeID>a01</alternativeID>
+      <categoryID>Medium</categoryID>
+    </alternativeAffectation>
+    <alternativeAffectation>
+      <alternativeID>a02</alternativeID>
+      <categoryID>Medium</categoryID>
+    </alternativeAffectation>
+    <alternativeAffectation>
+      <alternativeID>a06</alternativeID>
+      <categoryID>Medium</categoryID>
+    </alternativeAffectation>
+    <alternativeAffectation>
+      <alternativeID>a05</alternativeID>
+      <categoryID>Medium</categoryID>
+    </alternativeAffectation>
+    <alternativeAffectation>
+      <alternativeID>a03</alternativeID>
+      <categoryID>Medium</categoryID>
+    </alternativeAffectation>
+    <alternativeAffectation>
+      <alternativeID>a04</alternativeID>
+      <categoryID>Bad</categoryID>
+    </alternativeAffectation>
+  </alternativesAffectations>
+</xmcda:XMCDA>

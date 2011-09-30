@@ -1,6 +1,6 @@
 #!/bin/sh
 
-NB_TEST_SETS=3
+NB_TEST_SETS=4
 PYTHON_SCRIPT=infetribm.py
 
 cd ..

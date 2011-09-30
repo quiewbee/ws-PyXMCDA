@@ -227,10 +227,18 @@ def main(argv=None):
         create_error_file(out_dir, error_list)
         return error_list
 
-    (alt_id, crit_id, pt, cat_id, cat_rank, assign, pref_dir) = parse_xmcda_files(in_dir)
-    if error_list:
+    xmcda_input = parse_xmcda_files(in_dir)
+    if xmcda_input == None or error_list:
         create_error_file(out_dir, error_list)
         return error_list
+
+    alt_id = xmcda_input[0]
+    crit_id = xmcda_input[1]
+    pt = xmcda_input[2]
+    cat_id = xmcda_input[3]
+    cat_rank = xmcda_input[4]
+    assign = xmcda_input[5]
+    pref_dir = xmcda_input[6]
 
     # Name of the profile alternatives
     palts_id = [ "b%d" % (i+1) for i in range(len(cat_id)-1) ]

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xmcda:XMCDA xmlns:xmcda="http://www.decision-deck.org/2009/XMCDA-2.1.0">
+	<categories>
+		<category id="Good">
+			<rank>
+				<integer>1</integer>
+			</rank>
+		</category>
+		<category id="Medium">
+			<rank>
+				<integer>2</integer>
+			</rank>
+		</category>
+		<category id="Bad">
+			<rank>
+				<integer>3</integer>
+			</rank>
+		</category>
+	</categories>
+</xmcda:XMCDA>

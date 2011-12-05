@@ -1,6 +1,6 @@
 #!/bin/sh
 
-NB_TEST_SETS=4
+NB_TEST_SETS=5
 PYTHON_SCRIPT=infetribm.py
 
 cd ..
@@ -12,3 +12,4 @@ for i in $(seq $NB_TEST_SETS); do
 		echo "Test $i failed";
 	fi
 done
+echo "Test 5 fail... it's 'normal' ;-)"

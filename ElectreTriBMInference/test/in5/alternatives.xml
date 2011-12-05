@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xmcda:XMCDA xmlns:xmcda="http://www.decision-deck.org/2009/XMCDA-2.1.0">
+	<alternatives mcdaConcept="Real">
+		<alternative id="a01" name="Audi A3" />
+		<alternative id="a02" name="Audi A4" />
+		<alternative id="a03" name="BMW 118" />
+		<alternative id="a04" name="BMW 320" />
+		<alternative id="a05" name="Volvo C30" />
+		<alternative id="a06" name="Volvo S40" />
+	</alternatives>
+</xmcda:XMCDA>

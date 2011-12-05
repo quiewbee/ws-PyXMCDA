@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<program_description xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../docs/w3-ws/specificationData/description.xsd">
+       <program provider="PyXMCDA"
+              name="RubisOutrankingRelation"
+              displayName="RubisOutrankingRelation"
+              version="1.0" />
+       <documentation>
+              <description>This web service allows to compute an outranking relation as defined in the Rubis methodology.</description>
+              <reference>R. Bisdorff, P. Meyer, M. Roubens, Rubis: a bipolar-valued outranking method for the best choice decision problem, 4OR, 6 (2), June 2008, Springer (doi:10.1007/s10288-007-0045-5).</reference>
+              <contact>Thomas Veneziano (thomas.veneziano@uni.lu)</contact>
+       </documentation>
+
+       <parameters>
+       
+       		<input id="valuationDomain"
+                     name="valuationDomain"
+                     displayName="valuationDomain"
+                     isoptional="1">
+                     <documentation>
+                            <description>Indicates the minimal and the maximal values of the valuation domain for computing the outranking relation. By default the valuation domain is {0,0.5,1}. The median indetermination value is computed as the average of the minimal and the maximal values.</description>
+                     </documentation 
+                     <xmcda tag="methodParameters">
+                            <![CDATA[
+                    <methodParameters
+                             name="valuationDomain"><!-- REQUIRED  -->
+                        <parameter
+                             name="min"><!-- REQUIRED  -->
+                            <value>
+                                <integer>%1</integer>
+                            </value>
+                        </parameter>
+                        <parameter
+                             name="max"><!-- REQUIRED  -->
+                            <value>
+                                <integer>%2</integer>
+                            </value>
+                        </parameter>
+                    </methodParameters>
+                    ]]>
+                     </xmcda>
+                     
+                     <gui status="preferGUI">
+                            <entry id="%1" type="float" displayName="min">
+                                   <documentation>
+                                          <description>Indicates the minimal value of the valuation domain.</description>
+                                   </documentation>
+                                   <defaultValue>0</defaultValue>
+                            </entry>
+                            <entry id="%2" type="float" displayName="max">
+                                   <documentation>
+                                          <description>Indicates the maximal value of the valuation domain (which should be greater than the minimal value).</description>
+                                   </documentation>
+                                   <defaultValue>1</defaultValue>
+                            </entry>
+                     </gui>
+              </input>
+                            
+              <input id="criteria" name="criteria" displayName="criteria"
+                     isoptional="0">
+                     
+                     <documentation>
+                            <description>A list of criteria. Criteria can be activated or desactivated via the &lt;active&gt; tag (true or false). By default (no &lt;active&gt; tag), criteria are considered as active.
+                             Using thresholds is optional, only the constant ones with mcdaConcept equals to "indifference", "preference" or "veto" will be considered.</description>
+                     </documentation>
+                     <xmcda tag="criteria">
+                            <![CDATA[
+                    <criteria>
+                        <criterion>
+                            <active>[...]</active>
+                            <thresholds>
+                            	<threshold 
+                            		mcdaConcept="indifference"><!-- REQUIRED, must be indifference, preference or veto  -->
+                            		<constant><real>[...]</real></constant>
+                            	</threshold>
+                             </thresholds>
+                             [...]
+                        </criterion>
+                        [...]
+                    </criteria>
+                    ]]>
+                     </xmcda>
+              </input>
+              
+              <input id="alternatives" name="alternatives" displayName="alternatives"
+                     isoptional="0">
+                     
+                     <documentation>
+                            <description>A list of alternatives. Alternatives can be activated or desactivated via the &lt;active&gt; tag (true or false). By default (no &lt;active&gt; tag), alternatives are considered as active. </description>
+                     </documentation>
+                     <xmcda tag="alternatives">
+                            <![CDATA[
+                    <alternatives>
+                        <alternative>
+                            <active>[...]</active>
+                            [...]
+                        </alternative>
+                        [...]
+                    </alternatives>
+                    ]]>
+                     </xmcda>
+              </input>
+              
+              <input id="performanceTable"
+                     name="performanceTable"
+                     displayName="performanceTable"
+                     isoptional="0">
+                     
+                     <documentation>
+                            <description>A performance table. The evaluations should be numeric values, i.e. &lt;real&gt;, &lt;integer&gt; or &lt;rational&gt;.</description>
+                     </documentation>
+                     <xmcda tag="performanceTable"/>
+              </input>
+              
+              <input id="criteriaWeights"
+                     name="criteriaWeights"
+                     displayName="criteriaWeights">
+                     <documentation>
+                            <description>The set of criteria weights.</description>
+                     </documentation>        
+                     <xmcda tag="criteriaValues"/>
+              </input>
+              
+              <output id="messages"
+                     name="messages"
+                     displayName="messages">
+                     <documentation>
+                            <description>A list of messages generated by the algorithm.</description>
+                     </documentation>
+                     <xmcda tag="methodMessages"/>
+              </output>
+              
+              <output id="alternativesComparisons"
+                     name="alternativesComparisons"
+                     displayName="outrankingRelation">
+                     <documentation>
+                            <description>The ogniknartu relation.</description>
+                     </documentation>        
+                     <xmcda tag="alternativesComparisons"/>
+              </output>
+
+              
+       </parameters>
+</program_description>

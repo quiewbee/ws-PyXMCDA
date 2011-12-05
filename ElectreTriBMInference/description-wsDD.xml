@@ -6,7 +6,7 @@
 		displayName="InferenceEtriBM"
 		version="1.0" />
 	<documentation>
-		<description>This web service allows to infer parameters of a Bouyssou-Marchant Electre Tri relation on basis of reference actions affectations</description>
+		<description>The purpose of this webservice is to infer parameters of an ELECTRE TRI Bouyssou-Marchant model. It takes as input a set of learning alternatives evaluated on the criteria and their affectations to the different categories of the model. It is possible to perform a global inference of the parameters of the model (i.e. inferring the profiles, the weights and the credibility threshold) or to perform partial inference (i.e. only inferring the weights and the credibility threshold or only inferring the profiles delimiting the categories). The webservice will try to find a model that maximize the number of learning alternatives compatible with it. It means that it accepts in input an inconsistent set of learning alternatives that cannot be represented by an ELECTRE TRI model.</description>
 		<contact>Olivier Sobrie (olivier.sobrie@gmail.com)</contact>
 		<reference>Agnès Leroy: Apprentissage des paramètres d'une méthode multicritère de tri ordonné</reference>
 	</documentation>
@@ -14,91 +14,91 @@
 	<parameters>
 		<input id="criteria" name="criteria" displayName="criteria" isoptional="0">
 			<documentation>
-				<description>A list of criteria. Criteria can be activated or desactivated via the &lt;active&gt; tag (true or false). By default (no &lt;active&gt; tag), criteria are considered as active. Preference Direction of the criteria can also be set.</description>
+				<description>The list of criteria to be considerated in the model. Criteria can be activated or desactivated via the &lt;active&gt; tag (true or false). By default (no &lt;active&gt; tag), criteria are considered as active. Preference Direction of the criteria can also be set.</description>
 			</documentation>
 			<xmcda tag="criteria" />
 		</input>
 		<input id="alternatives" name="alternatives" displayName="alternatives" isoptional="0">
 			<documentation>
-				<description>A list of reference alternatives. Alternatives can be activated or desactivated via the &lt;active&gt; tag (true or false). By default (no &lt;active&gt; tag), alternatives are considered as active. </description>
+				<description>The list of learning alternatives to use to compute the ELECTRE TRI model. Alternatives can be activated or desactivated via the &lt;active&gt; tag (true or false). By default (no &lt;active&gt; tag), alternatives are considered as active.</description>
 			</documentation>
 			<xmcda tag="alternatives" />
 		</input>
 		<input id="perfs_table" name="perfs_table" displayName="performanceTable" isoptional="0">
 			<documentation>
-				<description>A performance table. The evaluations should be numeric values, i.e. &lt;real&gt;, &lt;integer&gt; or &lt;rational&gt;.</description>
+				<description>The performance table of the learning alternatives. All the learning alternatives are evaluated on all the criteria of the ELECTRE TRI model. The evaluations should be numeric values, i.e. &lt;real&gt;, &lt;integer&gt; or &lt;rational&gt;.</description>
 			</documentation>
 			<xmcda tag="performanceTable" />
 		</input>
 		<input id="assign" name="assign" displayName="alternativesAffectations" isoptional="0">
 			<documentation>
-				<description>Assignment of reference alternatives</description>
+				<description>The list of the learning alternatives affectations. This inputs represents the affectations of all the learning alternatives to a category. The categorie name used should be the same as the one given in the category input.</description>
 			</documentation>
 			<xmcda tag="alternativesAffectations" />
 		</input>
 		<input id="categories" name="categories" displayName="categories" isoptional="0">
 			<documentation>
-				<description>The list of categories and their rank (required!).</description>
+				<description>The list of categories of the model and their rank. The rank is required because the webservice need to know this to build the profiles delimiting the categories.</description>
 			</documentation>
 			<xmcda tag="categories" />
 		</input>
 		<input id="crit_weights" name="crit_weights" displayName="criteriaWeights" isoptional="1">
 			<documentation>
-				<description>The set of criteria weights to use (optional)</description>
+				<description>The set of criteria weights to use (optional). This input is set if the user only wants to infer the profiles of the model. It should be combined with the lambda input. If set, this input should contain the weights of the criteria defined in the criteria input.</description>
 			</documentation>
 			<xmcda tag="criteriaValues" />
 		</input>
 		<input id="lambda" name="lambda" displayName="lambda" isoptional="1">
 			<documentation>
-				<description>The credibility threshold to use (optional)</description>
+				<description>The credibility threshold to use (optional). This input is combined with the crit_weights inputs when wanting to perform only the inference of the profiles.</description>
 			</documentation>
 			<xmcda tag="methodParameters" />
 		</input>
 		<input id="cat_profiles" name="cat_profiles" displayName="categoriesProfiles" isoptional="1">
 			<documentation>
-				<description>The categories profiles to use (optional)</description>
+				<description>The categories profiles to use (optional). This input defines the profiles delimiting the categories of the model. It is optional and set when wanting to infer only the weights and the credibility threshold.</description>
 			</documentation>
 			<xmcda tag="categoriesProfiles" />
 		</input>
 		<input id="reference_alts" name="reference_alts" displayName="referenceAlternativesPerfTable" isoptional="1">
 			<documentation>
-				<description>The performance table of containing the reference alternatives to use (optional)</description>
+				<description>The performance table of containing the reference alternatives to use (optional). It contains the performance of the alternatives associated to the profiles of the model. It is combined with the cat_profiles input when wanting to infer only the weights and the credibility threshold.</description>
 			</documentation>
 			<xmcda tag="performanceTable" />
 		</input>
 		<output id="message" name="messages" displayName="messages">
 			<documentation>
-				<description>A list of messages generated by the algorithm.</description>
+				<description>A list of messages generated by the webservice. In this output the result of the inference will be given. It gives informations on what might be wrong in the inputs.</description>
 			</documentation>
 			<xmcda tag="methodMessages" />
 		</output>
 		<output id="crit_weights" name="crit_weights" displayName="criteriaWeights">
 			<documentation>
-				<description>The set of criteria weights generated by the algorithm</description>
+				<description>The set of criteria weights found by the webservice.</description>
 			</documentation>
 			<xmcda tag="criteriaValues" />
 		</output>
 		<output id="cat_profiles" name="cat_profiles" displayName="categoriesProfiles">
 			<documentation>
-				<description>The categories profiles computed by the algorithm</description>
+				<description>The category profiles computed by the webservice.</description>
 			</documentation>
 			<xmcda tag="categoriesProfiles" />
 		</output>
 		<output id="reference_alts" name="reference_alts" displayName="referenceAlternativesPerfTable">
 			<documentation>
-				<description>The performance table of containing the reference alternatives</description>
+				<description>The profiles performance table of the profiles computed by the webservice.</description>
 			</documentation>
 			<xmcda tag="performanceTable" />
 		</output>
 		<output id="compatible_alts" name="compatible_alts" displayName="compatibleAlternatives">
 			<documentation>
-				<description>The reference alternatives that are compatible with the profiles, weights and lamdda computed by the algorithm</description>
+				<description>The reference alternatives that are compatible with the profiles, weights and lambda computed by the webservice.</description>
 			</documentation>
 			<xmcda tag="alternatives" />
 		</output>
 		<output id="lambda" name="lambda" displayName="lambda">
 			<documentation>
-				<description>The credibility threshold computed by the algorithm</description>
+				<description>The credibility threshold computed by the webservice.</description>
 			</documentation>
 			<xmcda tag="methodParameters" />
 		</output>

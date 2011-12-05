@@ -115,6 +115,15 @@ def main(argv=None):
 		
 		fileAltValues.write ("\t<alternativesComparisons>\n\t\t<pairs>\n")
 		
+		# ATTENTION Solution rustine
+		# On retourne ici le tableau de perf pour les criteres a minimiser
+		# Devra etre fait par le getRubisElementaryOutranking
+		criteriaDir = PyXMCDA.getCriteriaPreferenceDirections (xmltree_criteria, criteriaId)
+		for crit in criteriaId:
+			if criteriaDir[crit] == "min":
+				for alt in alternativesId:
+					perfTable[alt][crit] = -perfTable[alt][crit]
+				
 		ElemOut = PyXMCDA.getRubisElementaryOutranking (alternativesId, criteriaId, perfTable, thresholds)
 		
 		tabVetos = PyXMCDA.getVetos (alternativesId, criteriaId, perfTable, thresholds)
@@ -133,9 +142,7 @@ def main(argv=None):
 					
 					sum += ElemOut[alt1][alt2][crit] * weights[crit]
 					# On verifie si un veto est leve
-					if tabVetos.has_key(alt1)
-					and tabVetos[alt1].has_key(alt2) 
-					and tabVetos[alt1][alt2][crit] == 1:
+					if tabVetos.has_key(alt1) and tabVetos[alt1].has_key(alt2) and tabVetos[alt1][alt2].has_key(crit) and tabVetos[alt1][alt2][crit] == 1:
 						isVeto = 1
 					
 				sum = sum/sumWeights

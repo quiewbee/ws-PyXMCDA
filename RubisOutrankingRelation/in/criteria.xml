@@ -7,6 +7,15 @@
     <criterion id="Securite"/>
     <criterion id="CO2"/>
     <criterion id="Packing"/>
-    <criterion id="PrixAchat"/>
+    <criterion id="PrixAchat">
+    	<scale><quantitative>
+    		<preferenceDirection>min</preferenceDirection>
+    	</quantitative></scale>
+    	<thresholds>
+			<threshold mcdaConcept='veto'>
+				<constant><real>10000</real></constant>
+			</threshold>
+		</thresholds>
+	</criterion>
 </criteria>
 </xmcda:XMCDA>

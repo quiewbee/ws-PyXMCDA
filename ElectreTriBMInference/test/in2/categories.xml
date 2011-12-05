@@ -5,7 +5,7 @@
 <categories>
 	<category id="1">
 		<active>true</active>
-		<rank><integer>1</integer></rank>
+		<rank><integer>3</integer></rank>
 	</category>
 	<category id="2">
 		<active>true</active>
@@ -13,7 +13,7 @@
 	</category>
 	<category id="3">
 		<active>true</active>
-		<rank><integer>3</integer></rank>
+		<rank><integer>1</integer></rank>
 	</category>
 </categories>
 

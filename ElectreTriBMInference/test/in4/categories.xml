@@ -8,7 +8,7 @@
 	<categories>
 		<category id="Good">
 			<rank>
-				<integer>1</integer>
+				<integer>3</integer>
 			</rank>
 		</category>
 		<category id="Medium">
@@ -18,7 +18,7 @@
 		</category>
 		<category id="Bad">
 			<rank>
-				<integer>3</integer>
+				<integer>1</integer>
 			</rank>
 		</category>
 	</categories>

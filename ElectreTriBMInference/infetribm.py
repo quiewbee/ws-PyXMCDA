@@ -82,6 +82,11 @@ def parse_xmcda_files(in_dir):
 
     return (alt_id, crit_id, pt, cat_id, cat_rank, assign, pref_dir)
 
+def invert_cat_rank(cat_rank):
+        ncat = len(cat_rank)
+        for key, val in cat_rank.iteritems():
+            cat_rank[key] = ncat+1-val
+
 def get_fixed_parameters(in_dir, alt_id, crit_id, pt, cat_id, cat_rank, pref_dir):
     weights = None
     lbda = None
@@ -239,6 +244,9 @@ def main(argv=None):
     cat_rank = xmcda_input[4]
     assign = xmcda_input[5]
     pref_dir = xmcda_input[6]
+
+    # Kludge: invert the categories rank... Beurk
+    invert_cat_rank(cat_rank)
 
     # Name of the profile alternatives
     palts_id = [ "b%d" % (i+1) for i in range(len(cat_id)-1) ]

@@ -1,0 +1,8 @@
+<xmcda:XMCDA xmlns:xmcda="http://www.decision-deck.org/2009/XMCDA-2.0.0">
+  <criteria>
+    <criterion id="cout"/>
+    <criterion id="risque"/>
+    <criterion id="emplois"/>
+    <criterion id="connexion"/>
+  </criteria>
+</xmcda:XMCDA>

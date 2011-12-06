@@ -157,7 +157,7 @@
 			<pair>
 				<initial><alternativeID>a03</alternativeID></initial>
 				<terminal><alternativeID>a05</alternativeID></terminal>
-				<value><real>0.428571428571</real></value>
+				<value><real>0.0</real></value>
 			</pair>
 			<pair>
 				<initial><alternativeID>a03</alternativeID></initial>
@@ -177,7 +177,7 @@
 			<pair>
 				<initial><alternativeID>a03</alternativeID></initial>
 				<terminal><alternativeID>a09</alternativeID></terminal>
-				<value><real>0.142857142857</real></value>
+				<value><real>0.0</real></value>
 			</pair>
 			<pair>
 				<initial><alternativeID>a03</alternativeID></initial>
@@ -382,7 +382,7 @@
 			<pair>
 				<initial><alternativeID>a06</alternativeID></initial>
 				<terminal><alternativeID>a11</alternativeID></terminal>
-				<value><real>0.714285714286</real></value>
+				<value><real>0.0</real></value>
 			</pair>
 			<pair>
 				<initial><alternativeID>a06</alternativeID></initial>
@@ -462,7 +462,7 @@
 			<pair>
 				<initial><alternativeID>a08</alternativeID></initial>
 				<terminal><alternativeID>a01</alternativeID></terminal>
-				<value><real>0.714285714286</real></value>
+				<value><real>0.0</real></value>
 			</pair>
 			<pair>
 				<initial><alternativeID>a08</alternativeID></initial>
@@ -487,7 +487,7 @@
 			<pair>
 				<initial><alternativeID>a08</alternativeID></initial>
 				<terminal><alternativeID>a06</alternativeID></terminal>
-				<value><real>0.142857142857</real></value>
+				<value><real>0.0</real></value>
 			</pair>
 			<pair>
 				<initial><alternativeID>a08</alternativeID></initial>
@@ -522,7 +522,7 @@
 			<pair>
 				<initial><alternativeID>a08</alternativeID></initial>
 				<terminal><alternativeID>a13</alternativeID></terminal>
-				<value><real>0.142857142857</real></value>
+				<value><real>0.0</real></value>
 			</pair>
 			<pair>
 				<initial><alternativeID>a09</alternativeID></initial>
@@ -612,7 +612,7 @@
 			<pair>
 				<initial><alternativeID>a10</alternativeID></initial>
 				<terminal><alternativeID>a05</alternativeID></terminal>
-				<value><real>0.428571428571</real></value>
+				<value><real>0.0</real></value>
 			</pair>
 			<pair>
 				<initial><alternativeID>a10</alternativeID></initial>
@@ -632,7 +632,7 @@
 			<pair>
 				<initial><alternativeID>a10</alternativeID></initial>
 				<terminal><alternativeID>a09</alternativeID></terminal>
-				<value><real>0.142857142857</real></value>
+				<value><real>0.0</real></value>
 			</pair>
 			<pair>
 				<initial><alternativeID>a10</alternativeID></initial>

@@ -137,19 +137,28 @@ def main(argv=None):
 				#fileAltValues.write ("\t\t\t\t<value><NA>not available</NA></value>\n\t\t\t</pair>\n")
 				sum = 0.0
 				isVeto = 0
+				isWeakVeto = 0
 				
 				for crit in criteriaId :
 					
 					sum += ElemOut[alt1][alt2][crit] * weights[crit]
+
 					# On verifie si un veto est leve
 					if tabVetos.has_key(alt1) and tabVetos[alt1].has_key(alt2) and tabVetos[alt1][alt2].has_key(crit) and tabVetos[alt1][alt2][crit] == 1:
 						isVeto = 1
+					
+					# On verifie si un veto faible est leve
+					if tabVetos.has_key(alt1) and tabVetos[alt1].has_key(alt2) and tabVetos[alt1][alt2].has_key(crit) and tabVetos[alt1][alt2][crit] == 0.5:
+						isWeakVeto = 1
 					
 				sum = sum/sumWeights
 				
 				if isVeto == 1:
 					# On utilise le veto classique, qui met la valeur minimale
 					sum = 0.0
+				elif isWeakVeto == 1 and sum > 0.5:
+					# Un veto faible est leve
+					sum = 0.5
 				
 				# La valeur est entre 0 et 1, on la met dans le bon intervalle
 				sum = (maxValDomain - minValDomain)*sum + minValDomain

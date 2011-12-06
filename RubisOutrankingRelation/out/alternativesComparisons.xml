@@ -2,6 +2,12 @@
 <?xml-stylesheet type='text/xsl' href='xmcdaXSL.xsl'?>
 <xmcda:XMCDA xmlns:xmcda='http://www.decision-deck.org/2009/XMCDA-2.0.0' xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance' xsi:schemaLocation='http://www.decision-deck.org/2009/XMCDA-2.0.0 http://sma.uni.lu/d2cms/xmcda/_downloads/XMCDA-2.0.0.xsd'>
 
+	<projectReference>
+		<title>Rubis outranking relation</title>
+		<version>1.1</version>
+		<author>ws_PyXMCDA suite (TV)</author>
+	</projectReference>
+
 	<alternativesComparisons>
 		<pairs>
 			<pair>

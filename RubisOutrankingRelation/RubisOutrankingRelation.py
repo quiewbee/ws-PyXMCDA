@@ -7,6 +7,7 @@ import PyXMCDA
 
 from optparse import OptionParser
 
+VERSION = "1.1"
 
 ###
 
@@ -113,6 +114,9 @@ def main(argv=None):
 		fileAltValues = open(out_dir+"/alternativesComparisons.xml", 'w')
 		PyXMCDA.writeHeader (fileAltValues)
 		
+		# We write some information about the generated file
+		fileAltValues.write ("\t<projectReference>\n\t\t<title>Rubis outranking relation</title>\n\t\t<version>"+VERSION+"</version>\n\t\t<author>ws_PyXMCDA suite (TV)</author>\n\t</projectReference>\n\n")
+	
 		fileAltValues.write ("\t<alternativesComparisons>\n\t\t<pairs>\n")
 		
 		# ATTENTION Solution rustine

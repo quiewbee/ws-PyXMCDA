@@ -3,7 +3,7 @@
        <program provider="PyXMCDA"
               name="RubisOutrankingRelation"
               displayName="RubisOutrankingRelation"
-              version="1.0" />
+              version="1.1" />
        <documentation>
               <description>This web service allows to compute an outranking relation as defined in the Rubis methodology.</description>
               <reference>R. Bisdorff, P. Meyer, M. Roubens, Rubis: a bipolar-valued outranking method for the best choice decision problem, 4OR, 6 (2), June 2008, Springer (doi:10.1007/s10288-007-0045-5).</reference>

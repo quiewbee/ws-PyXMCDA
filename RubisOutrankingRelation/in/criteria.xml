@@ -12,6 +12,9 @@
     		<preferenceDirection>min</preferenceDirection>
     	</quantitative></scale>
     	<thresholds>
+    		<threshold mcdaConcept='weakVeto'>
+				<constant><real>7000</real></constant>
+			</threshold>
 			<threshold mcdaConcept='veto'>
 				<constant><real>10000</real></constant>
 			</threshold>

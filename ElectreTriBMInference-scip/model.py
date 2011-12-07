@@ -27,13 +27,8 @@ class leroy_linear_problem():
                                            lower=0.5, upper=1)
 
         # csup and cinf
-        self.v_csup = dict((i.id,
-                           dict((j.id, {}) for j in self.c))
-                           for i in self.a)
-        self.v_cinf = dict((i.id,
-                           dict((j.id, {}) for j in self.c))
-                           for i in self.a)
-
+        self.v_csup = dict((i.id, {}) for i in self.a)
+        self.v_cinf = dict((i.id, {}) for i in self.a)
         for i, j in product(self.a, self.c):
             self.v_csup[i.id][j.id] = self.solver.variable(scip.CONTINUOUS)
             self.v_cinf[i.id][j.id] = self.solver.variable(scip.CONTINUOUS)
@@ -45,27 +40,21 @@ class leroy_linear_problem():
                                                   upper=1)
 
         # gamma
-        self.v_g = dict((i.id, {}) for i in self.a)
+        self.v_g = {}
         for i in self.a:
             self.v_g[i.id] = self.solver.variable(scip.BINARY)
 
         # dsup and dinf
-        self.v_dsup = dict((i.id,
-                           dict((j.id, {}) for j in self.c))
-                           for i in self.a)
-        self.v_dinf = dict((i.id,
-                           dict((j.id, {}) for j in self.c))
-                           for i in self.a)
+        self.v_dsup = dict((i.id, {}) for i in self.a)
+        self.v_dinf = dict((i.id, {}) for i in self.a)
         for i, j in product(self.a, self.c):
             self.v_dsup[i.id][j.id] = self.solver.variable(scip.BINARY)
             self.v_dinf[i.id][j.id] = self.solver.variable(scip.BINARY)
 
         # gb (profiles evaluations)
-        self.v_gb = dict((i,
-                         dict((j.id, {}) for j in self.c))
-                         for i in range(0, len(self.cat)))
+        self.v_gb = dict((i, {}) for i in range(0, len(self.cat)+1))
         for i, j in product(range(0, len(self.cat)+1), self.c):
-            self.v_gb[i, j.id] = self.solver.variable(scip.CONTINUOUS)
+            self.v_gb[i][j.id] = self.solver.variable(scip.CONTINUOUS)
 
     def _add_constraints(self):
         for i in self.a:
@@ -91,26 +80,23 @@ class leroy_linear_problem():
             i_cat_rank = int(self.cat(i.category_id).rank)
             self.solver += self.v_dinf[i.alternative_id][j.id] \
                             >= self.pt(i.alternative_id, j.id) \
-                                - self.v_gb[i_cat_rank-1, j.id] \
+                                - self.v_gb[i_cat_rank-1][j.id] \
                                 + self.epsilon
             self.solver += self.v_dsup[i.alternative_id][j.id] \
                             >= self.pt(i.alternative_id, j.id) \
-                                - self.v_gb[i_cat_rank, j.id] \
+                                - self.v_gb[i_cat_rank][j.id] \
                                 + self.epsilon
             self.solver += self.v_dinf[i.alternative_id][j.id] \
                             <= self.pt(i.alternative_id, j.id) \
-                                - self.v_gb[i_cat_rank-1, j.id] \
+                                - self.v_gb[i_cat_rank-1][j.id] \
                                 + 1
             self.solver += self.v_dinf[i.alternative_id][j.id] \
                             <= self.pt(i.alternative_id, j.id) \
-                                - self.v_gb[i_cat_rank, j.id] \
+                                - self.v_gb[i_cat_rank][j.id] \
                                 + 1
 
         for i, j in product(range(1, len(self.cat)), self.c):
-            self.solver += self.v_gb[i, j.id] <= self.v_gb[i+1, j.id]
-
-#        for j in self.c:
-#            self.solver += self.v_gb[0, j.id] == self.epsilon
+            self.solver += self.v_gb[i][j.id] <= self.v_gb[i+1][j.id]
 
         self.solver += sum(self.v_w[j.id] for j in self.c) == 1 
 

@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xmcda:XMCDA xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xmcda="http://www.decision-deck.org/2009/XMCDA-2.0.0" xsi:schemaLocation="http://www.decision-deck.org/2009/XMCDA-2.0.0 http://sma.uni.lu/d2cms/xmcda/_downloads/XMCDA-2.0.0.xsd">
+	<alternatives>
+		<alternative id="a12" name="P309">
+			<description>
+				<comment>Peugot 309</comment>
+			</description>
+		</alternative>
+		<alternative id="a03" name="Sunny">
+			<description>
+				<comment>Nissan Sunny</comment>
+			</description>
+		</alternative>
+		<alternative id="a07" name="Civic">
+			<description>
+				<comment>Honda Civic</comment>
+			</description>
+		</alternative>
+		<alternative id="a11" name="P309-16">
+			<description>
+				<comment>Peugot 309</comment>
+			</description>
+		</alternative>
+		<alternative id="a10" name="R19">
+			<description>
+				<comment>Renault 19</comment>
+			</description>
+		</alternative>
+		<alternative id="a08" name="Astra">
+			<description>
+				<comment>Opel Astra</comment>
+			</description>
+		</alternative>
+		<alternative id="a05" name="Colt">
+			<description>
+				<comment>Mitsu Colt</comment>
+			</description>
+		</alternative>
+		<alternative id="a04" name="Mazda">
+			<description>
+				<comment>Mazda 323</comment>
+			</description>
+		</alternative>
+		<alternative id="a01" name="Tipo">
+			<description>
+				<comment>Fiat tipo</comment>
+			</description>
+		</alternative>
+		<alternative id="a06" name="Corolla">
+			<description>
+				<comment>Toyota Corolla</comment>
+			</description>
+		</alternative>
+		<alternative id="a13" name="Galant">
+			<description>
+				<comment>Mitsu Galant</comment>
+			</description>
+		</alternative>
+		<alternative id="a02" name="Alfa">
+			<description>
+				<comment>Alfa 33</comment>
+			</description>
+		</alternative>
+		<alternative id="a09" name="Escort">
+			<description>
+				<comment>Ford Escort</comment>
+			</description>
+		</alternative>
+		<alternative id="a14" name="R21t">
+			<description>
+				<comment>Renault 21</comment>
+			</description>
+		</alternative>
+		<alternative id="profile_BM">
+			<type>fictive</type>
+		</alternative>
+		<alternative id="profile_MG">
+			<type>fictive</type>
+		</alternative>
+		<alternative id="profile_GV">
+			<type>fictive</type>
+		</alternative>
+	</alternatives>
+</xmcda:XMCDA>
+

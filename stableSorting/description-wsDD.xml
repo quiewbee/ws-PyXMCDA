@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<program_description xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../docs/w3-ws/specificationData/description.xsd">
+
+	<program provider="PyXMCDA"
+		name="stableCategoriesAffectation"
+		displayName="stableCategoriesAffectation"
+		version="1.0" />
+	
+	<documentation>
+		<description>
+			This web service allows to compute the affectations of some alternatives in predefined categories, bounded with predefined profiles. It takes a stability relation, which inform on the dependency of the outranking statements to the preorder. Basically, a statement is said to be stable if it is only dependent on the preorder of the weights, not the precise fixation of them. A positive value (resp. negative one) means that the outranking statement is warranted (resp. is not warranted). A +1 or -1 value on a statement means that it is unstable: in that case, at it may be warranted or not, it can modify the affectation of the alternatives. We then consider here to give the list of contiguous categories such that the alternatives can be affected to every ones by modifying the weights without changing the preorder.
+		</description>
+		<contact>Veneziano Thomas (thomas.veneziano@uni.lu)</contact>
+	</documentation>
+    
+	<parameters>
+		
+		<input id="alternatives" name="alternatives" displayName="alternatives" isoptional="0">
+			<documentation>
+				<description>
+					A list of alternatives. Alternatives can be activated or deactivated via the &lt;active&gt; tag (true or false). By default (no &lt;active&gt; tag), alternatives are considered as active. Alternatives can be also considered as fictive or not (using the tag &lt;type&gt;) and will not be affected in the categories. This is useful as the profiles have to be defined here. By default (no &lt;type&gt; tag), alternatives are considered as real. 
+				</description>
+			</documentation>
+			<xmcda tag="alternatives">
+				<![CDATA[ 
+					<alternatives>
+						<alternative>
+							<active>[...]</active>   <!-- true or false -->
+							<type>[...]</type> <!-- real or fictive -->
+							[...]
+						</alternative>
+						[...]
+					</alternatives>
+				]]>
+			</xmcda>
+		</input>
+		
+		<input id="categories"
+			name="categories"
+			displayName="categories"
+			isoptional="0">
+			<documentation>
+				<description>
+					A list of categories. They have to be ranked (using the tag rank).
+				</description>
+			</documentation>
+			<xmcda tag="categories">
+				<![CDATA[ 
+					<categories>
+						<category id=[...]>
+							<rank><integer>[...]</integer></rank>
+						</category>
+						[...]
+					</categories>
+				]]>
+			</xmcda>
+		</input>
+
+		<input id="categoriesProfiles"
+			name="categoriesProfiles"
+			displayName="categoriesProfiles"
+			isoptional="0">
+			<documentation>
+				<description>
+					A list of categoriesProfiles. They allow to know which profiles bound which categories. The profiles are defined under the tag alternatives.
+				</description>
+			</documentation>
+			<xmcda tag="categories">
+				<![CDATA[ 
+					<categoriesProfiles>
+						<categoryProfile>
+							<alternativeID>[...]</alternativeID> <!-- ID of the profile -->
+							<limits>
+								<lowerCategory><categoryID>[...]</categoryID></lowerCategory>
+								<upperCategory><categoryID>[...]</categoryID></upperCategory>
+							</limits>
+						</categoryProfile>
+						[...]
+					</categoriesProfiles>
+				]]>
+			</xmcda>
+		</input>
+		
+		<input id="stabilityRelation"
+			name="stabilityRelation"
+			displayName="stabilityRelation"
+			isoptional="0">
+			<documentation>
+				<description>The complete stability relation (at least, the relation that compare the alternatives and the profiles, not necessary the alternatives together). The value associated to each ordered pair (a,b) must be an integer between 3 and -3.
+				</description>
+			</documentation>
+ 			<xmcda tag="alternativesComparisons"/>
+		</input>
+		
+		<input displayName="sortingMode"
+			name="sortingMode"
+			id="sortingMode"
+			isoptional="0">
+			<documentation>
+				<description>The type of sorting to use (optimistic or pessimistic).
+				</description>
+			</documentation>
+			<xmcda tag="methodParameters">
+				<methodParameters>
+					<parameter>
+						<value>
+							<label>%1</label>
+						</value>
+					</parameter>
+				</methodParameters>
+			</xmcda>
+			
+			<gui status="preferGUI">
+				<entry id="%1" type="enum" displayName="sortingMode">
+					<items>
+						<item id="item0">
+							<description>Optimistic sorting.</description>
+							<value>optimistic</value>
+						</item>
+						<item id="item1">
+							<description>Pessimistic sorting.</description>
+							<value>pessimistic</value>
+						</item>
+					</items>
+				</entry>
+			</gui>
+		</input>
+				
+		<output id="messages"
+			name="messages"
+			displayName="messages">
+			<documentation>
+				<description>A list of messages generated by the algorithm.</description>
+			</documentation>
+			<xmcda tag="methodMessages"/>
+		</output>
+
+		<output id="alternativesAffectations"
+			name="alternativesAffectations"
+			displayName="alternativesAffectations">
+			<documentation>
+				<description>
+					The affectations of the alternatives.
+				</description>
+			</documentation>	  
+			<xmcda tag="alternativesAffectations"/>
+		</output>
+
+	</parameters>
+</program_description>

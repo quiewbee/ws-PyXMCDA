@@ -1,46 +1,51 @@
-<?xml version="1.0" encoding="iso-8859-1"?>
-<program_description xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../docs/w3-ws/specificationData/description.xsd">
-    <program provider="PyXMCDA"
-             name="csvToXMCDA-criteriaValues"
-             displayName="csvToXMCDA-criteriaValues"
-             version="1.0" />
-       <documentation>
-              <description>Transforms a file containing criteria values from a comma-separated values (CSV) file to two XMCDA compliant files, containing the corresponding criteria ids and their criteriaValues.</description>
-              <contact>Sébastien Bigaret (sebastien.bigaret@telecom-bretagne.eu)</contact>
-              <url>http://github.com/sbigaret/ws-PyXMCDA</url>
+<?xml version="1.0" encoding="UTF-8"?>
+<program_description>
+  <program provider="PyXMCDA"
+       name="csvToXMCDA-criteriaValues"
+       displayName="csvToXMCDA-criteriaValues"
+       version="1.0" />
+     <documentation>
+        <description>Transforms a file containing criteria values from a comma-separated values (CSV) file to two XMCDA compliant files, containing the corresponding criteria ids and their criteriaValues.</description>
+        <contact>SÃ©bastien Bigaret (sebastien.bigaret@telecom-bretagne.eu)</contact>
+        <url>http://github.com/sbigaret/ws-PyXMCDA</url>
+     </documentation>
 
-       </documentation>
-       
-       <parameters>
-                <input displayName="criteriaValues" name="criteriaValues.csv" id="csv"
-                        isoptional="0">
-                        <documentation>
-                                <description xml:space="preserve">The criteria and their criteria values as a CSV file.</description>
-                        </documentation>
-                        <xmcda tag="other" /> <!-- Not a real xmcda tag -->
-                </input>
+     <parameters>
+        <input displayName="criteriaValues" name="criteriaValues.csv" id="csv"
+            isoptional="0">
+            <documentation>
+                <description xml:space="preserve">The criteria and their criteria values as a CSV file.
 
-                <output displayName="criteria.xml" name="alternatives" id="criteria">
-                        <documentation>
-                                <description xml:space="preserve">The equivalent criteria ids.</description>
-                        </documentation>
-                        <xmcda tag="criteria" />
-                </output>
+Example:
 
-                <output displayName="criteriaValues" name="criteria" id="criteriaValues">
-                        <documentation>
-                                <description xml:space="preserve">The equivalent criteria values.</description>
-                        </documentation>
-                        <xmcda tag="criteriaValues" />
-                </output>
+  ,cost,risk,employment,connection
+  weights,1,2,3,4
 
-                <output displayName="messages" name="messages" id="messages">
-                        <documentation>
-                                <description xml:space="preserve">Status messages.</description>
-                        </documentation>
-                        <xmcda tag="methodMessages" />
-                </output>
+</description>
+            </documentation>
+            <xmcda tag="other" /> <!-- Not a real xmcda tag -->
+        </input>
 
-              
-       </parameters>
+        <output displayName="criteria" name="criteria" id="criteria">
+            <documentation>
+                <description xml:space="preserve">The equivalent criteria ids.</description>
+            </documentation>
+            <xmcda tag="criteria" />
+        </output>
+
+        <output displayName="criteriaValues" name="criteriaValues" id="criteriaValues">
+            <documentation>
+                <description xml:space="preserve">The equivalent criteria values.</description>
+            </documentation>
+            <xmcda tag="criteriaValues" />
+        </output>
+
+        <output displayName="messages" name="messages" id="messages">
+            <documentation>
+                <description xml:space="preserve">Status messages.</description>
+            </documentation>
+            <xmcda tag="methodMessages" />
+        </output>
+
+     </parameters>
 </program_description>

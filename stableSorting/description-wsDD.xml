@@ -102,7 +102,7 @@
 			</documentation>
 			<xmcda tag="methodParameters"><![CDATA[
 				<methodParameters>
-					<parameter>
+					<parameter name="sortingMode">
 						<value>
 							<label>%1</label>
 						</value>

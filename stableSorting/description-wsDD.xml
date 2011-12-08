@@ -2,8 +2,8 @@
 <program_description xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../docs/w3-ws/specificationData/description.xsd">
 
 	<program provider="PyXMCDA"
-		name="stableCategoriesAffectation"
-		displayName="stableCategoriesAffectation"
+		name="stableSorting"
+		displayName="stableSorting"
 		version="1.0" />
 	
 	<documentation>
@@ -100,14 +100,14 @@
 				<description>The type of sorting to use (optimistic or pessimistic).
 				</description>
 			</documentation>
-			<xmcda tag="methodParameters">
+			<xmcda tag="methodParameters"><![CDATA[
 				<methodParameters>
 					<parameter>
 						<value>
 							<label>%1</label>
 						</value>
 					</parameter>
-				</methodParameters>
+				</methodParameters>]]>
 			</xmcda>
 			
 			<gui status="preferGUI">

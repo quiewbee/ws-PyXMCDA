@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<program_description>
+  <program provider="PyXMCDA"
+       name="csvToXMCDA-criteriaThresholds"
+       displayName="csvToXMCDA-criteriaThresholds"
+       version="1.0" />
+     <documentation>
+        <description>Transforms a file containing criteria discrimination thresholds and preference directions from a comma-separated values (CSV) file to an XMCDA compliant file, containing the criteria ids with their preference direction and related discrimination thresholds.</description>
+        <contact>Sébastien Bigaret (sebastien.bigaret@telecom-bretagne.eu)</contact>
+        <url>http://github.com/sbigaret/ws-PyXMCDA</url>
+
+     </documentation>
+
+     <parameters>
+        <input displayName="criteriaThresholds" name="criteriaThresholds.csv" id="csv"
+            isoptional="0">
+            <documentation>
+                <description xml:space="preserve">A csv with criteria' thresholds.
+
+Example:
+  ,cost,risks,employment,connection
+  ind,1,2,3,4
+  pref,2,3,4,5
+  veto,3,4,5,6
+  preferenceDirection,min,max,min,max
+
+The labels of the separation thresholds ("ind", "pref", "veto") can be chosen freely in order to be in accordance with the selected outranking method. Further separation thresholds can also be added. The last line represents the preferenceDirection; its label must be "preferenceDirection".
+</description>
+            </documentation>
+            <xmcda tag="other" /> <!-- Not a real xmcda tag -->
+        </input>
+
+        <output displayName="criteria" name="criteria" id="criteria">
+            <documentation>
+                <description xml:space="preserve">The equivalent XMCDA file containing criteria with their preference directions and discrimination thresholds.</description>
+            </documentation>
+            <xmcda tag="criteria" />
+        </output>
+
+        <output displayName="messages" name="messages" id="messages">
+            <documentation>
+                <description xml:space="preserve">Status messages.</description>
+            </documentation>
+            <xmcda tag="methodMessages" />
+        </output>
+
+     </parameters>
+</program_description>

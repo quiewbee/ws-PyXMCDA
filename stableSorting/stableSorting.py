@@ -136,6 +136,7 @@ def main(argv=None):
 
 			fileAffectations.write("\t\t\t</categoriesSet>\n\t\t</alternativeAffectation>\n")
 		
+		fileAffectations.write("\t</alternativesAffectations>\n")
 		PyXMCDA.writeFooter(fileAffectations)
 		fileAffectations.close()
 	

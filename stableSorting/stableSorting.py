@@ -9,6 +9,10 @@ from optparse import OptionParser
 
 VERSION = "1.0"
 
+PyXMCDA_version_required = '20111208-001'
+if getattr(PyXMCDA,'__version__', '00000000-000') < PyXMCDA_version_required:
+	raise ImportError('found an old PyXMCDA lib., expecting %s or higher'%PyXMCDA_version_required)
+
 ###
 
 def main(argv=None):
@@ -136,6 +140,7 @@ def main(argv=None):
 
 			fileAffectations.write("\t\t\t</categoriesSet>\n\t\t</alternativeAffectation>\n")
 		
+		fileAffectations.write("\t</alternativesAffectations>\n")
 		PyXMCDA.writeFooter(fileAffectations)
 		fileAffectations.close()
 	

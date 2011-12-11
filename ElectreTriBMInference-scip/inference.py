@@ -119,6 +119,7 @@ def main(argv=None):
         return error_list
 
     model = leroy_linear_problem(a, c, pt, af, cat)
+    model.solve()
 
 if __name__ == "__main__":
     sys.exit(main())

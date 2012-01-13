@@ -3,7 +3,7 @@
   <program provider="PyXMCDA"
        name="csvToXMCDA-criteriaValues"
        displayName="csvToXMCDA-criteriaValues"
-       version="1.0" />
+       version="1.1" />
      <documentation>
         <description>Transforms a file containing criteria values from a comma-separated values (CSV) file to two XMCDA compliant files, containing the corresponding criteria ids and their criteriaValues.</description>
         <contact>Sébastien Bigaret (sebastien.bigaret@telecom-bretagne.eu)</contact>

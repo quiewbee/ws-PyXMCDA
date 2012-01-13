@@ -29,6 +29,35 @@ def csv_reader(csv_file):
     csvfile.seek(0)
     return csv.reader(csvfile, dialect)
 
+def string_to_numeric_list(alist):
+    """
+    Check that the list is made of numeric values only.  If the values in the
+    list are not valid numeric values, it also tries to interpret them with
+    the comma character (",") as the decimal separator.  This may happen when
+    the csv is exported by MS Excel on Windows platforms, where the csv format
+    depends on the local settings.
+
+    Note that we do not check whether the decimal separator is the same
+    everywhere: a list containing "4.5" and "5,7" will be accepted.
+
+    Return the list filled with the corresponding float values, or raise
+    ValueError if at least one value could not be interpreted as a numeric
+    value.
+    """
+    l = None
+    try:
+        l = [ float(i) for i in alist ]
+    except ValueError:
+        pass
+    else:
+        return l
+    # try with ',' as a comma separator
+    try:
+        l = [ float(i.replace(',', '.')) for i in alist ]
+    except ValueError:
+        raise ValueError, "Invalid literal for float"
+    else:
+        return l
 
 def transform(csv_file):
     try:
@@ -54,7 +83,10 @@ def transform(csv_file):
         raise ValueError, 'csv should contain at least one criteria/value'
     if len(criteria_ids) != len(weights):
         raise ValueError, 'csv should contain the same number of criteria and values'
-
+    try:
+        weights = string_to_numeric_list(weights)
+    except ValueError:
+        raise ValueError, 'weights should be numeric values'
     return criteria_ids, mcdaConcept, weights
 
 
@@ -106,7 +138,7 @@ def main(argv=None):
     grp_input.add_argument('-i', '--csv')
 
     grp_output = parser.add_argument_group("Outputs",
-										   description="Options -c and -C are linked and should be supplied (or omitted) together.  They are mutually exclusive with option -O")
+                                           description="Options -c and -C are linked and should be supplied (or omitted) together.  They are mutually exclusive with option -O")
     grp_output.add_argument('-O', '--out-dir', metavar='<output directory>', help='If specified, the files "criteria.xml" and "criteriaValues.xml" will be created in this directory.  The directory must exist beforehand.')
     grp_output.add_argument('-c', '--criteria', metavar='output.xml')
     grp_output.add_argument('-C', '--criteriaValues', metavar='output.xml')

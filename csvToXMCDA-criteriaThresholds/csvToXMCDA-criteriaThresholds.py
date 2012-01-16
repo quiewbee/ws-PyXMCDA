@@ -30,6 +30,37 @@ def csv_reader(csv_file):
     return csv.reader(csvfile, dialect)
 
 
+def string_to_numeric_list(alist):
+    """
+    Check that the list is made of numeric values only.  If the values in the
+    list are not valid numeric values, it also tries to interpret them with
+    the comma character (",") as the decimal separator.  This may happen when
+    the csv is exported by MS Excel on Windows platforms, where the csv format
+    depends on the local settings.
+
+    Note that we do not check whether the decimal separator is the same
+    everywhere: a list containing "4.5" and "5,7" will be accepted.
+
+    Return the list filled with the corresponding float values, or raise
+    ValueError if at least one value could not be interpreted as a numeric
+    value.
+    """
+    l = None
+    try:
+        l = [ float(i) for i in alist ]
+    except ValueError:
+        pass
+    else:
+        return l
+    # try with ',' as a comma separator
+    try:
+        l = [ float(i.replace(',', '.')) for i in alist ]
+    except ValueError:
+        raise ValueError, "Invalid literal for float"
+    else:
+        return l
+
+
 def transform(csv_file, errorList):
     try:
         content = csv_reader(csv_file)
@@ -65,7 +96,7 @@ def transform(csv_file, errorList):
     try:
         for thresholds in thresholds_list:
           mcdaConcept=thresholds[0]
-          thresholds=thresholds[1:]
+          thresholds=string_to_numeric_list(thresholds[1:])
           for i in range(len(criteria_ids)):
             thresholds_per_criteria[i].append((mcdaConcept, float(thresholds[i])))
     except ValueError:

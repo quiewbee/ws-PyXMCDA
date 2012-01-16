@@ -3,7 +3,7 @@
   <program provider="PyXMCDA"
        name="csvToXMCDA-criteriaThresholds"
        displayName="csvToXMCDA-criteriaThresholds"
-       version="1.0" />
+       version="1.1" />
      <documentation>
         <description>Transforms a file containing criteria discrimination thresholds and preference directions from a comma-separated values (CSV) file to an XMCDA compliant file, containing the criteria ids with their preference direction and related discrimination thresholds.</description>
         <contact>Sébastien Bigaret (sebastien.bigaret@telecom-bretagne.eu)</contact>

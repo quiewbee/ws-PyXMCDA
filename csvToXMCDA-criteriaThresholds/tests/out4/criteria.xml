@@ -27,6 +27,7 @@
                 </threshold>
             </thresholds>
         </criterion>
+
         <criterion id="risque">
             <scale>
                 <quantitative>
@@ -42,7 +43,7 @@
 
                 <threshold mcdaConcept="pref">
                     <constant>
-                        <real>5.6</real>
+                        <real>5.0</real>
                     </constant>
                 </threshold>
 
@@ -53,12 +54,8 @@
                 </threshold>
             </thresholds>
         </criterion>
+
         <criterion id="emplois">
-            <scale>
-                <quantitative>
-                    <preferenceDirection>min</preferenceDirection>
-                </quantitative>
-            </scale>
             <thresholds>
                 <threshold mcdaConcept="indifference">
                     <constant>
@@ -68,7 +65,7 @@
 
                 <threshold mcdaConcept="pref">
                     <constant>
-                        <real>8.7</real>
+                        <real>8.0</real>
                     </constant>
                 </threshold>
 
@@ -79,12 +76,8 @@
                 </threshold>
             </thresholds>
         </criterion>
+
         <criterion id="connexion">
-            <scale>
-                <quantitative>
-                    <preferenceDirection>max</preferenceDirection>
-                </quantitative>
-            </scale>
             <thresholds>
                 <threshold mcdaConcept="indifference">
                     <constant>
@@ -94,7 +87,7 @@
 
                 <threshold mcdaConcept="pref">
                     <constant>
-                        <real>11.2</real>
+                        <real>11.0</real>
                     </constant>
                 </threshold>
 
@@ -105,5 +98,6 @@
                 </threshold>
             </thresholds>
         </criterion>
+
     </criteria>
 </xmcda:XMCDA>

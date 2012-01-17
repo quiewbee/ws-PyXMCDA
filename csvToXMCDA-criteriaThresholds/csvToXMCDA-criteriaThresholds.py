@@ -30,7 +30,7 @@ def csv_reader(csv_file):
     return csv.reader(csvfile, dialect)
 
 
-def string_to_numeric_list(alist):
+def string_to_numeric_list(alist, allow_empty=False):
     """
     Check that the list is made of numeric values only.  If the values in the
     list are not valid numeric values, it also tries to interpret them with
@@ -41,20 +41,27 @@ def string_to_numeric_list(alist):
     Note that we do not check whether the decimal separator is the same
     everywhere: a list containing "4.5" and "5,7" will be accepted.
 
+    If ``allow_empty`` is True, empty strings (or containg just whitespaces)
+    are accepted and converted into None.
+
     Return the list filled with the corresponding float values, or raise
     ValueError if at least one value could not be interpreted as a numeric
     value.
     """
     l = None
+    if allow_empty:
+        func=lambda x: None if x.strip()=="" else float(x)
+    else:
+        func = lambda x: float(x)
     try:
-        l = [ float(i) for i in alist ]
+        l = [ func(x) for x in alist ]
     except ValueError:
         pass
     else:
         return l
     # try with ',' as a comma separator
     try:
-        l = [ float(i.replace(',', '.')) for i in alist ]
+        l = [ func(i.replace(',', '.')) for i in alist ]
     except ValueError:
         raise ValueError, "Invalid literal for float"
     else:
@@ -96,9 +103,10 @@ def transform(csv_file, errorList):
     try:
         for thresholds in thresholds_list:
           mcdaConcept=thresholds[0]
-          thresholds=string_to_numeric_list(thresholds[1:])
+          thresholds=string_to_numeric_list(thresholds[1:], True)
           for i in range(len(criteria_ids)):
-            thresholds_per_criteria[i].append((mcdaConcept, float(thresholds[i])))
+            if thresholds[i] is not None:
+                thresholds_per_criteria[i].append((mcdaConcept, thresholds[i]))
     except ValueError:
         raise ValueError, 'Invalid csv file: thresholds should be floats'
 
@@ -111,7 +119,7 @@ xmcda_scale='''
                     <preferenceDirection>%s</preferenceDirection>
                 </quantitative>
             </scale>
-'''
+'''[1:]
 
 xmcda_threshold='''
                 <threshold mcdaConcept="%s">
@@ -127,13 +135,19 @@ def output_criteria(filename, criteria_ids, preferenceDirections, thresholds_lis
     outfile.write('    <criteria>\n')
     for i in range(len(criteria_ids)):
         id, prefDir, thresholds = (criteria_ids[i], preferenceDirections[i], thresholds_list[i])
-        outfile.write('        <criterion id="%s">'%id)
-        outfile.write(xmcda_scale % prefDir)
+        outfile.write('        <criterion id="%s">\n'%id)
+        if prefDir is not None and prefDir.strip()!="":
+            outfile.write(xmcda_scale % prefDir)
+        if len(thresholds)==0:
+            outfile.write('        </criterion>\n\n')
+            continue
+
         outfile.write('            <thresholds>')
         for mcdaConcept, threshold in thresholds:
-            outfile.write(xmcda_threshold % (mcdaConcept, threshold))
+            if threshold is not None:
+                outfile.write(xmcda_threshold % (mcdaConcept, threshold))
         outfile.write('            </thresholds>')
-        outfile.write('\n        </criterion>\n')
+        outfile.write('\n        </criterion>\n\n')
 
     outfile.write('    </criteria>\n')
     xmcda_write_footer(outfile)

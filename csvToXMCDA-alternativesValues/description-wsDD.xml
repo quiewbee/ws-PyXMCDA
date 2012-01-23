@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<program_description>
+  <program provider="PyXMCDA"
+       name="csvToXMCDA-alternativesValues"
+       displayName="csvToXMCDA-alternativesValues"
+       version="1.0" />
+     <documentation>
+        <description>Transforms a file containing alternatives values from a comma-separated values (CSV) file to two XMCDA compliant files, containing the corresponding alternatives ids and their alternativesValues.</description>
+        <contact>Sébastien Bigaret (sebastien.bigaret@telecom-bretagne.eu)</contact>
+        <url>http://github.com/sbigaret/ws-PyXMCDA</url>
+     </documentation>
+
+     <parameters>
+        <input displayName="alternativesValues" name="alternativesValues.csv" id="csv"
+            isoptional="0">
+            <documentation>
+                <description xml:space="preserve">The alternatives and their alternatives values as a CSV file.  The first line is made of two cells, the first one being empty, and the second one will be the content of the attribute "mcdaConcept" in the tag "&lt;alternativesValues>", if supplied.
+
+Example:
+
+    ,ranks
+    alt1,1
+    alt2,2.7
+    alt3,3
+
+</description>
+            </documentation>
+            <xmcda tag="other" /> <!-- Not a real xmcda tag -->
+        </input>
+
+        <output displayName="alternatives" name="alternatives" id="alternatives">
+            <documentation>
+                <description xml:space="preserve">The equivalent alternatives ids.</description>
+            </documentation>
+            <xmcda tag="alternatives" />
+        </output>
+
+        <output displayName="alternativesValues" name="alternativesValues" id="alternativesValues">
+            <documentation>
+                <description xml:space="preserve">The equivalent alternatives values.</description>
+            </documentation>
+            <xmcda tag="alternativesValues" />
+        </output>
+
+        <output displayName="messages" name="messages" id="messages">
+            <documentation>
+                <description xml:space="preserve">Status messages.</description>
+            </documentation>
+            <xmcda tag="methodMessages" />
+        </output>
+
+     </parameters>
+</program_description>

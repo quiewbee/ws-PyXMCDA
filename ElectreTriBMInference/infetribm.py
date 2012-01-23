@@ -127,6 +127,18 @@ def get_fixed_parameters(in_dir, alt_id, crit_id, pt, cat_id, cat_rank, pref_dir
 
     return (weights, lbda, cat_profiles, pt_refalts)
 
+def get_sorted_categories(cat_rank):
+    rank_cat = dict([[v,k] for k,v in cat_rank.items()])
+    ranks = rank_cat.keys()
+    ranks.sort()
+
+    cat_id_sorted = []
+    for rank in ranks:
+        cat_id_sorted.append(rank_cat[rank])
+
+    cat_id_sorted.reverse()
+    return cat_id_sorted
+
 def get_sorted_profiles(cat_profiles, cat_rank, pt):
     lower_cat_rank = {}
     for profile, limits in cat_profiles.iteritems():
@@ -247,6 +259,8 @@ def main(argv=None):
 
     # Kludge: invert the categories rank... Beurk
     invert_cat_rank(cat_rank)
+
+    cat_id_sorted = get_sorted_categories(cat_rank)
 
     # Name of the profile alternatives
     palts_id = [ "b%d" % (i+1) for i in range(len(cat_id)-1) ]
@@ -369,7 +383,7 @@ def main(argv=None):
         return error_list
     
     out_weights = xmcda.format_criteria_weights(weights)
-    out_catprof = xmcda.format_category_profiles(profiles, palts_id, cat_id)
+    out_catprof = xmcda.format_category_profiles(profiles, palts_id, cat_id_sorted)
     out_refalts = xmcda.format_pt_reference_alternatives(profiles, palts_id, crit_id)
     out_lambda = xmcda.format_lambda(lbda)
     out_compat = xmcda.format_format_compatible_alternatives(compat, alt_id)

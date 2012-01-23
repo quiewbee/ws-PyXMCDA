@@ -4,15 +4,15 @@
 <criteriaValues>
 	<criterionValue>
 		<criterionID>c01</criterionID>
-		<value><real>0.333267</real></value>
+		<value><real>0.0001</real></value>
 	</criterionValue>
 	<criterionValue>
 		<criterionID>c02</criterionID>
-		<value><real>0</real></value>
+		<value><real>0.49975</real></value>
 	</criterionValue>
 	<criterionValue>
 		<criterionID>c03</criterionID>
-		<value><real>0.333367</real></value>
+		<value><real>0.0002</real></value>
 	</criterionValue>
 	<criterionValue>
 		<criterionID>c04</criterionID>
@@ -20,7 +20,7 @@
 	</criterionValue>
 	<criterionValue>
 		<criterionID>c05</criterionID>
-		<value><real>0.333267</real></value>
+		<value><real>0.49985</real></value>
 	</criterionValue>
 </criteriaValues>
 </xmcda:XMCDA>

@@ -1,6 +1,6 @@
 #! /usr/bin/env python2.7
 '''
-Transforms a file containing criteria values from a comma-separated values (CSV) file to two XMCDA compliant files, containing the corresponding criteria ids and their criteriaValues.'''
+Transforms a file containing alternatives values from a comma-separated values (CSV) file to two XMCDA compliant files, containing the corresponding alternatives ids and their alternativesValues.'''
 import argparse, csv, sys, os
 from optparse import OptionParser
 
@@ -66,36 +66,36 @@ def transform(csv_file):
         raise ValueError, 'Could not read csv file'
     
     try:
-        criteria_ids = content.next()
+        mcda_concept = content.next()
     except StopIteration:
         raise ValueError, 'Invalid csv file (is it empty?)'
+    if len(mcda_concept)!=2:
+        raise ValueError, 'Invalid csv file (two cells per line)'
+    mcda_concept = mcda_concept[1].strip()
 
-    try:
-        weights = content.next()
-    except StopIteration:
-        raise ValueError, 'Invalid csv file (second line is missing)'
+    alternatives_ids =[]
+    values = []
+    for line in content:
+        if len(line)!=2:
+            raise ValueError, 'Invalid csv file (two cells per line)'
+        alternatives_ids.append(line[0])
+        values.append(line[1])
 
-    criteria_ids = criteria_ids[1:]
-    mcdaConcept = weights[0]
-    weights = weights[1:]
+    if len(alternatives_ids) == 0:
+        raise ValueError, 'Invalid csv file (2 or more lines are required)'
 
-    if len(criteria_ids)==0 or len(weights)==0:
-        raise ValueError, 'csv should contain at least one criteria/value'
-    if len(criteria_ids) != len(weights):
-        raise ValueError, 'csv should contain the same number of criteria and values'
-    return criteria_ids, mcdaConcept, weights
+    return alternatives_ids, mcda_concept, values
 
 
-def output_criteria(filename, criteria_ids):
+def output_alternatives(filename, alternatives_ids):
     outfile = open(filename, 'w')
     xmcda_write_header(outfile)
-    outfile.write('  <criteria>\n')
-    for id in criteria_ids:
-        outfile.write('    <criterion id="%s" />\n'%id)
-    outfile.write('  </criteria>\n')
+    outfile.write('  <alternatives>\n')
+    for id in alternatives_ids:
+        outfile.write('    <alternative id="%s" />\n'%id)
+    outfile.write('  </alternatives>\n')
     xmcda_write_footer(outfile)
     outfile.close()
-
 
 xml_value_real='''
       <value>
@@ -106,35 +106,38 @@ xml_value_label='''
         <label>%s</label>
       </value>'''[1:]
 
-def output_criteriaValues(filename, criteria_ids, mcdaConcept, weights):
+def output_alternativesValues(filename, alternatives_ids, mcdaConcept, alternativesValues):
     outfile = open(filename, 'w')
     xmcda_write_header(outfile)
-    outfile.write('  <criteriaValues mcdaConcept="%s">'%mcdaConcept)
+    if mcdaConcept is not None and mcdaConcept!="":
+        outfile.write('  <alternativesValues mcdaConcept="%s">'%mcdaConcept)
+    else:
+        outfile.write('  <alternativesValues>')
 
     try:
-        weights = string_to_numeric_list(weights)
-        xmlWeights = [ xml_value_real%v for v in weights ]
+        alternativesValues = string_to_numeric_list(alternativesValues)
+        xmlValues = [ xml_value_real%v for v in alternativesValues ]
     except ValueError:
-        xmlWeights = [ xml_value_label%v for v in weights ]
+        xmlValues = [ xml_value_label%v for v in alternativesValues ]
 
-    for id, weight in map(None,criteria_ids, xmlWeights):
+    for id, weight in map(None,alternatives_ids, xmlValues):
         outfile.write("""
-    <criterionValue>
-      <criterionID>%s</criterionID>
+    <alternativeValue>
+      <alternativeID>%s</alternativeID>
 %s
-    </criterionValue>
+    </alternativeValue>
 """%(id, weight))
-    outfile.write('  </criteriaValues>\n')
+    outfile.write('  </alternativesValues>\n')
     xmcda_write_footer(outfile)
     outfile.close()
 
-def csv_to_criteriaValues(csv_file, out_criteria, out_criteriaValues):
+def csv_to_alternativesValues(csv_file, out_alternatives, out_alternativesValues):
     # If some mandatory input files are missing
     if not os.path.isfile(csv_file):
-        raise ValueError, "input file 'criteriaValues.csv' is missing"
-    criteria_ids, mcdaConcept, weights = transform(csv_file)
-    output_criteria(out_criteria, criteria_ids)
-    output_criteriaValues(out_criteriaValues, criteria_ids, mcdaConcept, weights)
+        raise ValueError, "input file 'alternativesValues.csv' is missing"
+    alternatives_ids, mcdaConcept, alternativesValues = transform(csv_file)
+    output_alternatives(out_alternatives, alternatives_ids)
+    output_alternativesValues(out_alternativesValues, alternatives_ids, mcdaConcept, alternativesValues)
 
 
 def main(argv=None):
@@ -148,35 +151,35 @@ def main(argv=None):
     grp_input.add_argument('-i', '--csv')
 
     grp_output = parser.add_argument_group("Outputs",
-                                           description="Options -c and -C are linked and should be supplied (or omitted) together.  They are mutually exclusive with option -O")
-    grp_output.add_argument('-O', '--out-dir', metavar='<output directory>', help='If specified, the files "criteria.xml" and "criteriaValues.xml" will be created in this directory.  The directory must exist beforehand.')
-    grp_output.add_argument('-c', '--criteria', metavar='output.xml')
-    grp_output.add_argument('-C', '--criteriaValues', metavar='output.xml')
+                                           description="Options -a and -A are linked and should be supplied (or omitted) together.  They are mutually exclusive with option -O")
+    grp_output.add_argument('-O', '--out-dir', metavar='<output directory>', help='If specified, the files "alternatives.xml" and "alternativesValues.xml" will be created in this directory.  The directory must exist beforehand.')
+    grp_output.add_argument('-a', '--alternatives', metavar='output.xml')
+    grp_output.add_argument('-A', '--alternativesValues', metavar='output.xml')
 
     grp_output.add_argument('-m', '--messages', metavar='<file.xml>', help='All messages are redirected to this XMCDA file instead of being sent to stdout or stderr.  Note that if an output directory is specified (option -O), the path is relative to this directory.')
 
     args = parser.parse_args()
     #in_dir = options.in_dir
     #out_dir = options.out_dir
-    if args.out_dir and ( args.criteria or args.criteriaValues ):
-        parser.error('Options -O and -c/-C are mutually exclusive')
-    if args.criteria != args.criteriaValues \
-        and None in (args.criteria, args.criteriaValues):
-        parser.error('Options -c and -C must be supplied (or omitted) together')
-    if args.out_dir and args.criteria:
-        parser.error('Options -O and -c/-C are mutually exclusive')
+    if args.out_dir and ( args.alternatives or args.alternativesValues ):
+        parser.error('Options -O and -a/-A are mutually exclusive')
+    if args.alternatives != args.alternativesValues \
+        and None in (args.alternatives, args.alternativesValues):
+        parser.error('Options -a and -A must be supplied (or omitted) together')
+    if args.out_dir and args.alternatives:
+        parser.error('Options -O and -a/-A are mutually exclusive')
 
     if args.in_dir:
-        csv_file = os.path.join(args.in_dir, 'criteriaValues.csv')
+        csv_file = os.path.join(args.in_dir, 'alternativesValues.csv')
     else:
         csv_file = args.csv
 
     if args.out_dir:
-        out_criteria = os.path.join(args.out_dir, 'criteria.xml')
-        out_criteriaValues = os.path.join(args.out_dir, 'criteriaValues.xml')
+        out_alternatives = os.path.join(args.out_dir, 'alternatives.xml')
+        out_alternativesValues = os.path.join(args.out_dir, 'alternativesValues.xml')
     else:
-        out_criteria = args.criteria
-        out_criteriaValues = args.criteriaValues
+        out_alternatives = args.alternatives
+        out_alternativesValues = args.alternativesValues
 
     if args.messages and args.out_dir is not None:
         args.messages = os.path.join(args.out_dir, args.messages)
@@ -187,7 +190,7 @@ def main(argv=None):
 
     exitStatus = 0
     try:
-        csv_to_criteriaValues(csv_file, out_criteria, out_criteriaValues)
+        csv_to_alternativesValues(csv_file, out_alternatives, out_alternativesValues)
     except ValueError as e:
         exitStatus = -1
         if args.messages:

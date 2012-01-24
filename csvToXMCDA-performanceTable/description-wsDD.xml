@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<program_description>
+  <program provider="PyXMCDA"
+       name="csvToXMCDA-performanceTable"
+       displayName="csvToXMCDA-performanceTable"
+       version="1.0" />
+     <documentation>
+        <description>Transforms a file containing a performance table from a comma-separated values (CSV) file to three XMCDA compliant files, containing the corresponding criteria ids, alternatives' ids and the performance table.</description>
+        <contact>Sébastien Bigaret (sebastien.bigaret@telecom-bretagne.eu)</contact>
+        <url>http://github.com/sbigaret/ws-PyXMCDA</url>
+     </documentation>
+
+     <parameters>
+        <input displayName="performanceTable" name="performanceTable.csv"
+			   id="input0" isoptional="0">
+            <documentation>
+                <description xml:space="preserve">The performance table as a CSV file.
+
+Example:
+
+  ,cost,risk,employment,connection
+  a11,17537,28.3,34.8,2.33
+  a03,16973,29,34.9,2.66
+
+</description>
+            </documentation>
+            <xmcda tag="other" /> <!-- Not a real xmcda tag -->
+        </input>
+
+        <output displayName="alternatives" name="alternatives" id="output0">
+            <documentation>
+                <description xml:space="preserve">The equivalent alternative ids.</description>
+            </documentation>
+            <xmcda tag="alternatives" />
+        </output>
+
+        <output displayName="criteria" name="criteria" id="output1">
+            <documentation>
+                <description xml:space="preserve">The equivalent criteria ids.</description>
+            </documentation>
+            <xmcda tag="criteria" />
+        </output>
+
+        <output displayName="performanceTable" name="performanceTable" id="output2">
+            <documentation>
+               <description xml:space="preserve">The equivalent performances.</description>
+            </documentation>
+            <xmcda tag="performanceTable" />
+        </output>
+
+        <output displayName="messages" name="messages" id="output3">
+            <documentation>
+                <description xml:space="preserve">Status messages.</description>
+            </documentation>
+            <xmcda tag="methodMessages" />
+        </output>
+
+     </parameters>
+</program_description>

@@ -4,28 +4,28 @@
     <criterionValue>
       <criterionID>cout</criterionID>
       <value>
-        <real>1.0</real>
+        <label>1</label>
       </value>
     </criterionValue>
 
     <criterionValue>
       <criterionID>risque</criterionID>
       <value>
-        <real>2.0</real>
+        <label>2a</label>
       </value>
     </criterionValue>
 
     <criterionValue>
       <criterionID>emplois</criterionID>
       <value>
-        <real>3.0</real>
+        <label>3</label>
       </value>
     </criterionValue>
 
     <criterionValue>
       <criterionID>connexion</criterionID>
       <value>
-        <real>4.0</real>
+        <label>4</label>
       </value>
     </criterionValue>
   </criteriaValues>

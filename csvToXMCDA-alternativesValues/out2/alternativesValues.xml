@@ -1,0 +1,25 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<xmcda:XMCDA xmlns:xmcda='http://www.decision-deck.org/2009/XMCDA-2.1.0' xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance' xsi:schemaLocation='http://www.decision-deck.org/2009/XMCDA-2.1.0 http://www.decision-deck.org/xmcda/_downloads/XMCDA-2.1.0.xsd'>
+  <alternativesValues mcdaConcept="ranks">
+    <alternativeValue>
+      <alternativeID>alt1</alternativeID>
+      <value>
+        <real>1.0</real>
+      </value>
+    </alternativeValue>
+
+    <alternativeValue>
+      <alternativeID>alt2</alternativeID>
+      <value>
+        <real>2.7</real>
+      </value>
+    </alternativeValue>
+
+    <alternativeValue>
+      <alternativeID>alt3</alternativeID>
+      <value>
+        <real>3.0</real>
+      </value>
+    </alternativeValue>
+  </alternativesValues>
+</xmcda:XMCDA>

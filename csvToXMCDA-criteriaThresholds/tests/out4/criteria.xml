@@ -1,0 +1,103 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<xmcda:XMCDA xmlns:xmcda='http://www.decision-deck.org/2009/XMCDA-2.1.0' xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance' xsi:schemaLocation='http://www.decision-deck.org/2009/XMCDA-2.1.0 http://www.decision-deck.org/xmcda/_downloads/XMCDA-2.1.0.xsd'>
+    <criteria>
+        <criterion id="cout">
+            <scale>
+                <quantitative>
+                    <preferenceDirection>min</preferenceDirection>
+                </quantitative>
+            </scale>
+            <thresholds>
+                <threshold mcdaConcept="indifference">
+                    <constant>
+                        <real>1.0</real>
+                    </constant>
+                </threshold>
+
+                <threshold mcdaConcept="pref">
+                    <constant>
+                        <real>2.0</real>
+                    </constant>
+                </threshold>
+
+                <threshold mcdaConcept="veto">
+                    <constant>
+                        <real>3.0</real>
+                    </constant>
+                </threshold>
+            </thresholds>
+        </criterion>
+
+        <criterion id="risque">
+            <scale>
+                <quantitative>
+                    <preferenceDirection>max</preferenceDirection>
+                </quantitative>
+            </scale>
+            <thresholds>
+                <threshold mcdaConcept="indifference">
+                    <constant>
+                        <real>4.0</real>
+                    </constant>
+                </threshold>
+
+                <threshold mcdaConcept="pref">
+                    <constant>
+                        <real>5.0</real>
+                    </constant>
+                </threshold>
+
+                <threshold mcdaConcept="veto">
+                    <constant>
+                        <real>6.0</real>
+                    </constant>
+                </threshold>
+            </thresholds>
+        </criterion>
+
+        <criterion id="emplois">
+            <thresholds>
+                <threshold mcdaConcept="indifference">
+                    <constant>
+                        <real>7.0</real>
+                    </constant>
+                </threshold>
+
+                <threshold mcdaConcept="pref">
+                    <constant>
+                        <real>8.0</real>
+                    </constant>
+                </threshold>
+
+                <threshold mcdaConcept="veto">
+                    <constant>
+                        <real>9.0</real>
+                    </constant>
+                </threshold>
+            </thresholds>
+        </criterion>
+
+        <criterion id="connexion">
+            <thresholds>
+                <threshold mcdaConcept="indifference">
+                    <constant>
+                        <real>10.0</real>
+                    </constant>
+                </threshold>
+
+                <threshold mcdaConcept="pref">
+                    <constant>
+                        <real>11.0</real>
+                    </constant>
+                </threshold>
+
+                <threshold mcdaConcept="veto">
+                    <constant>
+                        <real>12.0</real>
+                    </constant>
+                </threshold>
+            </thresholds>
+        </criterion>
+
+    </criteria>
+</xmcda:XMCDA>

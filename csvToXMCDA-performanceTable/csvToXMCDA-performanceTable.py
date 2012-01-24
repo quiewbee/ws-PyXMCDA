@@ -1,6 +1,6 @@
 #! /usr/bin/env python2.7
 '''
-Transforms a file containing criteria values from a comma-separated values (CSV) file to two XMCDA compliant files, containing the corresponding criteria ids and their criteriaValues.'''
+Transforms a file containing a performance tablec from a comma-separated values (CSV) file ...'''
 import argparse, csv, sys, os
 from optparse import OptionParser
 
@@ -28,6 +28,7 @@ def csv_reader(csv_file):
     dialect = csv.Sniffer().sniff(csvfile.read(1024))
     csvfile.seek(0)
     return csv.reader(csvfile, dialect)
+
 
 def string_to_numeric_list(alist):
     """
@@ -59,31 +60,50 @@ def string_to_numeric_list(alist):
     else:
         return l
 
+
 def transform(csv_file):
     try:
         content = csv_reader(csv_file)
-    except:
-        raise ValueError, 'Could not read csv file'
+    except Exception as e:
+        raise ValueError, 'Could not read csv file, reason: '+e.message
     
     try:
         criteria_ids = content.next()
     except StopIteration:
         raise ValueError, 'Invalid csv file (is it empty?)'
 
-    try:
-        weights = content.next()
-    except StopIteration:
-        raise ValueError, 'Invalid csv file (second line is missing)'
-
     criteria_ids = criteria_ids[1:]
-    mcdaConcept = weights[0]
-    weights = weights[1:]
+    if len(criteria_ids)==0:
+        raise ValueError, 'csv should contain at least one criteria'
 
-    if len(criteria_ids)==0 or len(weights)==0:
-        raise ValueError, 'csv should contain at least one criteria/value'
-    if len(criteria_ids) != len(weights):
-        raise ValueError, 'csv should contain the same number of criteria and values'
-    return criteria_ids, mcdaConcept, weights
+    alternatives_ids = []
+    performanceTable = []
+    expected_len = len(criteria_ids) + 1
+
+    for values in content:
+        if len(values) != expected_len:
+            raise ValueError, 'Invalid csv file (all lines should have the same number of elements)'
+        alternatives_ids.append(values[0])
+        try:
+            values = string_to_numeric_list(values[1:])
+        except ValueError:
+            raise ValueError, 'performance table should contain numeric values only'
+        performanceTable.append(values)
+
+    if len(alternatives_ids)==0:
+        raise ValueError, 'csv should contain at least one alternative'
+    return alternatives_ids, criteria_ids, performanceTable
+
+
+def output_alternatives(filename, alternatives_ids):
+    outfile = open(filename, 'w')
+    xmcda_write_header(outfile)
+    outfile.write('  <alternatives>\n')
+    for id in alternatives_ids:
+        outfile.write('    <alternative id="%s">\n      <active>true</active>\n    </alternative>\n'%id)
+    outfile.write('  </alternatives>\n')
+    xmcda_write_footer(outfile)
+    outfile.close()
 
 
 def output_criteria(filename, criteria_ids):
@@ -91,50 +111,45 @@ def output_criteria(filename, criteria_ids):
     xmcda_write_header(outfile)
     outfile.write('  <criteria>\n')
     for id in criteria_ids:
-        outfile.write('    <criterion id="%s" />\n'%id)
+        outfile.write('    <criterion id="%s">\n      <active>true</active>\n    </criterion>\n'%id)
     outfile.write('  </criteria>\n')
     xmcda_write_footer(outfile)
     outfile.close()
 
 
-xml_value_real='''
-      <value>
-        <real>%s</real>
-      </value>'''[1:]
-xml_value_label='''
-      <value>
-        <label>%s</label>
-      </value>'''[1:]
-
-def output_criteriaValues(filename, criteria_ids, mcdaConcept, weights):
+def output_performanceTable(filename,
+                            alternatives_ids, criteria_ids, performanceTable):
     outfile = open(filename, 'w')
     xmcda_write_header(outfile)
-    outfile.write('  <criteriaValues mcdaConcept="%s">'%mcdaConcept)
+    outfile.write('<performanceTable>\n')
+    for alt_id, values in map(None, alternatives_ids, performanceTable):
+        outfile.write('  <alternativePerformances>\n');
+        outfile.write('    <alternativeID>%s</alternativeID>\n'%alt_id);
+        for crit_id, value in map(None, criteria_ids, values):
+            outfile.write('''      <performance>
+        <criterionID>%s</criterionID>
+        <value>
+          <real>%s</real>
+        </value>
+      </performance>
+'''%(crit_id, value));
+        outfile.write('  </alternativePerformances>\n');
 
-    try:
-        weights = string_to_numeric_list(weights)
-        xmlWeights = [ xml_value_real%v for v in weights ]
-    except ValueError:
-        xmlWeights = [ xml_value_label%v for v in weights ]
-
-    for id, weight in map(None,criteria_ids, xmlWeights):
-        outfile.write("""
-    <criterionValue>
-      <criterionID>%s</criterionID>
-%s
-    </criterionValue>
-"""%(id, weight))
-    outfile.write('  </criteriaValues>\n')
+    outfile.write('</performanceTable>\n')
     xmcda_write_footer(outfile)
     outfile.close()
 
-def csv_to_criteriaValues(csv_file, out_criteria, out_criteriaValues):
+
+def csv_to_performanceTable(csv_file,
+                            out_alternatives, out_criteria, out_perfTable):
     # If some mandatory input files are missing
     if not os.path.isfile(csv_file):
-        raise ValueError, "input file 'criteriaValues.csv' is missing"
-    criteria_ids, mcdaConcept, weights = transform(csv_file)
+        raise ValueError, "input file '%s' is missing"%csv_file
+    alternatives_ids, criteria_ids, performanceTable = transform(csv_file)
+    output_alternatives(out_alternatives, alternatives_ids)
     output_criteria(out_criteria, criteria_ids)
-    output_criteriaValues(out_criteriaValues, criteria_ids, mcdaConcept, weights)
+    output_performanceTable(out_perfTable,
+							alternatives_ids, criteria_ids, performanceTable)
 
 
 def main(argv=None):
@@ -150,30 +165,30 @@ def main(argv=None):
     grp_output = parser.add_argument_group("Outputs",
                                            description="Options -c and -C are linked and should be supplied (or omitted) together.  They are mutually exclusive with option -O")
     grp_output.add_argument('-O', '--out-dir', metavar='<output directory>', help='If specified, the files "criteria.xml" and "criteriaValues.xml" will be created in this directory.  The directory must exist beforehand.')
+    grp_output.add_argument('-a', '--alternatives', metavar='output.xml')
     grp_output.add_argument('-c', '--criteria', metavar='output.xml')
-    grp_output.add_argument('-C', '--criteriaValues', metavar='output.xml')
+    grp_output.add_argument('-p', '--perfTable', metavar='output.xml')
 
     grp_output.add_argument('-m', '--messages', metavar='<file.xml>', help='All messages are redirected to this XMCDA file instead of being sent to stdout or stderr.  Note that if an output directory is specified (option -O), the path is relative to this directory.')
 
     args = parser.parse_args()
     #in_dir = options.in_dir
     #out_dir = options.out_dir
-    if args.out_dir and ( args.criteria or args.criteriaValues ):
-        parser.error('Options -O and -c/-C are mutually exclusive')
-    if args.criteria != args.criteriaValues \
-        and None in (args.criteria, args.criteriaValues):
-        parser.error('Options -c and -C must be supplied (or omitted) together')
-    if args.out_dir and args.criteria:
-        parser.error('Options -O and -c/-C are mutually exclusive')
+    if args.out_dir and (args.alternatives or args.criteria or args.perfTable):
+        parser.error('Options -O and -p/-a/-p are mutually exclusive')
+    if args.criteria != args.perfTable \
+        and None in (args.alternatives, args.criteria, args.perfTable):
+        parser.error('Options -a, -c and -P must be supplied (or omitted) together')
 
     if args.in_dir:
-        csv_file = os.path.join(args.in_dir, 'criteriaValues.csv')
+        csv_file = os.path.join(args.in_dir, 'performanceTable.csv')
     else:
         csv_file = args.csv
 
     if args.out_dir:
-        out_criteria = os.path.join(args.out_dir, 'criteria.xml')
-        out_criteriaValues = os.path.join(args.out_dir, 'criteriaValues.xml')
+        out_alternatives = os.path.join(args.out_dir, 'alternatives.xml')
+        out_criteria     = os.path.join(args.out_dir, 'criteria.xml')
+        out_perfTable    = os.path.join(args.out_dir, 'performanceTable.xml')
     else:
         out_criteria = args.criteria
         out_criteriaValues = args.criteriaValues
@@ -187,7 +202,8 @@ def main(argv=None):
 
     exitStatus = 0
     try:
-        csv_to_criteriaValues(csv_file, out_criteria, out_criteriaValues)
+        csv_to_performanceTable(csv_file,
+                                out_alternatives, out_criteria, out_perfTable)
     except ValueError as e:
         exitStatus = -1
         if args.messages:

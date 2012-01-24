@@ -1,0 +1,7 @@
+in1: regular file
+in2: CSV file export w/ excel in w/ french regional settings: separator is a
+     semicolumn and the decimal separator is a comma
+in3: some thresholds are not set
+in4: some preference directions are not given
+in5: some thresholds and some pref. directions are absent; one colum is
+     completely empty.

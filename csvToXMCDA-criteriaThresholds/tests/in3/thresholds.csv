@@ -1,0 +1,5 @@
+,cout,risque,emplois,connexion
+indifference,,,,10
+pref,2,5,,11
+veto,3,,,12
+preferenceDirection,min,max,min,max

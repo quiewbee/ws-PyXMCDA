@@ -83,10 +83,6 @@ def transform(csv_file):
         raise ValueError, 'csv should contain at least one criteria/value'
     if len(criteria_ids) != len(weights):
         raise ValueError, 'csv should contain the same number of criteria and values'
-    try:
-        weights = string_to_numeric_list(weights)
-    except ValueError:
-        raise ValueError, 'weights should be numeric values'
     return criteria_ids, mcdaConcept, weights
 
 
@@ -101,17 +97,31 @@ def output_criteria(filename, criteria_ids):
     outfile.close()
 
 
+xml_value_real='''
+      <value>
+        <real>%s</real>
+      </value>'''[1:]
+xml_value_label='''
+      <value>
+        <label>%s</label>
+      </value>'''[1:]
+
 def output_criteriaValues(filename, criteria_ids, mcdaConcept, weights):
     outfile = open(filename, 'w')
     xmcda_write_header(outfile)
     outfile.write('  <criteriaValues mcdaConcept="%s">'%mcdaConcept)
-    for id, weight in map(None,criteria_ids, weights):
+
+    try:
+        weights = string_to_numeric_list(weights)
+        xmlWeights = [ xml_value_real%v for v in weights ]
+    except ValueError:
+        xmlWeights = [ xml_value_label%v for v in weights ]
+
+    for id, weight in map(None,criteria_ids, xmlWeights):
         outfile.write("""
     <criterionValue>
       <criterionID>%s</criterionID>
-      <value>
-        <real>%s</real>
-      </value>
+%s
     </criterionValue>
 """%(id, weight))
     outfile.write('  </criteriaValues>\n')

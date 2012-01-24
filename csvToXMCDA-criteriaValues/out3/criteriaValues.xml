@@ -1,0 +1,32 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<xmcda:XMCDA xmlns:xmcda='http://www.decision-deck.org/2009/XMCDA-2.1.0' xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance' xsi:schemaLocation='http://www.decision-deck.org/2009/XMCDA-2.1.0 http://www.decision-deck.org/xmcda/_downloads/XMCDA-2.1.0.xsd'>
+  <criteriaValues mcdaConcept="weights">
+    <criterionValue>
+      <criterionID>cout</criterionID>
+      <value>
+        <label>1</label>
+      </value>
+    </criterionValue>
+
+    <criterionValue>
+      <criterionID>risque</criterionID>
+      <value>
+        <label>2a</label>
+      </value>
+    </criterionValue>
+
+    <criterionValue>
+      <criterionID>emplois</criterionID>
+      <value>
+        <label>3</label>
+      </value>
+    </criterionValue>
+
+    <criterionValue>
+      <criterionID>connexion</criterionID>
+      <value>
+        <label>4</label>
+      </value>
+    </criterionValue>
+  </criteriaValues>
+</xmcda:XMCDA>

@@ -84,11 +84,6 @@ def transform(csv_file):
     if len(alternatives_ids) == 0:
         raise ValueError, 'Invalid csv file (2 or more lines are required)'
 
-    try:
-        values = string_to_numeric_list(values)
-    except ValueError:
-        raise ValueError, "Alternatives' values should be numeric values"
-
     return alternatives_ids, mcda_concept, values
 
 
@@ -102,6 +97,14 @@ def output_alternatives(filename, alternatives_ids):
     xmcda_write_footer(outfile)
     outfile.close()
 
+xml_value_real='''
+      <value>
+        <real>%s</real>
+      </value>'''[1:]
+xml_value_label='''
+      <value>
+        <label>%s</label>
+      </value>'''[1:]
 
 def output_alternativesValues(filename, alternatives_ids, mcdaConcept, alternativesValues):
     outfile = open(filename, 'w')
@@ -110,13 +113,18 @@ def output_alternativesValues(filename, alternatives_ids, mcdaConcept, alternati
         outfile.write('  <alternativesValues mcdaConcept="%s">'%mcdaConcept)
     else:
         outfile.write('  <alternativesValues>')
-    for id, weight in map(None,alternatives_ids, alternativesValues):
+
+    try:
+        alternativesValues = string_to_numeric_list(alternativesValues)
+        xmlValues = [ xml_value_real%v for v in alternativesValues ]
+    except ValueError:
+        xmlValues = [ xml_value_label%v for v in alternativesValues ]
+
+    for id, weight in map(None,alternatives_ids, xmlValues):
         outfile.write("""
     <alternativeValue>
       <alternativeID>%s</alternativeID>
-      <value>
-        <real>%s</real>
-      </value>
+%s
     </alternativeValue>
 """%(id, weight))
     outfile.write('  </alternativesValues>\n')

@@ -33,15 +33,15 @@
 		</performance>
 		<performance>
 			<criterionID>g7</criterionID>
-			<value><real>1.0002</real></value>
+			<value><real>2.0002</real></value>
 		</performance>
 		<performance>
 			<criterionID>g8</criterionID>
-			<value><real>4.0</real></value>
+			<value><real>1.0</real></value>
 		</performance>
 		<performance>
 			<criterionID>g9</criterionID>
-			<value><real>3.0</real></value>
+			<value><real>1.0002</real></value>
 		</performance>
 		<performance>
 			<criterionID>g10</criterionID>
@@ -56,7 +56,7 @@
 		<alternativeID>b2</alternativeID>
 		<performance>
 			<criterionID>g1</criterionID>
-			<value><real>1.0002</real></value>
+			<value><real>2.0002</real></value>
 		</performance>
 		<performance>
 			<criterionID>g2</criterionID>
@@ -88,7 +88,7 @@
 		</performance>
 		<performance>
 			<criterionID>g9</criterionID>
-			<value><real>3.0</real></value>
+			<value><real>1.0002</real></value>
 		</performance>
 		<performance>
 			<criterionID>g10</criterionID>
@@ -123,7 +123,7 @@
 		</performance>
 		<performance>
 			<criterionID>g6</criterionID>
-			<value><real>1.0003</real></value>
+			<value><real>3.000001</real></value>
 		</performance>
 		<performance>
 			<criterionID>g7</criterionID>
@@ -135,7 +135,7 @@
 		</performance>
 		<performance>
 			<criterionID>g9</criterionID>
-			<value><real>3.0</real></value>
+			<value><real>2.0002</real></value>
 		</performance>
 		<performance>
 			<criterionID>g10</criterionID>

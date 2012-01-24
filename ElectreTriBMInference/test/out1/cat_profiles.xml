@@ -5,22 +5,22 @@
 	<categoryProfile>
 		<alternativeID>b1</alternativeID>
 		<limits>
-			<lowerCategory><categoryID>cat1</categoryID></lowerCategory>
-			<upperCategory><categoryID>cat2</categoryID></upperCategory>
+			<lowerCategory><categoryID>cat4</categoryID></lowerCategory>
+			<upperCategory><categoryID>cat3</categoryID></upperCategory>
 		</limits>
 	</categoryProfile>
 	<categoryProfile>
 		<alternativeID>b2</alternativeID>
 		<limits>
-			<lowerCategory><categoryID>cat2</categoryID></lowerCategory>
-			<upperCategory><categoryID>cat3</categoryID></upperCategory>
+			<lowerCategory><categoryID>cat3</categoryID></lowerCategory>
+			<upperCategory><categoryID>cat2</categoryID></upperCategory>
 		</limits>
 	</categoryProfile>
 	<categoryProfile>
 		<alternativeID>b3</alternativeID>
 		<limits>
-			<lowerCategory><categoryID>cat3</categoryID></lowerCategory>
-			<upperCategory><categoryID>cat4</categoryID></upperCategory>
+			<lowerCategory><categoryID>cat2</categoryID></lowerCategory>
+			<upperCategory><categoryID>cat1</categoryID></upperCategory>
 		</limits>
 	</categoryProfile>
 </categoriesProfiles>

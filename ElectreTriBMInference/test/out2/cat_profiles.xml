@@ -5,7 +5,7 @@
 	<categoryProfile>
 		<alternativeID>b1</alternativeID>
 		<limits>
-			<lowerCategory><categoryID>1</categoryID></lowerCategory>
+			<lowerCategory><categoryID>3</categoryID></lowerCategory>
 			<upperCategory><categoryID>2</categoryID></upperCategory>
 		</limits>
 	</categoryProfile>
@@ -13,7 +13,7 @@
 		<alternativeID>b2</alternativeID>
 		<limits>
 			<lowerCategory><categoryID>2</categoryID></lowerCategory>
-			<upperCategory><categoryID>3</categoryID></upperCategory>
+			<upperCategory><categoryID>1</categoryID></upperCategory>
 		</limits>
 	</categoryProfile>
 </categoriesProfiles>

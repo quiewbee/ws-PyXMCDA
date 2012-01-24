@@ -151,10 +151,10 @@ def main(argv=None):
     grp_input.add_argument('-i', '--csv')
 
     grp_output = parser.add_argument_group("Outputs",
-                                           description="Options -c and -C are linked and should be supplied (or omitted) together.  They are mutually exclusive with option -O")
+                                           description="Options -a and -A are linked and should be supplied (or omitted) together.  They are mutually exclusive with option -O")
     grp_output.add_argument('-O', '--out-dir', metavar='<output directory>', help='If specified, the files "alternatives.xml" and "alternativesValues.xml" will be created in this directory.  The directory must exist beforehand.')
-    grp_output.add_argument('-c', '--alternatives', metavar='output.xml')
-    grp_output.add_argument('-C', '--alternativesValues', metavar='output.xml')
+    grp_output.add_argument('-a', '--alternatives', metavar='output.xml')
+    grp_output.add_argument('-A', '--alternativesValues', metavar='output.xml')
 
     grp_output.add_argument('-m', '--messages', metavar='<file.xml>', help='All messages are redirected to this XMCDA file instead of being sent to stdout or stderr.  Note that if an output directory is specified (option -O), the path is relative to this directory.')
 
@@ -162,12 +162,12 @@ def main(argv=None):
     #in_dir = options.in_dir
     #out_dir = options.out_dir
     if args.out_dir and ( args.alternatives or args.alternativesValues ):
-        parser.error('Options -O and -c/-C are mutually exclusive')
+        parser.error('Options -O and -a/-A are mutually exclusive')
     if args.alternatives != args.alternativesValues \
         and None in (args.alternatives, args.alternativesValues):
-        parser.error('Options -c and -C must be supplied (or omitted) together')
+        parser.error('Options -a and -A must be supplied (or omitted) together')
     if args.out_dir and args.alternatives:
-        parser.error('Options -O and -c/-C are mutually exclusive')
+        parser.error('Options -O and -a/-A are mutually exclusive')
 
     if args.in_dir:
         csv_file = os.path.join(args.in_dir, 'alternativesValues.csv')

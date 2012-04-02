@@ -4,7 +4,7 @@
 	<program provider="PyXMCDA"
 		name="InferenceEtriBM"
 		displayName="InferenceEtriBM"
-		version="1.0" />
+		version="1.2" />
 	<documentation>
 		<description>The purpose of this webservice is to infer parameters of an ELECTRE TRI Bouyssou-Marchant model. It takes as input a set of learning alternatives evaluated on the criteria and their affectations to the different categories of the model. It is possible to perform a global inference of the parameters of the model (i.e. inferring the profiles, the weights and the credibility threshold) or to perform partial inference (i.e. only inferring the weights and the credibility threshold or only inferring the profiles delimiting the categories). The webservice will try to find a model that maximize the number of learning alternatives compatible with it. It means that it accepts in input an inconsistent set of learning alternatives that cannot be represented by an ELECTRE TRI model.</description>
 		<contact>Olivier Sobrie (olivier.sobrie@gmail.com)</contact>
